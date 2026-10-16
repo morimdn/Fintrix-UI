@@ -15,10 +15,19 @@ Pages has only `workflow_dispatch`; running the reviewed workflow on main is the
 explicit publication action. The deployment job holds pages/id-token write
 permissions; build jobs have only contents read. Pull requests do not deploy.
 
-Expected future URL: https://morimdn.github.io/Fintrix-UI/ . This phase does not
-establish that the live site contains Phase 2. `npm run build:demo` sets the Vite
-base for project Pages. Native anchors and relative bundled assets need no SPA
-server rewrite.
+## Current delivery status
+
+Phase 2 is merged and publicly deployed at
+[the Live Showcase](https://morimdn.github.io/Fintrix-UI/).
+Phase 3 is implemented in [PR #5](https://github.com/morimdn/Fintrix-UI/pull/5)
+but is not yet merged or deployed. The library can be independently installed
+from its generated tarball. The npm package is not published, no GitHub Release
+has been created, and no editable Figma UI Kit exists.
+
+The existing Pages workflow is manual-only; nothing in this PR triggers a
+new deployment. Historical validation reports retain their original observations
+and must not be read as current release status. `npm run build:demo` prepares the
+project base path without publishing anything.
 
 ## Phase 3 controlled first release checklist
 

@@ -5,18 +5,62 @@ Import styles once and place controls under `FintrixProvider`. The independent
 
 ## Themes and density
 
+This complete App initializes the provider and switches both modes.
+
+<!-- theme:start -->
+
 ```tsx
-import { FintrixProvider } from "fintrix-ui-preview";
+import {
+  Button,
+  FintrixProvider,
+  WalletBalanceCard,
+  useFintrixTheme,
+} from "fintrix-ui-preview";
 import "fintrix-ui-preview/styles.css";
-import "fintrix-ui-preview/fonts.css";
-<FintrixProvider initialMode="light" initialDensity="compact"
-  colorOverrides={{
-    light: { primary: "#5941a9", primaryHover: "#432b88", action: "#5941a9", actionHover: "#432b88" },
-    dark: { primary: "#c4b5fd", primaryHover: "#ddd6fe", action: "#5941a9", actionHover: "#432b88" },
-  }}>
-  <Application />
-</FintrixProvider>;
+import "fintrix-ui-preview/fonts.css"; // Optional self-hosted Inter Variable
+
+function WalletPage() {
+  const { mode, setMode, density, setDensity } = useFintrixTheme();
+  return (
+    <main style={{ padding: 24 }}>
+      <h1>My wallet</h1>
+      <Button onClick={() => setMode(mode === "light" ? "dark" : "light")}>
+        Theme: {mode}
+      </Button>
+      <Button
+        onClick={() =>
+          setDensity(density === "comfortable" ? "compact" : "comfortable")
+        }
+      >
+        Density: {density}
+      </Button>
+      <WalletBalanceCard
+        value="12500.25"
+        currency="EUR"
+        detail="Synthetic balance"
+      />
+    </main>
+  );
+}
+
+// Replace src/App.tsx in a React/TypeScript Vite app with this file.
+export default function App() {
+  return (
+    <FintrixProvider
+      initialMode="dark"
+      initialDensity="comfortable"
+      colorOverrides={{
+        light: { primary: "#5941a9" },
+        dark: { primary: "#c4b5fd" },
+      }}
+    >
+      <WalletPage />
+    </FintrixProvider>
+  );
+}
 ```
+
+<!-- theme:end -->
 
 `colorOverrides` is typed as `ThemeOverrides`: an optional partial map per mode
 using existing color token names. Omitted values retain defaults. The resolved
@@ -33,17 +77,40 @@ where supported. Preserve accessible target spacing in compact interfaces.
 
 ## Icons
 
+Render this exported example inside FintrixProvider, as shown in Getting Started.
+
+<!-- icons:start -->
+
 ```tsx
-import { Wallet, Settings } from "lucide-react";
+import { useState } from "react";
+import { Settings, Wallet } from "lucide-react";
 import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui-preview";
 
-<FintrixIcon icon={Wallet} tone="success" size={24} strokeWidth={2} />;
-<FintrixIcon icon={Wallet} label="Wallet balance" />;
-<WalletBalanceCard value="128450.00" currency="USD"
-  icon={<Wallet size={24} />} iconTone="primary" />;
-<IconButton label="Wallet settings" icon={<Settings size={20} />}
-  iconTone="primary" onClick={openSettings} />;
+export default function Icons() {
+  const [status, setStatus] = useState("Ready");
+  return (
+    <>
+      <FintrixIcon icon={Wallet} size={20} strokeWidth={2} />
+      <FintrixIcon icon={Wallet} tone="primary" label="Wallet" />
+      <IconButton
+        label="Wallet settings"
+        icon={<Settings size={20} />}
+        iconTone="primary"
+        onClick={() => setStatus("Settings selected")}
+      />
+      <WalletBalanceCard
+        value="12500.25"
+        currency="EUR"
+        icon={<Wallet size={24} />}
+        iconTone="success"
+      />
+      <p role="status">{status}</p>
+    </>
+  );
+}
 ```
+
+<!-- icons:end -->
 
 Tones: neutral, primary, success, warning, danger, info. The standalone wrapper
 defaults to neutral. Existing buttons and MetricCard retain their inherited

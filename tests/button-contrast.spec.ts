@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { palettes } from "fintrix-ui-preview/tokens";
@@ -68,9 +69,9 @@ for (const mode of ["light", "dark"] as const) {
         await page.mouse.up();
       }
       await expect(button).toHaveText("Copied");
-      expect(
-        await page.evaluate(() => navigator.clipboard.readText()),
-      ).toContain('<FintrixProvider initialMode="dark"');
+      expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+        readFileSync("examples/documentation/App.tsx", "utf8"),
+      );
       await page.mouse.move(0, 0);
       await button.focus();
       await expect(button).toBeFocused();

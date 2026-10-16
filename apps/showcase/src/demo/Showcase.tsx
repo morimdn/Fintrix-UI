@@ -1,6 +1,6 @@
 import { ShowcaseTabBar } from "./ShowcaseTabBar";
 import { Documentation } from "./Documentation";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   Card,
   Input,
@@ -76,6 +76,31 @@ function ExampleCard({
   );
 }
 export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
+  function sectionFromHash() {
+    const hash = window.location.hash.slice(1);
+    if (hash.startsWith("docs-")) return "documentation";
+    return [
+      "foundations",
+      "components",
+      "financial",
+      "documentation",
+      "iconography",
+    ].includes(hash)
+      ? hash
+      : "foundations";
+  }
+  const [section, setSection] = useState(sectionFromHash);
+  useEffect(() => {
+    const navigate = () => setSection(sectionFromHash());
+    window.addEventListener("hashchange", navigate);
+    return () => window.removeEventListener("hashchange", navigate);
+  }, []);
+  useEffect(() => {
+    if (!window.location.hash.startsWith("#docs-")) {
+      const scroller = document.querySelector(".main-scroll");
+      if (scroller) scroller.scrollTop = 0;
+    }
+  }, [section]);
   const { mode, density, setDensity } = useFintrixTheme();
   const color = palettes[mode];
   const [range, setRange] = useState<[number, number]>([20, 80]),
@@ -626,7 +651,11 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
       <Tabs
         className="showcase-tabs"
         renderTabBar={(props) => <ShowcaseTabBar {...props} />}
-        defaultActiveKey="foundations"
+        activeKey={section}
+        onChange={(key) => {
+          setSection(key);
+          window.location.hash = key;
+        }}
         items={[
           {
             key: "foundations",
@@ -647,7 +676,7 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
           {
             key: "documentation",
             label: "Documentation",
-            children: <Documentation />,
+            children: <Documentation visible={section === "documentation"} />,
           },
         ]}
       />

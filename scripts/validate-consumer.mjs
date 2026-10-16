@@ -15,6 +15,12 @@ cpSync(resolve(root, "examples/consumer-app"), target, {
   recursive: true,
   filter: (path) => !path.includes("node_modules") && !path.includes("/dist"),
 });
+// The exact source displayed by the public docs is compiled against the tarball.
+cpSync(
+  resolve(root, "examples/documentation"),
+  resolve(target, "src/documentation"),
+  { recursive: true },
+);
 execFileSync("npm", ["pack", "--pack-destination", target], {
   cwd: resolve(root, "packages/fintrix-ui"),
   stdio: "inherit",

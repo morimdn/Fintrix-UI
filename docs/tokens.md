@@ -2,7 +2,7 @@
 
 `packages/fintrix-ui/src/tokens.ts` is the single typed source. `foundations`
 defines typography, space, radius, layout, motion and density. `palettes` defines
-matching light/dark semantic roles. `getTokens(mode, density)` resolves both axes;
+matching light/dark semantic roles. `getTokens(mode, density, overrides?)` resolves both axes;
 `cssVariables` maps them to scoped `--fx-*` variables. FintrixProvider uses the
 same resolved tokens to configure Ant Design. Nested providers scope variables
 and popup ancestry, avoiding a global theme mutation.
@@ -25,3 +25,9 @@ Comfortable: 40px controls / 16px cell padding. Compact: 32px / 10px. Typography
 remains legible; touch target adaptations belong to each application's responsive
 layout. Font weights: 400 regular, 500 medium, 650 strong. Inter is optionally
 self-hosted through the fonts entry point. Reduced motion disables transitions.
+
+Typed per-mode `FintrixProvider.colorOverrides` customizes semantic colors in both
+CSS variables and Ant Design tokens. See [complete theme examples](customization.md).
+Primitive foundation values describe sizes, spacing and raw palette colors;
+semantic roles describe intended use. Fintrix does not expose a numbered brand
+color scale. Preserve foreground/background pairs and test all interaction states.

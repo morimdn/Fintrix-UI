@@ -107,3 +107,74 @@ test("packed production grid and overlays preserve keyboard behavior", async ({
     page.getByRole("dialog", { name: "Consumer drawer" }),
   ).toBeHidden();
 });
+
+test("complete onboarding App works from the independently packed library", async ({
+  page,
+}) => {
+  await page.goto("/?example=onboarding");
+  await expect(page.getByRole("heading", { name: "My wallet" })).toBeVisible();
+  await expect(page.getByText("€12,500.25", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Theme: dark" }).click();
+  await page.getByRole("button", { name: "Density: comfortable" }).click();
+  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+    "data-theme",
+    "light",
+  );
+  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+    "data-density",
+    "compact",
+  );
+  expect(
+    (await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze())
+      .violations,
+  ).toEqual([]);
+});
+for (const example of [
+  "actions",
+  "forms",
+  "overlays",
+  "grid",
+  "financial",
+  "icons",
+  "feedback",
+]) {
+  test(`documentation example renders without runtime errors: ${example}`, async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto(`/?example=${example}`);
+    await expect(
+      page.getByRole("heading", { name: "Documentation example" }),
+    ).toBeVisible();
+    if (example === "actions") {
+      await page
+        .getByRole("button", { name: "Create report", exact: true })
+        .click();
+      await expect(page.getByRole("status")).toHaveText("Report requested");
+    }
+    if (example === "grid") {
+      await page.getByRole("checkbox", { name: "Hide note column" }).check();
+      await expect(
+        page.getByRole("columnheader", { name: "Note", exact: true }),
+      ).toHaveCount(0);
+      await page.getByTitle("Next Page").click();
+      await expect(
+        page.getByRole("cell", { name: "Reserve", exact: true }),
+      ).toBeVisible();
+    }
+    if (example === "feedback") {
+      await page.getByRole("button", { name: "Show notification" }).click();
+      await expect(
+        page.getByText("Report ready", { exact: true }),
+      ).toBeVisible();
+    }
+    if (example === "forms") {
+      await page.getByRole("button", { name: "Save preferences" }).click();
+      await expect(
+        page.getByText("Enter an account reference", { exact: true }),
+      ).toBeVisible();
+    }
+    expect(errors).toEqual([]);
+  });
+}

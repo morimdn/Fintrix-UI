@@ -14,6 +14,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run validate:consumer
+      - run: npm run docs:check
       - run: npm test
       - run: npm run build-storybook
       - run: npx playwright install --with-deps chromium

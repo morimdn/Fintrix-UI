@@ -99,5 +99,11 @@ writeFileSync(
   JSON.stringify(tokens, null, 2) + "\n",
 );
 
-copyFileSync(resolve(root, "README.md"), `${pkg}/README.md`);
+// Package readers do not have the repository docs beside the tarball README.
+const readme = readFileSync(resolve(root, "README.md"), "utf8").replace(
+  /(!?\[[^\]]*\])\((?!https?:|#)([^)]+)\)/g,
+  (_, label, path) =>
+    `${label}(${label.startsWith("!") ? "https://raw.githubusercontent.com/morimdn/Fintrix-UI/main/" : "https://github.com/morimdn/Fintrix-UI/blob/main/"}${path})`,
+);
+writeFileSync(`${pkg}/README.md`, readme);
 copyFileSync(resolve(root, "LICENSE"), `${pkg}/LICENSE`);

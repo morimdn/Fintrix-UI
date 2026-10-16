@@ -37,7 +37,28 @@ for (const mode of ["light", "dark"]) {
       name: "Copy Wallet example",
       exact: true,
     });
+    // Audit the visible tooltip after its entrance animation, then the copy
+    // hover state after that tooltip has finished leaving. Keep contrast rules intact.
+    await page
+      .getByRole("button", { name: "Wallet settings", exact: true })
+      .hover();
+    await expect(
+      page.getByRole("tooltip", { name: "Wallet settings", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.locator(".ant-tooltip").filter({ hasText: "Wallet settings" }),
+    ).toHaveCSS("opacity", "1");
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
     await copy.hover();
+    await expect(
+      page.getByRole("tooltip", { name: "Wallet settings", exact: true }),
+    ).toBeHidden();
     expect(
       (
         await new AxeBuilder({ page })

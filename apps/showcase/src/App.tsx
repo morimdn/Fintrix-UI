@@ -22,7 +22,8 @@ const Showcase = lazy(() =>
 );
 export default function App() {
   const [view, setView] = useState(
-    new URLSearchParams(window.location.search).get("view") === "crm"
+    new URLSearchParams(window.location.search).get("view") === "crm" &&
+      !/^#(docs-|documentation|iconography)/.test(window.location.hash)
       ? "crm"
       : "showcase",
   );

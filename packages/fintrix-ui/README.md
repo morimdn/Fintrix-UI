@@ -1,160 +1,138 @@
 # Fintrix UI
 
-An independent, MIT-licensed React design system for financial software teams.
-Build brokerage CRMs, risk dashboards and wallet interfaces with semantic
-financial states, readable data grids and a shared light/dark token system.
+A React design system for teams building brokerage CRMs, wallet interfaces and
+risk dashboards. Fintrix combines Ant Design 6 controls with financial display
+components, semantic Light/Dark tokens, two density modes and Lucide icon conventions.
+It extends Ant Design; it is not a standalone replacement for it.
 
-Built on Ant Design 6, React and self-hosted Inter Variable. Phase 3 adds curated iconography, semantic icon tones, typed theme customization
-and independent packed-consumer validation. The provisional package is private and **not published to npm**.
+[Live Showcase](https://morimdn.github.io/Fintrix-UI/) ·
+[Component documentation](https://github.com/morimdn/Fintrix-UI/blob/main/docs/components.md) ·
+[Iconography](https://github.com/morimdn/Fintrix-UI/blob/main/docs/customization.md#icons) ·
+[Installation guide](https://github.com/morimdn/Fintrix-UI/blob/main/docs/getting-started.md) ·
+[GitHub repository](https://github.com/morimdn/Fintrix-UI)
 
-![Fintrix semantic colors and typography in light mode](docs/screenshots/tokens-light.png)
-_Real Chromium capture: semantic palette, typography, spacing and density._
+## What is available today?
 
-![Reusable wallet, P&L, KYC, transaction, risk and quote components in dark mode](docs/screenshots/library-financial-dark.png)
-_Reusable financial components using synthetic values, with explicit text states._
+| Deliverable | Current status |
+| --- | --- |
+| Phase 2 | Merged and publicly deployed at the Live Showcase |
+| Phase 3 | Implemented in [PR #5](https://github.com/morimdn/Fintrix-UI/pull/5); not yet merged or deployed |
+| React library | Independently buildable, packable and installable from a local tarball |
+| npm package | **Not published**; provisional `fintrix-ui-preview@0.2.0` remains private |
+| GitHub Release | Not created |
+| Editable Figma UI Kit | Not created; future work |
 
-![Advanced Data Grid with a synthetic 10,000-row dataset](docs/screenshots/library-grid.png)
-_Controlled visibility, keyboard resizing, sorting and pagination._
+The live site currently shows Phase 2. Phase 3 screenshots and APIs below describe
+the reviewed branch, not a deployed update. No `npm install fintrix-ui` command is
+available. Release naming, ownership and publication require separate owner approval.
 
-![Working brokerage CRM in light mode](docs/screenshots/crm-light.png)
-_Preserved Phase 1 client management workflow, fixed columns and financial metrics._
+## Install the current artifact
 
-## Install and use
-
-Requires Node 24 for repository tooling. Runtime peers: React/React DOM 18.3 or 19
-and Ant Design 6 (see the [Phase 3 validation report](docs/phase-three-report.md)). Package name availability is not
-claimed; install the locally packed artifact until a release is approved.
+Use Node 24, npm and Git for repository development. Consumers use React/React DOM
+18.3 or 19 and Ant Design 6 as peers. Independent validation covers React
+18.3.1/19.3.1 × Ant 6.0.0/6.6.6; other versions in the peer ranges are not individually verified.
 
 ```sh
+git clone https://github.com/morimdn/Fintrix-UI.git
+cd Fintrix-UI
 npm ci
-npm run build
-npm pack --workspace fintrix-ui-preview --pack-destination /tmp
-# In your separate React app:
-npm install /tmp/fintrix-ui-preview-0.2.0.tgz antd react react-dom
+npm run build:library
+mkdir -p artifacts
+npm pack --workspace fintrix-ui-preview --pack-destination ./artifacts
 ```
 
-```tsx
-import {
-  FintrixProvider,
-  WalletBalanceCard,
-  PnLIndicator,
-} from "fintrix-ui-preview";
-import "fintrix-ui-preview/styles.css";
-import "fintrix-ui-preview/fonts.css"; // optional, self-hosted Inter
-
-export function App() {
-  return (
-    <FintrixProvider initialMode="dark" initialDensity="comfortable">
-      <WalletBalanceCard
-        value="128450.00"
-        currency="USD"
-        detail={<PnLIndicator value="-24.50" currency="USD" />}
-      />
-    </FintrixProvider>
-  );
-}
-```
-
-Use `useFintrixTheme()` inside the provider to switch mode/density. Tokens are
-available from `fintrix-ui-preview/tokens`, scoped CSS variables, and
-`fintrix-ui-preview/tokens.json`. Amounts are presentation only; use decimal text
-for precision. No trading, payments, ledger or live market integration is included.
-
-## Explore
+These commands build the checked-out source. Until PR #5 merges, use its reviewed
+checkout (`gh pr checkout 5`) **before building** to try the Phase 3 APIs. In a
+separate React app, install the resulting tarball by its actual absolute path:
 
 ```sh
-npm run dev              # build first; public showcase at localhost:5173
-npm run storybook        # component stories at localhost:6006
+npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-preview-0.2.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
-The default view is the public system gallery. Its Documentation tab has 14
-sections, copyable React examples and a synthetic 10k-row grid. Select Clients to
-open the CRM, or use `/?view=crm`. Theme and density controls work across both.
+Follow the [complete Getting Started guide](https://github.com/morimdn/Fintrix-UI/blob/main/docs/getting-started.md) for a new
+React/TypeScript app, CSS and optional local Inter fonts, FintrixProvider, a wallet
+and working theme/density controls. The [complete App example](https://github.com/morimdn/Fintrix-UI/blob/main/examples/documentation/App.tsx)
+is compiled against the installed artifact, along with the other documentation examples.
 
-[GitHub Pages demo / expected publication URL](https://morimdn.github.io/Fintrix-UI/)
-may show the previously approved phase. Phase 2 has **not been deployed**. Its
-workflow is manual-only and must be explicitly authorized after review.
+## Components and customization
 
-## App shell
+| Area | Available APIs |
+| --- | --- |
+| Themes | FintrixProvider, useFintrixTheme, typed colorOverrides, tokens/CSS variables, Comfortable/Compact density |
+| Iconography | FintrixIcon; optional iconTone on IconButton, MetricCard, WalletBalanceCard and FinancialKPICard |
+| Actions | Button, ButtonGroup, IconButton |
+| Forms | Input / Input.TextArea, Select / multi-select, Checkbox, Radio, Switch, Slider, InputNumber, RangeController, Form, DatePicker, TimePicker |
+| Data | DataTable, DataGrid, ColumnResizeHandle, ResizableHeaderCell |
+| Navigation | Tabs, Breadcrumb, Menu, Dropdown, Pagination |
+| Feedback | StatusIndicator, Chip, Alert, Progress, Skeleton, Empty, notification, message |
+| Overlays | Modal, FormModal, Drawer, Tooltip, Popover |
+| Financial summaries | CurrencyAmount, formatCurrency, PnLIndicator, WalletBalanceCard, AccountSummary, FinancialKPICard |
+| Financial states | KYCStatus, ClientStatus, TransactionStatus, RiskLevelIndicator |
+| Supplied quotes | SymbolPriceDisplay, BidAskDisplay |
+| Composition | Card, Space, MetricCard (legacy decorative synthetic sparkline) |
 
-The sidebar and header stay stationary while content scrolls independently.
-Only overflowing sidebar navigation scrolls; brand/workspace and profile remain
-anchored. The mobile navigation drawer retains keyboard focus management.
-[Responsive behavior and regression checks](docs/shell-refinement.md).
+Standard controls are Ant Design re-exports; Fintrix wrappers add the documented
+semantics and behavior. Use [component guidance](https://github.com/morimdn/Fintrix-UI/blob/main/docs/components.md) to choose
+between controls and [customization](https://github.com/morimdn/Fintrix-UI/blob/main/docs/customization.md) for typed theme/icon
+overrides. Financial values are display-only; decimal strings are preferred.
+No ledger, trading engine, broker integration, payment system or live data feed is included.
 
-![Refined Fintrix app shell in dark mode](docs/screenshots/shell-desktop-dark.png)
-_Real application capture: aligned header, stationary sidebar and bottom profile._
-
-## Components
-
-| Area                 | Available APIs                                                                                                      |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Actions              | Button, ButtonGroup, IconButton                                                                                     |
-| Forms                | Input/TextArea, Select, Checkbox, Radio, Switch, Slider, InputNumber, RangeController, Form, DatePicker, TimePicker |
-| Data                 | DataTable, DataGrid, ColumnResizeHandle, ResizableHeaderCell                                                        |
-| Navigation           | Tabs, Breadcrumb, Menu, Dropdown, Pagination                                                                        |
-| Feedback             | StatusIndicator, Chip, Alert, Progress, Skeleton, Empty, notification, message                                      |
-| Overlays             | Modal, FormModal, Drawer, Tooltip, Popover                                                                          |
-| Financial summaries  | CurrencyAmount, formatCurrency, PnLIndicator, WalletBalanceCard, AccountSummary, FinancialKPICard                   |
-| Financial operations | KYCStatus, ClientStatus, TransactionStatus, RiskLevelIndicator                                                      |
-| Quotes               | SymbolPriceDisplay, BidAskDisplay (supplied spread)                                                                 |
-| Composition          | Card, Space, MetricCard (legacy synthetic sparkline)                                                                |
-
-Standard controls retain Ant Design props; wrappers add Fintrix behavior where
-needed. [Usage and decision guidance](docs/components.md).
-
-## Visual evidence
-
-All images are captured from the running application by Playwright. No generated
-mockups are used. [Capture details and asset index](docs/screenshots/README.md).
-
-| Preview                        | Image                                                                                         |
-| ------------------------------ | --------------------------------------------------------------------------------------------- |
-| Button states and core gallery | [Light](docs/screenshots/components-light.png) / [Dark](docs/screenshots/components-dark.png) |
-| Financial dashboard gallery    | [Light](docs/screenshots/financial-light.png) / [Dark](docs/screenshots/financial-dark.png)   |
-| Tokens and typography          | [Light](docs/screenshots/tokens-light.png) / [Dark](docs/screenshots/tokens-dark.png)         |
-| Public documentation           | [Light](docs/screenshots/library-light.png) / [Dark](docs/screenshots/library-dark.png)       |
-| Mobile                         | [Documentation](docs/screenshots/library-mobile.png) / [CRM](docs/screenshots/mobile.png)     |
-
-## Validate
+## Explore the system
 
 ```sh
 npm run build
+npm run dev        # Local Showcase, including unreleased Phase 3 on this branch
+npm run storybook  # Local component stories
+```
+
+The public documentation retains 14 topics grouped for developers and designers.
+Local deep links such as `/#docs-getting-started`, `/#docs-grid` and `/#iconography`
+open the relevant section. These navigation improvements reach the live site only
+after an approved merge and deployment. Browse the Iconography tab to search
+36 curated icons and copy size/stroke/tone examples; Lucide remains usable directly.
+
+![Phase 3 searchable Iconography in dark mode](https://raw.githubusercontent.com/morimdn/Fintrix-UI/main/docs/screenshots/iconography-dark-chromium.png)
+_Real browser capture from the Phase 3 branch; not yet deployed._
+
+The **brokerage CRM is an example application**, separate from the reusable
+package. It demonstrates synthetic clients, filters, selection, resizing and
+record editing. The header and sidebar stay fixed while main content scrolls;
+mobile navigation uses a Drawer.
+
+![Example brokerage CRM](https://raw.githubusercontent.com/morimdn/Fintrix-UI/main/docs/screenshots/crm-light.png)
+_Illustrative records, not live customer or market data._
+
+More [real screenshots](https://github.com/morimdn/Fintrix-UI/blob/main/docs/screenshots/README.md),
+[financial examples](https://github.com/morimdn/Fintrix-UI/blob/main/examples/documentation/Financial.tsx) and
+[DataGrid example](https://github.com/morimdn/Fintrix-UI/blob/main/examples/documentation/Grid.tsx).
+
+## Validate and contribute
+
+```sh
+npm run build
+npm run docs:check
 npm test
 npm run build-storybook
 npm run validate:consumer
 npx playwright install --with-deps chromium
 npm run test:e2e
-npx playwright test --config playwright.consumer.config.ts
-node scripts/package-metrics.mjs
-npm run build:demo
+npm run test:consumer
 ```
 
-The independent consumer is installed from `npm pack` in a fresh temporary
-directory outside this workspace. Its build and browser checks verify actual
-package exports, declarations, CSS, fonts, provider, forms and financial display.
-[Architecture](docs/architecture.md) · [Validation and limits](docs/phase-two-report.md)
-· [Tokens](docs/tokens.md) · [Accessibility](docs/accessibility.md)
-· [Design-to-code mapping](docs/design-to-code.md) · [Contributing](CONTRIBUTING.md)
-· [Releases](docs/releases.md).
+Consumer validation uses a fresh directory outside the workspace, the actual
+packed library, and the exact documentation example sources. CI also checks
+React 18/19 with Ant 6 endpoints and selected Firefox/WebKit workflows.
+Automated accessibility checks do not establish WCAG certification; manual
+assistive-technology testing remains part of release review.
 
-Fintrix UI is not an official MetaTrader, cTrader or Ant Design product. See
-[MIT license](LICENSE) and [third-party attribution](docs/third-party-notices.md).
+Open focused GitHub pull requests targeting main. Follow [Contributing](https://github.com/morimdn/Fintrix-UI/blob/main/CONTRIBUTING.md),
+include relevant test evidence, and preserve semantic tokens and synthetic data.
+See [architecture](https://github.com/morimdn/Fintrix-UI/blob/main/docs/architecture.md), [token contract](https://github.com/morimdn/Fintrix-UI/blob/main/docs/tokens.md),
+[Phase 3 validation](https://github.com/morimdn/Fintrix-UI/blob/main/docs/phase-three-report.md),
+[documentation refinement validation](https://github.com/morimdn/Fintrix-UI/blob/main/docs/documentation-refinement.md), and
+[release checklist](https://github.com/morimdn/Fintrix-UI/blob/main/docs/releases.md). Older validation reports describe their
+original test dates, not current deployment status.
 
-## Iconography and customization
-
-Use the Showcase **Iconography** tab to search 36 Lucide icons, preview sizes,
-strokes and tones in either theme, and copy React examples.
-
-```tsx
-import { Wallet } from "lucide-react";
-import { FintrixIcon, WalletBalanceCard } from "fintrix-ui-preview";
-
-<FintrixIcon icon={Wallet} tone="primary" size={24} />;
-<WalletBalanceCard value="12500.25" currency="EUR"
-  icon={<Wallet size={24} />} iconTone="success" />;
-```
-
-See [customization](docs/customization.md) for theme overrides, density, icon
-semantics, control variants and DataGrid extensions. See the
-[release checklist](docs/releases.md) for owner decisions before publication.
+MIT licensed. See [LICENSE](https://github.com/morimdn/Fintrix-UI/blob/main/LICENSE) and [third-party attribution](https://github.com/morimdn/Fintrix-UI/blob/main/docs/third-party-notices.md).
+Fintrix UI is independent and has no implied affiliation with MetaTrader,
+cTrader or Ant Design. The editable Figma UI Kit and official npm release remain future deliverables.

@@ -1,3 +1,11 @@
+import Onboarding from "./documentation/App";
+import Actions from "./documentation/Actions";
+import Preferences from "./documentation/Forms";
+import Overlays from "./documentation/Overlays";
+import AccountsGrid from "./documentation/Grid";
+import FinancialExamples from "./documentation/Financial";
+import Icons from "./documentation/Icons";
+import Feedback from "./documentation/Feedback";
 import { useState } from "react";
 import { Wallet } from "lucide-react";
 import { createRoot } from "react-dom/client";
@@ -99,13 +107,35 @@ function Consumer() {
     </main>
   );
 }
+const example = new URLSearchParams(window.location.search).get("example");
+const examples = {
+  actions: Actions,
+  forms: Preferences,
+  overlays: Overlays,
+  grid: AccountsGrid,
+  financial: FinancialExamples,
+  icons: Icons,
+  feedback: Feedback,
+};
+const Example = examples[example as keyof typeof examples];
 createRoot(document.getElementById("root")!).render(
-  <FintrixProvider
-    colorOverrides={{
-      light: { primary: "#5941a9" },
-      dark: { primary: "#c4b5fd" },
-    }}
-  >
-    <Consumer />
-  </FintrixProvider>,
+  example === "onboarding" ? (
+    <Onboarding />
+  ) : (
+    <FintrixProvider
+      colorOverrides={{
+        light: { primary: "#5941a9" },
+        dark: { primary: "#c4b5fd" },
+      }}
+    >
+      {Example ? (
+        <main style={{ padding: 24 }}>
+          <h1>Documentation example</h1>
+          <Example />
+        </main>
+      ) : (
+        <Consumer />
+      )}
+    </FintrixProvider>
+  ),
 );

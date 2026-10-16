@@ -214,6 +214,11 @@ export default function Iconography() {
           iconTone={tone}
           onClick={() => setStatus("Wallet settings demonstration activated")}
         />
+        <p>
+          This API fragment assumes Wallet and Settings imports and your
+          application's openSettings handler. For a complete tested component,
+          see <a href="#docs-core">Iconography usage</a>.
+        </p>
         <pre>
           <code>{`<WalletBalanceCard value="128450.00" currency="USD"\n  icon={<Wallet size={24} />} iconTone="${tone}" />\n<IconButton label="Wallet settings" icon={<Settings size={20} />}\n  iconTone="${tone}" onClick={openSettings} />`}</code>
         </pre>
