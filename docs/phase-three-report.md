@@ -54,8 +54,14 @@ size/stroke keyboard controls, narrow layout and the dark hover foreground.
 Firefox/WebKit binaries are unavailable locally: the browser download endpoint
 returned HTTP 403 Domain forbidden under this environment's network policy.
 A separate CI job installs both engines and runs gallery, CRM and shell tests.
-Local Chromium results do not establish Firefox/WebKit support. CI results must
-be checked on the PR. Manual assistive-technology testing remains an owner release
+The first CI run passed all four consumer combinations and full Chromium
+validation. WebKit passed all 16 applicable engine tests; Firefox passed gallery
+and CRM checks but reported native scrollbar-width as none despite the authored
+thin rule. The engine test now keeps the visual-width assertion on Chromium/WebKit
+and checks overflow plus real keyboard sidebar scrolling on every engine. Native
+Firefox scrollbar appearance still needs manual review. Clipboard permissions
+are tested in Chromium only (one explicitly skipped test per other engine).
+Check the final CI result on the PR. Manual assistive-technology testing remains an owner release
 checklist item; this is not WCAG certification.
 
 Real Chromium captures: [Light](screenshots/iconography-light-chromium.png),
