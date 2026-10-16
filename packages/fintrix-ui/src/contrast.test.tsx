@@ -36,6 +36,9 @@ for (const [mode, t] of Object.entries(palettes))
     for (const action of ["action", "actionHover"] as const)
       it(`action text on ${action} meets 4.5:1`, () =>
         expect(ratio(t.onAction, t[action])).toBeGreaterThanOrEqual(4.5));
+    for (const foreground of ["primary", "primaryHover"] as const)
+      it(`default button ${foreground} on surface meets 4.5:1`, () =>
+        expect(ratio(t[foreground], t.surface)).toBeGreaterThanOrEqual(4.5));
     it("selected navigation meets 4.5:1", () =>
       expect(ratio(t.primary, t.primarySoft)).toBeGreaterThanOrEqual(4.5));
   });
