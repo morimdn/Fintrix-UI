@@ -55,6 +55,7 @@ for (const mode of ["light", "dark"]) {
           .analyze()
       ).violations,
     ).toEqual([]);
+    await copy.focus();
     await copy.hover();
     await expect(
       page.getByRole("tooltip", { name: "Wallet settings", exact: true }),
