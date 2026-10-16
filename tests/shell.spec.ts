@@ -1,6 +1,22 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+test.afterEach(async ({ page }, testInfo) => {
+  if (testInfo.status !== testInfo.expectedStatus)
+    console.log(
+      "Tooltip diagnostics",
+      await page.evaluate(() => ({
+        active: document.activeElement?.outerHTML,
+        hovered: [...document.querySelectorAll(":hover")].map((el) =>
+          el.outerHTML.slice(0, 400),
+        ),
+        tooltips: [...document.querySelectorAll('[role="tooltip"]')].map(
+          (el) => el.outerHTML,
+        ),
+      })),
+    );
+});
+
 const viewports = [
   { name: "desktop", width: 1536, height: 960 },
   { name: "tablet", width: 1024, height: 768 },
