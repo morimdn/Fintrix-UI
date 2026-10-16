@@ -38,8 +38,8 @@ accessibility and third-party attribution documentation.
 
 - TypeScript, ESM library, showcase production and Storybook builds pass locally.
 - 53 unit/interaction/contrast checks pass, preserving all 48 previous checks.
-- Existing 10 CRM/showcase browser tests pass after package extraction fixes.
-- Four new public-docs/grid/responsive/axe tests pass.
+- All 14 showcase browser tests pass together: existing 10 CRM/showcase checks
+  plus four public-docs/grid/responsive/axe checks.
 - Packed consumer installs outside the workspace, typechecks and builds; its
   browser test verifies CSS, fonts, large decimal display, validation, both theme
   axes, compact sizing and targeted axe checks.

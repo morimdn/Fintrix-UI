@@ -1,5 +1,5 @@
 {
-  "javascriptBytes": 21543,
+  "javascriptBytes": 22115,
   "modules": [
     {
       "name": "ColumnResizeHandle.js",
@@ -7,7 +7,7 @@
     },
     {
       "name": "DataGrid.js",
-      "bytes": 1199
+      "bytes": 1592
     },
     {
       "name": "IconButton.js",
@@ -19,11 +19,11 @@
     },
     {
       "name": "components.js",
-      "bytes": 3191
+      "bytes": 3192
     },
     {
       "name": "financial.js",
-      "bytes": 4082
+      "bytes": 4260
     },
     {
       "name": "index.js",
