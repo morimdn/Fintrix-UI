@@ -1,3 +1,4 @@
+import { runNpm } from "./run-npm.mjs";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, existsSync } from "node:fs";
@@ -8,13 +9,13 @@ const cwd = resolve(root, "packages/fintrix-ui");
 const temp = mkdtempSync(resolve(tmpdir(), "fintrix-inspect-"));
 try {
   const [dry] = JSON.parse(
-    execFileSync("npm", ["pack", "--dry-run", "--json"], {
+    runNpm(["pack", "--dry-run", "--json"], {
       cwd,
       encoding: "utf8",
     }),
   );
   const [packed] = JSON.parse(
-    execFileSync("npm", ["pack", "--json", "--pack-destination", temp], {
+    runNpm(["pack", "--json", "--pack-destination", temp], {
       cwd,
       encoding: "utf8",
     }),
@@ -64,8 +65,7 @@ try {
   for (const mode of ["light", "dark"])
     for (const density of ["comfortable", "compact"])
       assert.ok(tokens[mode][density]);
-  execFileSync(
-    "npm",
+  runNpm(
     [
       "publish",
       resolve(temp, packed.filename),

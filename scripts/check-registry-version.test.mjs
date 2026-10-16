@@ -15,15 +15,15 @@ for (const [label, payload, exitCode, accepted] of [
     const dir = mkdtempSync(resolve(tmpdir(), "fintrix-registry-test-"));
     try {
       writeFileSync(
-        resolve(dir, "npm"),
-        `#!${process.execPath}\nconsole.log(${JSON.stringify(JSON.stringify(payload))}); process.exit(${exitCode});\n`,
+        resolve(dir, "npm-cli.cjs"),
+        `console.log(${JSON.stringify(JSON.stringify(payload))}); process.exit(${exitCode});\n`,
         { mode: 0o755 },
       );
       const result = spawnSync(
         process.execPath,
         [resolve(import.meta.dirname, "check-registry-version.mjs")],
         {
-          env: { ...process.env, PATH: `${dir}:${process.env.PATH}` },
+          env: { ...process.env, npm_execpath: resolve(dir, "npm-cli.cjs") },
           encoding: "utf8",
         },
       );

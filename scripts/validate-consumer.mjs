@@ -1,3 +1,4 @@
+import { runNpm } from "./run-npm.mjs";
 import { execFileSync } from "node:child_process";
 import {
   cpSync,
@@ -9,12 +10,13 @@ import {
 } from "node:fs";
 import { gzipSync } from "node:zlib";
 import { tmpdir } from "node:os";
-import { resolve } from "node:path";
+import { resolve, sep } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const target = mkdtempSync(resolve(tmpdir(), "fintrix-consumer-"));
 cpSync(resolve(root, "examples/consumer-app"), target, {
   recursive: true,
-  filter: (path) => !path.includes("node_modules") && !path.includes("/dist"),
+  filter: (path) =>
+    !path.split(sep).some((part) => ["node_modules", "dist"].includes(part)),
 });
 // The exact source displayed by the public docs is compiled against the tarball.
 cpSync(
@@ -22,7 +24,7 @@ cpSync(
   resolve(target, "src/documentation"),
   { recursive: true },
 );
-execFileSync("npm", ["pack", "--pack-destination", target], {
+runNpm(["pack", "--pack-destination", target], {
   cwd: resolve(root, "packages/fintrix-ui"),
   stdio: "inherit",
 });
@@ -39,15 +41,14 @@ manifest.devDependencies["@types/react-dom"] = react.startsWith("18.")
   ? "^18.3.0"
   : "19.3.0";
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-execFileSync(
-  "npm",
-  ["install", "--ignore-scripts", "--no-audit", "--no-fund"],
-  { cwd: target, stdio: "inherit" },
-);
+runNpm(["install", "--ignore-scripts", "--no-audit", "--no-fund"], {
+  cwd: target,
+  stdio: "inherit",
+});
 if (lstatSync(resolve(target, "node_modules/fintrix-ui")).isSymbolicLink())
   throw new Error("Consumer must install the tarball, not a workspace link");
 execFileSync(
-  "node",
+  process.execPath,
   [
     "--input-type=module",
     "-e",
@@ -62,8 +63,8 @@ execFileSync(
   ],
   { cwd: target, stdio: "inherit" },
 );
-execFileSync("npm", ["run", "build"], { cwd: target, stdio: "inherit" });
-execFileSync("node", [resolve(root, "scripts/package-metrics.mjs")], {
+runNpm(["run", "build"], { cwd: target, stdio: "inherit" });
+execFileSync(process.execPath, [resolve(root, "scripts/package-metrics.mjs")], {
   cwd: target,
   env: { ...process.env, CONSUMER_PATH: target },
   stdio: "inherit",

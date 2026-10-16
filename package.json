@@ -20,6 +20,7 @@
     "docs:sync": "node scripts/sync-documentation.mjs",
     "docs:check": "node scripts/sync-documentation.mjs --check",
     "inspect:package": "node scripts/inspect-package.mjs",
+    "test:scripts": "node --test scripts/build-library.test.mjs scripts/run-npm.test.mjs scripts/check-registry-version.test.mjs",
     "test:release": "node --test scripts/check-registry-version.test.mjs"
   },
   "dependencies": {

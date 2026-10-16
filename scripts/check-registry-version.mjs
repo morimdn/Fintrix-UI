@@ -1,9 +1,8 @@
+import { runNpm } from "./run-npm.mjs";
 // Read-only check. Do not interpret authentication/network failures as availability.
-import { execFileSync } from "node:child_process";
 let result;
 try {
-  result = execFileSync(
-    "npm",
+  result = runNpm(
     [
       "view",
       "fintrix-ui@0.3.0",

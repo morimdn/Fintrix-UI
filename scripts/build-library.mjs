@@ -7,15 +7,21 @@ import {
   readdirSync,
   copyFileSync,
 } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { createRequire } from "node:module";
+import { pathToFileURL } from "node:url";
+const require = createRequire(import.meta.url);
 const root = resolve(import.meta.dirname, "..");
 const pkg = resolve(root, "packages/fintrix-ui");
-rmSync(`${pkg}/dist`, { recursive: true, force: true });
-execFileSync(
-  resolve(root, "node_modules/.bin/tsc"),
-  ["-p", `${pkg}/tsconfig.build.json`],
-  { stdio: "inherit" },
+const typescriptManifest = require.resolve("typescript/package.json");
+const tsc = resolve(
+  dirname(typescriptManifest),
+  require(typescriptManifest).bin.tsc,
 );
+rmSync(`${pkg}/dist`, { recursive: true, force: true });
+execFileSync(process.execPath, [tsc, "-p", `${pkg}/tsconfig.build.json`], {
+  stdio: "inherit",
+});
 // Native ESM requires explicit extensions; preserve modules for tree shaking.
 for (const name of readdirSync(`${pkg}/dist`)) {
   if (!/\.(js|ts)$/.test(name)) continue;
@@ -38,7 +44,9 @@ writeFileSync(`${pkg}/dist/fonts.css`, fontCss);
 for (const match of fontCss.matchAll(/\.\/files\/([^)'"\s]+)/g))
   copyFileSync(`${font}/files/${match[1]}`, `${pkg}/dist/files/${match[1]}`);
 copyFileSync(`${font}/LICENSE`, `${pkg}/dist/INTER-LICENSE.txt`);
-const { getTokens } = await import(`${pkg}/dist/tokens.js?build=${Date.now()}`);
+const tokensUrl = pathToFileURL(resolve(pkg, "dist/tokens.js"));
+tokensUrl.searchParams.set("build", Date.now());
+const { getTokens } = await import(tokensUrl.href);
 function dtcg(value, path = []) {
   if (typeof value === "object")
     return Object.fromEntries(
