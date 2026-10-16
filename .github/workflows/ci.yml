@@ -65,7 +65,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps firefox webkit
       - name: Repeat WebKit tooltip regression
-        run: npx playwright test --config playwright.engines.config.ts --project=webkit tests/shell.spec.ts --grep "app shell mobile-landscape dark" --repeat-each=20 --workers=2
+        run: npx playwright test --config playwright.engines.config.ts --project=webkit tests/shell.spec.ts --grep "app shell mobile-landscape dark|theme tooltip supports keyboard focus" --repeat-each=20 --workers=2
       - run: npx playwright test --config playwright.engines.config.ts --workers=2
       - uses: actions/upload-artifact@v4
         if: always()

@@ -1,22 +1,6 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-test.afterEach(async ({ page }, testInfo) => {
-  if (testInfo.status !== testInfo.expectedStatus)
-    console.log(
-      "Tooltip diagnostics",
-      await page.evaluate(() => ({
-        active: document.activeElement?.outerHTML,
-        hovered: [...document.querySelectorAll(":hover")].map((el) =>
-          el.outerHTML.slice(0, 400),
-        ),
-        tooltips: [...document.querySelectorAll('[role="tooltip"]')].map(
-          (el) => el.outerHTML,
-        ),
-      })),
-    );
-});
-
 const viewports = [
   { name: "desktop", width: 1536, height: 960 },
   { name: "tablet", width: 1024, height: 768 },
@@ -58,7 +42,11 @@ for (const mode of ["light", "dark"] as const) {
       expect((await scroller.boundingBox())!.y).toBe(
         before!.y + before!.height,
       );
-      await page.mouse.move(viewport.width - 2, viewport.height - 2);
+      // A theme click can retain focus. Establish a neutral pointer AND focus
+      // state before checking the unobscured shell; focused hints are legitimate.
+      await page.locator(".breadcrumb > strong").hover();
+      await scroller.focus();
+      await expect(scroller).toBeFocused();
       await expect(page.getByRole("tooltip")).toHaveCount(0);
       await page.screenshot({
         animations: "disabled",
@@ -220,3 +208,66 @@ test("skip link targets independently scrolling content", async ({ page }) => {
   await expect(page.locator("#main-content")).toBeFocused();
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
+
+for (const mode of ["light", "dark"] as const) {
+  test(`theme tooltip supports keyboard focus and dismissal ${mode}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 667, height: 375 });
+    await page.goto("/?view=crm");
+    const neutral = page.locator(".breadcrumb > strong");
+    const scroller = page.locator(".main-scroll");
+    const button = page.getByRole("button", { name: /Switch to .* theme/ });
+    if (mode === "dark") await button.click();
+    await neutral.hover();
+    await scroller.focus();
+    await expect(page.getByRole("tooltip")).toHaveCount(0);
+
+    // Tab from the preceding density control, with the pointer away from the button.
+    await page.getByRole("radio", { name: "Comfortable", exact: true }).focus();
+    await page.keyboard.press("Tab");
+    await expect(button).toBeFocused();
+    const tooltip = page.getByRole("tooltip");
+    await expect(tooltip).toHaveText(
+      `Switch to ${mode === "light" ? "dark" : "light"} theme`,
+    );
+    await expect(tooltip).toBeVisible();
+    await expect(button).toHaveAttribute(
+      "aria-describedby",
+      (await tooltip.getAttribute("id")) as string,
+    );
+
+    // Leaving hover must not dismiss the hint for a still-focused keyboard user.
+    await button.hover();
+    await neutral.hover();
+    await expect(button).toBeFocused();
+    await expect(tooltip).toBeVisible();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".fintrix-root")).toHaveAttribute(
+      "data-theme",
+      mode === "light" ? "dark" : "light",
+    );
+    await expect(button).toBeFocused();
+    await expect(tooltip).toHaveText(`Switch to ${mode} theme`);
+    await page.keyboard.press("Escape");
+    await expect(tooltip).toHaveCount(0);
+    await expect(button).toBeFocused();
+    await expect(button).not.toHaveAttribute("aria-describedby");
+
+    // A fresh keyboard focus shows the hint again, and Tab away dismisses it.
+    await page.keyboard.press("Shift+Tab");
+    await page.keyboard.press("Tab");
+    await expect(button).toBeFocused();
+    await expect(tooltip).toBeVisible();
+    await page.keyboard.press("Tab");
+    await expect(button).not.toBeFocused();
+    await expect(tooltip).toHaveCount(0);
+
+    // Hover still works without focus and dismisses on pointer leave.
+    await button.hover();
+    await expect(button).not.toBeFocused();
+    await expect(tooltip).toBeVisible();
+    await neutral.hover();
+    await expect(tooltip).toHaveCount(0);
+  });
+}
