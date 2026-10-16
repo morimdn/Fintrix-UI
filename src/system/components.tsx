@@ -2,17 +2,15 @@ import {
   Button,
   Card,
   Tag,
-  Tooltip,
   Slider,
   InputNumber,
   Flex,
-  type ButtonProps,
   type TableProps,
   Table,
   Modal,
   type ModalProps,
 } from "antd";
-import { useId, type ReactNode } from "react";
+import { useId, useRef, useLayoutEffect, type ReactNode } from "react";
 import { foundations } from "./tokens";
 export {
   Button,
@@ -25,17 +23,7 @@ export {
   Form,
   Modal,
 } from "antd";
-export function IconButton({
-  label,
-  icon,
-  ...props
-}: Omit<ButtonProps, "children"> & { label: string; icon: ReactNode }) {
-  return (
-    <Tooltip title={label}>
-      <Button aria-label={label} icon={icon} {...props} />
-    </Tooltip>
-  );
-}
+export { IconButton } from "./IconButton";
 export function ButtonGroup({
   children,
   label = "Related actions",
@@ -59,7 +47,7 @@ export function StatusIndicator({
 }) {
   return (
     <Tag variant="filled" className={`fx-status tone-${tone}`}>
-      <span aria-hidden="true">●</span> {label}
+      <i aria-hidden="true" /> {label}
     </Tag>
   );
 }
@@ -69,12 +57,14 @@ export function MetricCard({
   change,
   icon,
   detail,
+  tone = "positive",
 }: {
   label: string;
   value: string;
   change: string;
   icon: ReactNode;
   detail: string;
+  tone?: "positive" | "negative" | "neutral";
 }) {
   return (
     <Card className="metric">
@@ -84,7 +74,7 @@ export function MetricCard({
       </div>
       <strong>{value}</strong>
       <div className="metric-detail">
-        <span>{change}</span> {detail}
+        <span className={`financial-${tone}`}>{change}</span> {detail}
       </div>
       <svg className="sparkline" viewBox="0 0 130 32" aria-hidden="true">
         <path d="M0 27 L12 22 L22 25 L34 12 L46 17 L58 10 L70 15 L82 6 L94 9 L106 2 L118 5 L130 0" />
@@ -110,6 +100,7 @@ export function RangeController({
       <Slider
         aria-labelledby={labelId}
         range
+        ariaLabelForHandle={[`${label} minimum`, `${label} maximum`]}
         value={value}
         max={max}
         onChange={(v) => onChange(v as [number, number])}
@@ -134,12 +125,24 @@ export function RangeController({
   );
 }
 export function DataTable<T extends object>(props: TableProps<T>) {
+  const host = useRef<HTMLDivElement>(null);
+  // Ant Design 6 clones selection titles into an aria-hidden measurement row.
+  // Inert prevents those cloned controls from entering the keyboard focus order.
+  useLayoutEffect(() => {
+    host.current
+      ?.querySelectorAll<HTMLElement>(".ant-table-measure-row")
+      .forEach((row) => {
+        row.inert = true;
+      });
+  });
   return (
-    <Table<T>
-      rowKey="id"
-      scroll={{ x: foundations.layout.tableMin }}
-      {...props}
-    />
+    <div className="fx-data-table" ref={host}>
+      <Table<T>
+        rowKey="id"
+        scroll={{ x: foundations.layout.tableMin }}
+        {...props}
+      />
+    </div>
   );
 }
 

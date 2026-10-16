@@ -4,6 +4,9 @@ import {
   Button,
   Card,
   Checkbox,
+  InputNumber,
+  Grid,
+  Empty,
   Input,
   Select,
   Space,
@@ -23,13 +26,14 @@ import {
   SlidersHorizontal,
   Columns3,
   ChevronRight,
-  GripVertical,
+  ArrowLeftRight,
 } from "lucide-react";
 import {
   DataTable,
   MetricCard,
   StatusIndicator,
   RangeController,
+  ResizableHeaderCell,
 } from "../system";
 import { clients, filterClients, money, type Client } from "./data";
 import { ClientModal } from "./ClientModal";
@@ -54,6 +58,8 @@ export function CRM() {
     [editing, setEditing] = useState<Client>(),
     [open, setOpen] = useState(false),
     [page, setPage] = useState(1);
+  const screens = Grid.useBreakpoint();
+  const narrow = !screens.md;
   const [widths, setWidths] = useState<Record<string, number>>({});
   const filtered = useMemo(
     () => filterClients(rows, search, status, kyc, range),
@@ -90,7 +96,7 @@ export function CRM() {
     status: {
       title: "Status",
       dataIndex: "status",
-      width: 120,
+      width: 135,
       render: (value) => (
         <StatusIndicator
           label={value}
@@ -107,7 +113,7 @@ export function CRM() {
     kyc: {
       title: "KYC status",
       dataIndex: "kyc",
-      width: 135,
+      width: 145,
       render: (value) => (
         <StatusIndicator
           label={value}
@@ -124,7 +130,7 @@ export function CRM() {
     balance: {
       title: "Wallet balance",
       dataIndex: "balance",
-      width: 160,
+      width: 180,
       align: "right",
       sorter: (a, b) => a.balance - b.balance,
       render: (value) => (
@@ -137,29 +143,35 @@ export function CRM() {
     tier: { title: "Account tier", dataIndex: "tier", width: 145 },
     manager: { title: "Manager", dataIndex: "manager", width: 145 },
   };
+  function columnWidth(key: string) {
+    const max = key === "name" && narrow ? 240 : key === "name" ? 320 : 380;
+    const min = key === "name" ? 220 : 120;
+    return Math.max(
+      min,
+      Math.min(
+        max,
+        widths[key] ??
+          (key === "name" && narrow ? 220 : Number(definitions[key].width)),
+      ),
+    );
+  }
   const columns: TableColumnsType<Client> = order
     .filter((key) => visible.includes(key))
     .map((key) => ({
       ...definitions[key],
       key,
-      width: widths[key] ?? definitions[key].width,
-      title: (
-        <div className="column-title">
-          <span>{definitions[key].title as string}</span>
-          <input
-            type="range"
-            className="column-resize"
-            aria-label={`Resize ${key} column`}
-            min={100}
-            max={380}
-            value={widths[key] ?? Number(definitions[key].width)}
-            onClick={(e) => e.stopPropagation()}
-            onChange={(e) =>
-              setWidths({ ...widths, [key]: Number(e.target.value) })
-            }
-          />
-        </div>
-      ),
+      width: columnWidth(key),
+      onHeaderCell: () => ({
+        className: "resizable-header",
+        resize: {
+          label: key,
+          value: columnWidth(key),
+          min: key === "name" ? 220 : 120,
+          max: key === "name" && narrow ? 240 : key === "name" ? 320 : 380,
+          onChange: (width: number) =>
+            setWidths((previous) => ({ ...previous, [key]: width })),
+        },
+      }),
     }));
   function exportCsv() {
     const csv = [
@@ -311,7 +323,6 @@ export function CRM() {
               <div className="column-options">
                 {order.map((key, index) => (
                   <div key={key}>
-                    <GripVertical size={14} />
                     <Checkbox
                       checked={visible.includes(key)}
                       disabled={key === "name"}
@@ -340,10 +351,31 @@ export function CRM() {
                     >
                       ↑
                     </Button>
+                    <InputNumber
+                      aria-label={`${key} column width`}
+                      size="small"
+                      min={key === "name" ? 220 : 120}
+                      max={
+                        key === "name" && narrow
+                          ? 240
+                          : key === "name"
+                            ? 320
+                            : 380
+                      }
+                      value={columnWidth(key)}
+                      onChange={(width) => {
+                        if (width !== null)
+                          setWidths((previous) => ({
+                            ...previous,
+                            [key]: width,
+                          }));
+                      }}
+                    />
                   </div>
                 ))}
                 <small>
-                  Client stays pinned. Use header sliders to resize.
+                  Client stays pinned. Drag column edges or use arrow keys to
+                  resize.
                 </small>
               </div>
             }
@@ -364,10 +396,50 @@ export function CRM() {
             </Button>
           </div>
         )}
+        <div className="table-scroll-hint">
+          <ArrowLeftRight size={16} />
+          <span>
+            Scroll horizontally to explore columns. Client identity stays
+            pinned.
+          </span>
+        </div>
         <DataTable<Client>
+          components={{ header: { cell: ResizableHeaderCell } }}
+          locale={{
+            emptyText: (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={
+                  <div>
+                    <strong>No matching clients</strong>
+                    <p>Try a different search or reset your filters.</p>
+                    <Button
+                      onClick={() => {
+                        setSearch("");
+                        setStatus("All statuses");
+                        setKyc("All KYC");
+                        setRange([0, 100000]);
+                        setPage(1);
+                      }}
+                    >
+                      Reset filters
+                    </Button>
+                  </div>
+                }
+              />
+            ),
+          }}
           columns={columns}
           dataSource={filtered}
+          scroll={{
+            x: order
+              .filter((key) => visible.includes(key))
+              .reduce((total, key) => total + columnWidth(key), 48),
+          }}
+          tableLayout="fixed"
           rowSelection={{
+            fixed: true,
+            columnWidth: 48,
             selectedRowKeys: selected,
             onChange: setSelected,
             preserveSelectedRowKeys: true,
@@ -376,6 +448,7 @@ export function CRM() {
             current: page,
             onChange: setPage,
             pageSize: 6,
+            responsive: true,
             showSizeChanger: false,
             showTotal: (total) => `${total} clients`,
             placement: ["bottomStart"],
@@ -406,6 +479,7 @@ export function CRM() {
                 <div key={label}>
                   <span>{label}</span>
                   <Progress
+                    aria-label={`${label} clients`}
                     percent={Math.round(
                       (rows.filter((c) => c.kyc === label).length /
                         rows.length) *

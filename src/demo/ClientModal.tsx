@@ -52,6 +52,7 @@ export function ClientModal({
         form={form}
         layout="vertical"
         requiredMark="optional"
+        scrollToFirstError={{ focus: true }}
         onFinish={(values) => {
           onSave(values);
           message.success(client ? "Client updated" : "Client created");

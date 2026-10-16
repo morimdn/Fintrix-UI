@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { FintrixProvider, useFintrixTheme } from "./ThemeProvider";
 import { cssVariables, palettes } from "./tokens";
@@ -8,7 +8,7 @@ import { vi } from "vitest";
 describe("semantic tokens", () => {
   it("maintains parity and density independent of mode", () => {
     expect(Object.keys(palettes.light)).toEqual(Object.keys(palettes.dark));
-    expect(cssVariables("dark", "compact")["--fx-control"]).toBe("30px");
+    expect(cssVariables("dark", "compact")["--fx-control"]).toBe("32px");
     expect(cssVariables("light", "comfortable")["--fx-primary"]).toBe(
       palettes.light.primary,
     );

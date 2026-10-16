@@ -6,6 +6,7 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   await expect(
     page.getByRole("heading", { name: /Client management/ }),
   ).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
   await page.screenshot({
     path: "docs/screenshots/crm-light.png",
     fullPage: true,
@@ -35,7 +36,23 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   await expect(page.getByRole("columnheader", { name: /Manager/ })).toHaveCount(
     0,
   );
-  await page.getByRole("slider", { name: "Resize balance column" }).fill("220");
+  const handle = page.getByRole("slider", { name: "Resize balance column" });
+  await handle.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(handle).toHaveAttribute("aria-valuenow", "190");
+  await expect(page.locator("th[aria-sort]")).toHaveCount(0);
+  await handle.scrollIntoViewIfNeeded();
+  const box = await handle.boundingBox();
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(
+    box!.x + box!.width / 2 + 40,
+    box!.y + box!.height / 2,
+    { steps: 5 },
+  );
+  await page.mouse.up();
+  await expect(handle).toHaveAttribute("aria-valuenow", "230");
+  await expect(page.locator("th[aria-sort]")).toHaveCount(0);
   await page.getByRole("columnheader", { name: /Wallet balance/ }).click();
   await expect(page.locator("th[aria-sort]")).toHaveAttribute(
     "aria-sort",
@@ -77,6 +94,9 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
     .fill("Taylor Demo");
   await expect(page.getByRole("button", { name: /Taylor Demo/ })).toBeVisible();
   await page.getByRole("button", { name: /Design system/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Precision with a human perspective." }),
+  ).toBeVisible();
   await page.screenshot({
     path: "docs/screenshots/showcase-dark.png",
     fullPage: true,
@@ -97,7 +117,9 @@ test("mobile table scroll and filters", async ({ page }) => {
   ).toBeVisible();
   await page.getByRole("combobox", { name: "Filter KYC" }).click();
   await page.getByTitle("Verified", { exact: true }).click();
-  await expect(page.locator(".ant-empty-description")).toBeVisible();
+  await expect(
+    page.getByText("No matching clients", { exact: true }),
+  ).toBeVisible();
   await page.keyboard.press("Escape");
   await page.getByRole("combobox", { name: "Filter status" }).click();
   await page.getByTitle("All statuses", { exact: true }).click();
@@ -105,7 +127,7 @@ test("mobile table scroll and filters", async ({ page }) => {
   await page.getByTitle("All KYC", { exact: true }).click();
   await page.keyboard.press("Escape");
   await expect(page.locator(".client-link").first()).toBeVisible();
-  await page.getByRole("heading",{name:"Client directory"}).click();
+  await page.getByRole("heading", { name: "Client directory" }).click();
   await expect(page.locator(".ant-select-dropdown:visible")).toHaveCount(0);
   await page.screenshot({
     path: "docs/screenshots/mobile.png",
