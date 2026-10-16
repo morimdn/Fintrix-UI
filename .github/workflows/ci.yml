@@ -27,3 +27,44 @@ jobs:
             docs/screenshots
             test-results
             consumer-test-results
+
+  consumers:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        react: ["18.3.1", "19.3.1"]
+        antd: ["6.0.0", "6.6.6"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build:library
+      - run: npm run validate:consumer
+        env:
+          CONSUMER_REACT: ${{ matrix.react }}
+          CONSUMER_ANTD: ${{ matrix.antd }}
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:consumer
+  browser-engines:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps firefox webkit
+      - run: npx playwright test --config playwright.engines.config.ts --workers=2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: engine-evidence
+          path: |
+            docs/screenshots/iconography-*.png
+            test-results

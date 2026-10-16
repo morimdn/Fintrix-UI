@@ -22,7 +22,16 @@ for (const [mode, t] of Object.entries(palettes))
       "elevated",
       "subtle",
     ] as const) {
-      for (const foreground of ["text", "muted"] as const)
+      for (const foreground of [
+        "text",
+        "muted",
+        "neutral",
+        "primary",
+        "success",
+        "warning",
+        "danger",
+        "info",
+      ] as const)
         it(`${foreground} on ${surface} meets 4.5:1`, () =>
           expect(ratio(t[foreground], t[surface])).toBeGreaterThanOrEqual(4.5));
       it(`control border on ${surface} meets 3:1`, () =>

@@ -1,6 +1,6 @@
 import { ShowcaseTabBar } from "./ShowcaseTabBar";
 import { Documentation } from "./Documentation";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import {
   Card,
   Input,
@@ -44,6 +44,7 @@ import {
   foundations,
 } from "fintrix-ui-preview";
 import type { StatusTone } from "fintrix-ui-preview";
+const Iconography = lazy(() => import("./Iconography"));
 const tokensByRole = {
   Surfaces: ["canvas", "sidebar", "surface", "elevated", "subtle"],
   Interaction: ["primary", "primarySoft", "action", "focus"],
@@ -617,7 +618,7 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
           </p>
         </div>
         <div className="hero-meta">
-          <StatusIndicator label="Phase 2 · Library preview" tone="info" />
+          <StatusIndicator label="Phase 3 · Library preview" tone="info" />
           <span>React + Ant Design</span>
           <span>Inter Variable · Semantic tokens</span>
         </div>
@@ -631,6 +632,15 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
             key: "foundations",
             label: "Foundations",
             children: foundationsView,
+          },
+          {
+            key: "iconography",
+            label: "Iconography",
+            children: (
+              <Suspense fallback={<p role="status">Loading iconography…</p>}>
+                <Iconography />
+              </Suspense>
+            ),
           },
           { key: "components", label: "Core components", children: coreView },
           { key: "financial", label: "Financial UI", children: financialView },

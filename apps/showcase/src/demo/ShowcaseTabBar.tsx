@@ -3,6 +3,7 @@ import type { TabsProps } from "antd";
 type TabBarProps = Parameters<NonNullable<TabsProps["renderTabBar"]>>[0];
 const sections = [
   ["foundations", "Foundations"],
+  ["iconography", "Iconography"],
   ["components", "Core components"],
   ["financial", "Financial UI"],
   ["documentation", "Documentation"],

@@ -39,7 +39,7 @@ const sections = [
   [
     "tokens",
     "Color Palette & Tokens",
-    "Foundations shows the complete semantic palette. getTokens(mode, density), scoped --fx-* CSS variables and fintrix-ui-preview/tokens.json share one source. Positive/negative represent direction; success/danger represent workflow states.",
+    'Foundations shows the complete semantic palette. getTokens(mode, density), scoped --fx-* CSS variables and fintrix-ui-preview/tokens.json share one source. Pass typed colorOverrides={{ light: { primary: "#5941a9" }, dark: { primary: "#c4b5fd" } }} to FintrixProvider to override the same semantic roles in CSS and Ant controls. Recheck contrast after customization. Positive/negative represent direction; success/danger represent workflow states.',
   ],
   [
     "typography",
@@ -54,7 +54,7 @@ const sections = [
   [
     "core",
     "Core Components",
-    "Use one Primary action per decision. Secondary supports alternatives; Text is low emphasis. Destructive actions need explicit wording and confirmation. IconButton requires an accessible label. ButtonGroup groups related actions. Hover signals availability, focus signals keyboard position, active confirms pressing, disabled explains unavailability, loading signals progress. Try these states in Core components.",
+    "Use one Primary action per decision. Secondary supports alternatives; Text is low emphasis. Destructive actions need explicit wording and confirmation. IconButton requires an accessible label. ButtonGroup groups related actions. Hover signals availability, focus signals keyboard position, active confirms pressing, disabled explains unavailability, loading signals progress. Try these states in Core components. The independent Iconography tab provides searchable Lucide names, size/stroke/tone previews and copyable examples. FintrixIcon supports decorative or labeled images; IconButton and financial cards accept optional iconTone.",
   ],
   [
     "forms",
@@ -89,7 +89,7 @@ const sections = [
   [
     "developers",
     "Developer Documentation",
-    "The ESM package preserves modules and excludes React and Ant Design from its output. Import typed components from the root, tokens from /tokens and opt into /styles.css and /fonts.css. See repository docs for architecture, release guidelines and design-to-code mapping.",
+    "The ESM package preserves modules and excludes React and Ant Design from its output. Import typed components from the root, tokens from /tokens and opt into /styles.css and /fonts.css. Customize standard controls with typed size, variant, styles and classNames props; financial cards accept icon and detail content. Use controlled DataGrid columns and pagination. See repository docs/customization.md for examples and CONTRIBUTING.md for the GitHub pull-request workflow.",
   ],
 ] as const;
 export function Documentation() {

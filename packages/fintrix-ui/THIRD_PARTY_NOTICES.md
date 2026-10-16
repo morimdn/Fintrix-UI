@@ -9,7 +9,7 @@ Inter Variable: SIL Open Font License 1.1, The Inter Project Authors
 (https://github.com/rsms/inter). Fontsource packaging: MIT. The complete Inter
 license is shipped as dist/INTER-LICENSE.txt with optional self-hosted fonts.
 
-Showcase icons: Lucide, ISC, Lucide Contributors (https://lucide.dev/license).
+Library and Showcase icons: Lucide, ISC, Lucide Contributors (https://lucide.dev/license).
 Build/test tools include Vite, TypeScript, Storybook, Vitest, Testing Library,
 Playwright and axe-core; their upstream licenses remain applicable. This notice
 is attribution, not a full transitive software bill of materials.

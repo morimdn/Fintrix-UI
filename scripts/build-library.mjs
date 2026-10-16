@@ -98,3 +98,6 @@ writeFileSync(
   `${pkg}/dist/tokens.json`,
   JSON.stringify(tokens, null, 2) + "\n",
 );
+
+copyFileSync(resolve(root, "README.md"), `${pkg}/README.md`);
+copyFileSync(resolve(root, "LICENSE"), `${pkg}/LICENSE`);

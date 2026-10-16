@@ -4,9 +4,8 @@ An independent, MIT-licensed React design system for financial software teams.
 Build brokerage CRMs, risk dashboards and wallet interfaces with semantic
 financial states, readable data grids and a shared light/dark token system.
 
-Built on Ant Design 6, React and self-hosted Inter Variable. Phase 2 extracts a
-reusable package from the working Phase 1 CRM and adds release-like consumer
-validation. The provisional package is private and **not published to npm**.
+Built on Ant Design 6, React and self-hosted Inter Variable. Phase 3 adds curated iconography, semantic icon tones, typed theme customization
+and independent packed-consumer validation. The provisional package is private and **not published to npm**.
 
 ![Fintrix semantic colors and typography in light mode](docs/screenshots/tokens-light.png)
 _Real Chromium capture: semantic palette, typography, spacing and density._
@@ -23,7 +22,7 @@ _Preserved Phase 1 client management workflow, fixed columns and financial metri
 ## Install and use
 
 Requires Node 24 for repository tooling. Runtime peers: React/React DOM 18.3 or 19
-and Ant Design 6 (validated here on React 19). Package name availability is not
+and Ant Design 6 (see the [Phase 3 validation report](docs/phase-three-report.md)). Package name availability is not
 claimed; install the locally packed artifact until a release is approved.
 
 ```sh
@@ -141,3 +140,21 @@ package exports, declarations, CSS, fonts, provider, forms and financial display
 
 Fintrix UI is not an official MetaTrader, cTrader or Ant Design product. See
 [MIT license](LICENSE) and [third-party attribution](docs/third-party-notices.md).
+
+## Iconography and customization
+
+Use the Showcase **Iconography** tab to search 36 Lucide icons, preview sizes,
+strokes and tones in either theme, and copy React examples.
+
+```tsx
+import { Wallet } from "lucide-react";
+import { FintrixIcon, WalletBalanceCard } from "fintrix-ui-preview";
+
+<FintrixIcon icon={Wallet} tone="primary" size={24} />;
+<WalletBalanceCard value="12500.25" currency="EUR"
+  icon={<Wallet size={24} />} iconTone="success" />;
+```
+
+See [customization](docs/customization.md) for theme overrides, density, icon
+semantics, control variants and DataGrid extensions. See the
+[release checklist](docs/releases.md) for owner decisions before publication.

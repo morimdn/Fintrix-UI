@@ -1,3 +1,4 @@
+import type { IconTone } from "./FintrixIcon";
 import {
   Button,
   Card,
@@ -56,6 +57,7 @@ export function MetricCard({
   value,
   change,
   icon,
+  iconTone,
   detail,
   tone = "positive",
 }: {
@@ -63,6 +65,7 @@ export function MetricCard({
   value: string;
   change: string;
   icon: ReactNode;
+  iconTone?: IconTone;
   detail: string;
   tone?: "positive" | "negative" | "neutral";
 }) {
@@ -70,7 +73,13 @@ export function MetricCard({
     <Card className="metric">
       <div className="metric-label">
         {label}
-        <span className="metric-icon">{icon}</span>
+        <span
+          className="metric-icon"
+          aria-hidden="true"
+          style={{ color: iconTone ? `var(--fx-${iconTone})` : undefined }}
+        >
+          {icon}
+        </span>
       </div>
       <strong>{value}</strong>
       <div className="metric-detail">

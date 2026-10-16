@@ -55,3 +55,55 @@ test("packed artifact loads CSS, fonts, forms, finance and both theme axes", asy
   ).toEqual([]);
   expect(errors).toEqual([]);
 });
+
+test("packed production grid and overlays preserve keyboard behavior", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(
+    page.getByRole("cell", { name: "Operating", exact: true }),
+  ).toBeVisible();
+  await page.getByTitle("Next Page").click();
+  await expect(
+    page.getByRole("cell", { name: "Reserve", exact: true }),
+  ).toBeVisible();
+  const trigger = page.getByRole("button", {
+    name: "Open dialog",
+    exact: true,
+  });
+  await trigger.click();
+  await expect(
+    page.getByRole("dialog", { name: "Consumer dialog" }),
+  ).toBeVisible();
+  await expect
+    .poll(() =>
+      page
+        .getByRole("dialog")
+        .evaluate((el) =>
+          (el.closest(".ant-drawer") ?? el).contains(document.activeElement),
+        ),
+    )
+    .toBe(true);
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("dialog", { name: "Consumer dialog" }),
+  ).toBeHidden();
+  await expect(trigger).toBeFocused();
+  await page.getByRole("button", { name: "Open drawer", exact: true }).click();
+  await expect(
+    page.getByRole("dialog", { name: "Consumer drawer" }),
+  ).toBeVisible();
+  await expect
+    .poll(() =>
+      page
+        .getByRole("dialog")
+        .evaluate((el) =>
+          (el.closest(".ant-drawer") ?? el).contains(document.activeElement),
+        ),
+    )
+    .toBe(true);
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("dialog", { name: "Consumer drawer" }),
+  ).toBeHidden();
+});

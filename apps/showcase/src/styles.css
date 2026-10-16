@@ -1669,3 +1669,51 @@ footer b {
   border-bottom-color: var(--fx-primary);
   font-weight: var(--fx-typography-weightMedium);
 }
+
+.iconography {
+  display: grid;
+  gap: 24px;
+}
+.iconography-intro h2 {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.iconography-intro p {
+  color: var(--fx-muted);
+}
+.icon-controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 24px;
+}
+.icon-controls label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.icon-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 16px;
+}
+.icon-gallery .ant-card {
+  min-width: 0;
+}
+.icon-preview {
+  display: grid;
+  place-items: center;
+  min-height: 80px;
+  background: var(--fx-subtle);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.iconography pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .icon-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}

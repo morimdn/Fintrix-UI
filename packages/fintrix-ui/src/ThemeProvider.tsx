@@ -11,6 +11,7 @@ import {
   getTokens,
   type ColorMode,
   type Density,
+  type ThemeOverrides,
 } from "./tokens";
 const Context = createContext<{
   mode: ColorMode;
@@ -20,16 +21,18 @@ const Context = createContext<{
 } | null>(null);
 export function FintrixProvider({
   children,
+  colorOverrides,
   initialMode = "light",
   initialDensity = "comfortable",
 }: {
   children: ReactNode;
+  colorOverrides?: ThemeOverrides;
   initialMode?: ColorMode;
   initialDensity?: Density;
 }) {
   const [mode, setMode] = useState<ColorMode>(initialMode),
     [density, setDensity] = useState<Density>(initialDensity);
-  const t = getTokens(mode, density);
+  const t = getTokens(mode, density, colorOverrides);
   return (
     <Context.Provider value={{ mode, density, setMode, setDensity }}>
       <ConfigProvider
@@ -154,7 +157,7 @@ export function FintrixProvider({
           className="fintrix-root"
           data-theme={mode}
           data-density={density}
-          style={cssVariables(mode, density) as CSSProperties}
+          style={cssVariables(mode, density, colorOverrides) as CSSProperties}
         >
           <App>{children}</App>
         </div>

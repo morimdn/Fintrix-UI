@@ -1,0 +1,22 @@
+{
+  "versions": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "antd": "6.6.6",
+    "lucide-react": "1.58.0"
+  },
+  "productionBuild": "passed",
+  "assets": [
+    {
+      "name": "index-8PGBmfjw.js",
+      "bytes": 875242,
+      "gzipBytes": 280465
+    },
+    {
+      "name": "index-BxZa8Ifz.css",
+      "bytes": 5563,
+      "gzipBytes": 1692
+    }
+  ],
+  "notes": "Independent tarball install; application assets include peers. Browser checks run separately with test:consumer."
+}

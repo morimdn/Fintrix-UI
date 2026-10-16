@@ -100,18 +100,27 @@ export const palettes = {
     elevatedShadow: "0 16px 48px #050c1666",
   },
 };
-export function getTokens(mode: ColorMode, density: Density) {
+export type ColorOverrides = Partial<
+  Record<keyof typeof palettes.light, string>
+>;
+export type ThemeOverrides = Partial<Record<ColorMode, ColorOverrides>>;
+export function getTokens(
+  mode: ColorMode,
+  density: Density,
+  overrides?: ThemeOverrides,
+) {
   return {
     ...foundations,
-    color: palettes[mode],
+    color: { ...palettes[mode], ...overrides?.[mode] },
     sizing: foundations.density[density],
   };
 }
 export function cssVariables(
   mode: ColorMode,
   density: Density,
+  overrides?: ThemeOverrides,
 ): Record<string, string | number> {
-  const t = getTokens(mode, density);
+  const t = getTokens(mode, density, overrides);
   const vars: Record<string, string | number> = {};
   for (const [key, value] of Object.entries(t.color))
     vars[`--fx-${key}`] = value;

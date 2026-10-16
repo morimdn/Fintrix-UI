@@ -1,0 +1,22 @@
+{
+  "versions": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "antd": "6.0.0",
+    "lucide-react": "1.58.0"
+  },
+  "productionBuild": "passed",
+  "assets": [
+    {
+      "name": "index-BxZa8Ifz.css",
+      "bytes": 5563,
+      "gzipBytes": 1692
+    },
+    {
+      "name": "index-Dim31KMb.js",
+      "bytes": 957505,
+      "gzipBytes": 300534
+    }
+  ],
+  "notes": "Independent tarball install; application assets include peers. Browser checks run separately with test:consumer."
+}

@@ -59,3 +59,7 @@ visual continuity. Use `FinancialKPICard` for arbitrary production metrics.
 See individual Storybook stories for actions, forms, wallet, KYC, grid and modal.
 Toolbar globals select theme/density. The public Showcase retains the full
 foundations/core/financial galleries and adds a 14-section documentation view.
+
+Phase 3 adds `FintrixIcon`, optional `iconTone` on IconButton/MetricCard/financial
+cards, and provider color overrides. See [customization](customization.md) for
+copyable examples and supported extension points.
