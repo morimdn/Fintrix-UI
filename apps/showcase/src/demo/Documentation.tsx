@@ -123,13 +123,13 @@ export function Documentation() {
             <p>{text}</p>
             {id === "getting-started" && (
               <>
-                <pre>
+                <pre tabIndex={0} aria-label="Installation command">
                   <code>
                     npm install ./fintrix-ui-preview-0.2.0.tgz antd react
                     react-dom
                   </code>
                 </pre>
-                <pre>
+                <pre tabIndex={0} aria-label="React usage example">
                   <code>{quickstart}</code>
                 </pre>
                 <Button

@@ -2,6 +2,9 @@
 
 ## 0.2.0 — Unreleased
 
+- Refine app shell scrolling: stationary sidebar/header, navigation-only overflow,
+  anchored profile, responsive drawer and light/dark regression evidence.
+
 - Extract private provisional ESM package with typed exports and CSS/font entries.
 - Preserve Phase 1 CRM and semantic themes/densities in the showcase workspace.
 - Add reusable financial presentation components and controlled DataGrid API.

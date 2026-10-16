@@ -76,6 +76,16 @@ open the CRM, or use `/?view=crm`. Theme and density controls work across both.
 may show the previously approved phase. Phase 2 has **not been deployed**. Its
 workflow is manual-only and must be explicitly authorized after review.
 
+## App shell
+
+The sidebar and header stay stationary while content scrolls independently.
+Only overflowing sidebar navigation scrolls; brand/workspace and profile remain
+anchored. The mobile navigation drawer retains keyboard focus management.
+[Responsive behavior and regression checks](docs/shell-refinement.md).
+
+![Refined Fintrix app shell in dark mode](docs/screenshots/shell-desktop-dark.png)
+_Real application capture: aligned header, stationary sidebar and bottom profile._
+
 ## Components
 
 | Area                 | Available APIs                                                                                                      |

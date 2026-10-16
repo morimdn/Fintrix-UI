@@ -81,3 +81,16 @@ summary when supported by actual consumer requirements. Improve documentation
 search/deep linking and the application chunk split. Measure production grid
 pagination, virtualization and server data against realistic device budgets.
 Verify the final package name and complete a release review before publication.
+
+## App shell follow-up
+
+The sidebar and header now stay stationary while main content scrolls independently.
+Only overflowing sidebar navigation scrolls, with a thin semantic scrollbar and
+keyboard focus. Brand/workspace and profile stay anchored; mobile drawer behavior
+is preserved. Documentation tab and code-example keyboard access were also refined.
+See [shell details and responsive evidence](shell-refinement.md).
+
+Local verification: 53 unit tests, all 25 showcase browser checks (11 new shell
+regressions), the independent consumer browser test, library/showcase/Pages builds,
+packed consumer installation/build and Storybook build pass. Real light/dark
+captures cover five viewport sizes and portrait/landscape mobile drawers.

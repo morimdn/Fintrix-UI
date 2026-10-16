@@ -34,74 +34,87 @@ export default function App() {
   }
   const navigation = (
     <div className="sidebar-content">
-      <a className="brand" href="#main-content" onClick={() => navigate("crm")}>
-        <span className="brand-mark">
-          <Activity size={24} />
-        </span>
-        fintrix<span className="brand-ui">UI</span>
-      </a>
-      <div className="workspace">
-        <span className="workspace-icon">F</span>
-        <div>
-          <strong>Fintrix UI</strong>
-          <small>Open-source design system</small>
-        </div>
-      </div>
-      <span className="nav-label">WORKSPACE</span>
-      <nav aria-label="Workspace navigation">
-        <button
-          aria-current={view === "crm" ? "page" : undefined}
-          className={view === "crm" ? "active" : ""}
+      <div className="sidebar-top">
+        <a
+          className="brand"
+          href="#main-content"
           onClick={() => navigate("crm")}
         >
-          <Users size={20} />
-          Clients
-        </button>
-        <button
-          aria-current={view === "showcase" ? "page" : undefined}
-          className={view === "showcase" ? "active" : ""}
-          onClick={() => navigate("showcase")}
-        >
-          <Layers size={20} />
-          Design system
-          <ArrowUpRight size={16} />
-        </button>
-      </nav>
-      <div className="nav-preview">
-        <span className="nav-label">EXAMPLE DOMAINS</span>
-        {[
-          [LayoutDashboard, "Overview"],
-          [Wallet, "Transactions"],
-          [ShieldCheck, "Compliance"],
-          [ChartNoAxesCombined, "Reports"],
-        ].map(([Icon, label]) => {
-          const I = Icon as typeof Wallet;
-          return (
-            <div key={String(label)}>
-              <I size={20} />
-              {String(label)}
-            </div>
-          );
-        })}
-      </div>
-      <div className="sidebar-bottom">
-        <div className="poc-note">
-          <span className="eyebrow">FINANCIAL CLARITY</span>
-          <strong>Clarity at every scale.</strong>
-          <p>A considered foundation for modern finance.</p>
-          <Button onClick={() => navigate("showcase")}>
-            Explore the system <ArrowUpRight size={16} />
-          </Button>
-        </div>
-        <div className="sidebar-helper">
-          <HelpCircle size={18} /> Open source · MIT
-        </div>
-        <div className="profile">
-          <Avatar>EW</Avatar>
+          <span className="brand-mark">
+            <Activity size={24} />
+          </span>
+          fintrix<span className="brand-ui">UI</span>
+        </a>
+        <div className="workspace">
+          <span className="workspace-icon">F</span>
           <div>
-            <strong>Emma Wilson</strong>
-            <small>Workspace admin</small>
+            <strong>Fintrix UI</strong>
+            <small>Open-source design system</small>
           </div>
+        </div>
+      </div>
+      <div
+        className="sidebar-navigation"
+        role="region"
+        aria-label="Sidebar navigation"
+        tabIndex={0}
+      >
+        <span className="nav-label">WORKSPACE</span>
+        <nav aria-label="Workspace navigation">
+          <button
+            aria-current={view === "crm" ? "page" : undefined}
+            className={view === "crm" ? "active" : ""}
+            onClick={() => navigate("crm")}
+          >
+            <Users size={20} />
+            Clients
+          </button>
+          <button
+            aria-current={view === "showcase" ? "page" : undefined}
+            className={view === "showcase" ? "active" : ""}
+            onClick={() => navigate("showcase")}
+          >
+            <Layers size={20} />
+            Design system
+            <ArrowUpRight size={16} />
+          </button>
+        </nav>
+        <div className="nav-preview">
+          <span className="nav-label">EXAMPLE DOMAINS</span>
+          {[
+            [LayoutDashboard, "Overview"],
+            [Wallet, "Transactions"],
+            [ShieldCheck, "Compliance"],
+            [ChartNoAxesCombined, "Reports"],
+          ].map(([Icon, label]) => {
+            const I = Icon as typeof Wallet;
+            return (
+              <div key={String(label)}>
+                <I size={20} />
+                {String(label)}
+              </div>
+            );
+          })}
+        </div>
+        <div className="sidebar-bottom">
+          <div className="poc-note">
+            <span className="eyebrow">FINANCIAL CLARITY</span>
+            <strong>Clarity at every scale.</strong>
+            <p>A considered foundation for modern finance.</p>
+            <Button onClick={() => navigate("showcase")}>
+              Explore the system <ArrowUpRight size={16} />
+            </Button>
+          </div>
+          <div className="sidebar-helper">
+            <HelpCircle size={18} /> Open source · MIT
+          </div>
+        </div>
+      </div>
+      <div className="profile">
+        <Avatar>EW</Avatar>
+        <div>
+          <strong>Emma Wilson</strong>
+          <small>Workspace admin</small>
         </div>
       </div>
     </div>
@@ -120,7 +133,7 @@ export default function App() {
         onClose={() => setNavigationOpen(false)}
         getContainer={false}
         rootClassName="mobile-navigation"
-        styles={{ body: { padding: 0 } }}
+        styles={{ body: { padding: 0, overflow: "hidden", display: "flex" } }}
       >
         {navigationOpen ? navigation : null}
       </Drawer>
@@ -161,21 +174,27 @@ export default function App() {
             <Avatar size={32}>EW</Avatar>
           </div>
         </header>
-        <main id="main-content" tabIndex={-1}>
-          <Suspense
-            fallback={
-              <div role="status" aria-label="Loading workspace">
-                <Skeleton active paragraph={{ rows: 8 }} />
-              </div>
-            }
-          >
-            {view === "crm" ? (
-              <CRM />
-            ) : (
-              <Showcase onOpenCRM={() => navigate("crm")} />
-            )}
-          </Suspense>
-        </main>
+        <div
+          className="main-scroll"
+          tabIndex={0}
+          aria-label="Scrollable page content"
+        >
+          <main id="main-content" tabIndex={-1}>
+            <Suspense
+              fallback={
+                <div role="status" aria-label="Loading workspace">
+                  <Skeleton active paragraph={{ rows: 8 }} />
+                </div>
+              }
+            >
+              {view === "crm" ? (
+                <CRM />
+              ) : (
+                <Showcase onOpenCRM={() => navigate("crm")} />
+              )}
+            </Suspense>
+          </main>
+        </div>
       </div>
     </div>
   );

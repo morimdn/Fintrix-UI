@@ -1,3 +1,4 @@
+import { ShowcaseTabBar } from "./ShowcaseTabBar";
 import { Documentation } from "./Documentation";
 import { useState } from "react";
 import {
@@ -623,6 +624,7 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
       </div>
       <Tabs
         className="showcase-tabs"
+        renderTabBar={(props) => <ShowcaseTabBar {...props} />}
         defaultActiveKey="foundations"
         items={[
           {
