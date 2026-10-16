@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { test } from "node:test";
@@ -36,7 +36,9 @@ test("npm CLI paths and arguments remain literal, including spaces and shell met
       { env: { ...process.env, npm_execpath: cli }, encoding: "utf8" },
     );
     assert.equal(result.status, 0, result.stderr);
-    assert.deepEqual(JSON.parse(result.stdout), { args, cwd: directory });
+    const actual = JSON.parse(result.stdout);
+    assert.deepEqual(actual.args, args);
+    assert.equal(realpathSync(actual.cwd), realpathSync(directory));
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
