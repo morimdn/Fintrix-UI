@@ -1,108 +1,143 @@
 # Fintrix UI
 
-**Financial clarity, at every scale.** An original open-source React design system foundation for brokerage CRMs, FinTech operations and enterprise financial dashboards.
+An independent, MIT-licensed React design system for financial software teams.
+Build brokerage CRMs, risk dashboards and wallet interfaces with semantic
+financial states, readable data grids and a shared light/dark token system.
 
-Fintrix UI pairs Ant Design's established behavior with a considered visual language: locally hosted Inter, blue actions, calm neutral surfaces, clear status labels and precise tabular figures. Financial interfaces carry dense information and consequential decisions; readable text, predictable controls and accessible feedback are part of the design, not finishing touches.
+Built on Ant Design 6, React and self-hosted Inter Variable. Phase 2 extracts a
+reusable package from the working Phase 1 CRM and adds release-like consumer
+validation. The provisional package is private and **not published to npm**.
 
-**Phase 1 · Architecture & working proof of concept · MIT**
+![Fintrix semantic colors and typography in light mode](docs/screenshots/tokens-light.png)
+_Real Chromium capture: semantic palette, typography, spacing and density._
 
-## Brokerage CRM — Light
+![Reusable wallet, P&L, KYC, transaction, risk and quote components in dark mode](docs/screenshots/library-financial-dark.png)
+_Reusable financial components using synthetic values, with explicit text states._
 
-![Brokerage CRM in light mode](docs/screenshots/crm-light.png)
+![Advanced Data Grid with a synthetic 10,000-row dataset](docs/screenshots/library-grid.png)
+_Controlled visibility, keyboard resizing, sorting and pagination._
 
-## Brokerage CRM — Dark
+![Working brokerage CRM in light mode](docs/screenshots/crm-light.png)
+_Preserved Phase 1 client management workflow, fixed columns and financial metrics._
 
-Distinct canvas, navigation, card and elevated surfaces keep dark mode comfortable and legible.
+## Install and use
 
-![Brokerage CRM in dark mode](docs/screenshots/crm-dark.png)
-
-## Compact data grid
-
-Compact mode reduces spacing while preserving text size. The table supports native sorting, selection and pagination, combined filters, pinned identity, pointer/keyboard column resizing, numeric width controls and column visibility/order.
-
-![Compact data grid in dark mode](docs/screenshots/compact-grid.png)
-
-## Foundations & semantic tokens
-
-The interactive Foundations view documents color roles, the actual Inter font, spacing, radius, elevation, layout, density and motion.
-
-![Design tokens and color showcase](docs/screenshots/tokens-light.png)
-
-## Component gallery
-
-Interactive examples cover actions, fields, statuses, controllers, tables, overlays, navigation, empty/loading feedback and financial compositions. Both themes and densities work throughout.
-
-![Core component gallery](docs/screenshots/components-light.png)
-
-## Mobile experience
-
-Labeled drawer navigation, 44px touch controls, reflowing metrics, single-column forms and discoverable table scrolling support smaller screens.
-
-<p>
-  <img src="docs/screenshots/mobile.png" width="300" alt="Mobile client management screen" />
-  <img src="docs/screenshots/mobile-navigation.png" width="300" alt="Mobile navigation drawer with labeled destinations" />
-</p>
-
-All previews are captured from the actual running application with Playwright. Additional light/dark, financial and tablet captures live in [docs/screenshots](docs/screenshots).
-
-## Web demo deployment
-
-The `Publish web demo` workflow builds and deploys the application from `main` to GitHub Pages. The `build:demo` script sets the project subpath `/Fintrix-UI/`, including lazy-loaded chunks and font assets. Pull requests build the same deployment artifact without publishing it.
-
-Repository owners must enable **Settings → Pages → Build and deployment → Source: GitHub Actions** once. Then run **Actions → Publish web demo → Run workflow** for the initial deployment; subsequent pushes to `main` publish automatically. The deployment job records the live URL in its `github-pages` environment after a successful release. No npm package is published by this workflow.
-
-## Run locally
-
-Validated with Node 24 and npm 11.
+Requires Node 24 for repository tooling. Runtime peers: React/React DOM 18.3 or 19
+and Ant Design 6 (validated here on React 19). Package name availability is not
+claimed; install the locally packed artifact until a release is approved.
 
 ```sh
 npm ci
-npm run dev
 npm run build
-npm test
-npm run storybook
-npm run build-storybook
+npm pack --workspace fintrix-ui-preview --pack-destination /tmp
+# In your separate React app:
+npm install /tmp/fintrix-ui-preview-0.2.0.tgz antd react react-dom
 ```
-
-Open `http://localhost:5173`. Use **Clients** for the working CRM or **Design system** for the Foundations, Core components and Financial UI tabs. The top bar changes color mode and density independently.
-
-## Reuse the foundations
 
 ```tsx
-import { FintrixProvider, Button, StatusIndicator } from "./src/system";
-import "@fontsource-variable/inter/wght.css";
-import "antd/dist/reset.css";
-import "./src/styles.css";
+import {
+  FintrixProvider,
+  WalletBalanceCard,
+  PnLIndicator,
+} from "fintrix-ui-preview";
+import "fintrix-ui-preview/styles.css";
+import "fintrix-ui-preview/fonts.css"; // optional, self-hosted Inter
 
-<FintrixProvider initialMode="dark" initialDensity="compact">
-  <Button type="primary">Create client</Button>
-  <StatusIndicator label="Verified" tone="success" />
-</FintrixProvider>;
+export function App() {
+  return (
+    <FintrixProvider initialMode="dark" initialDensity="comfortable">
+      <WalletBalanceCard
+        value="128450.00"
+        currency="USD"
+        detail={<PnLIndicator value="-24.50" currency="USD" />}
+      />
+    </FintrixProvider>
+  );
+}
 ```
 
-- `src/system`: typed tokens, CSS variable adapter, theme provider, reusable controls and table/header/modal primitives.
-- `src/demo`: 48 synthetic clients and session-only CRM logic. Search, status/KYC/balance filtering, CSV export, selection and validated create/edit workflows work locally.
-- Storybook: isolated component examples, full gallery and CRM with theme/density toolbar controls.
+Use `useFintrixTheme()` inside the provider to switch mode/density. Tokens are
+available from `fintrix-ui-preview/tokens`, scoped CSS variables, and
+`fintrix-ui-preview/tokens.json`. Amounts are presentation only; use decimal text
+for precision. No trading, payments, ledger or live market integration is included.
 
-Ant Design is the only complete UI foundation. Lucide provides consistent icons. Inter is self-hosted through Fontsource under SIL OFL 1.1. No proprietary trading-platform assets are used. Fintrix UI is not an official Ant Design theme and does not copy MetaTrader or cTrader.
-
-Read the [architecture](docs/architecture.md), [token contract](docs/tokens.md), [visual refinement decisions](docs/refinement.md), [Ant Design evaluation](docs/antd-evaluation.md) and [validation evidence](docs/validation.md).
-
-## Browser & accessibility checks
+## Explore
 
 ```sh
-npx playwright install --with-deps chromium
-npm run test:e2e
-# Or use an existing compatible Chromium:
-PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/path/to/chromium npm run test:e2e
+npm run dev              # build first; public showcase at localhost:5173
+npm run storybook        # component stories at localhost:6006
 ```
 
-The config uses `/usr/bin/chromium` when available and Playwright's managed browser otherwise. Tests regenerate screenshots in `docs/screenshots`. Vitest/RTL verifies provider state, combined filters, invalid form submission and token contrast targets. Browser checks include all theme/density combinations, desktop/tablet/mobile layouts, font loading, pointer/keyboard resizing, drawer/modal focus behavior and targeted axe scans.
+The default view is the public system gallery. Its Documentation tab has 14
+sections, copyable React examples and a synthetic 10k-row grid. Select Clients to
+open the CRM, or use `/?view=crm`. Theme and density controls work across both.
 
-These checks do not constitute full WCAG certification. Additional browsers, assistive technology, touch devices, extreme zoom and RTL require broader validation.
+[GitHub Pages demo / expected publication URL](https://morimdn.github.io/Fintrix-UI/)
+may show the previously approved phase. Phase 2 has **not been deployed**. Its
+workflow is manual-only and must be explicitly authorized after review.
 
-## Phase 1 boundaries
+## App shell
 
-No backend, transactions, authentication, live market data, npm publishing or deployment. Data and preferences reset on reload. Trends are illustrative. Column reordering uses explicit controls; drag reordering and an optional mobile card view await further evaluation. Large datasets are unbenchmarked.
+The sidebar and header stay stationary while content scrolls independently.
+Only overflowing sidebar navigation scrolls; brand/workspace and profile remain
+anchored. The mobile navigation drawer retains keyboard focus management.
+[Responsive behavior and regression checks](docs/shell-refinement.md).
 
-Pages are lazy-loaded, but Ant Design's shared runtime remains substantial. Phase 2 should prioritize accessibility research, library packaging and tree shaking, measured bundle budgets, localization and large-data benchmarks before expanding the component catalog.
+![Refined Fintrix app shell in dark mode](docs/screenshots/shell-desktop-dark.png)
+_Real application capture: aligned header, stationary sidebar and bottom profile._
+
+## Components
+
+| Area                 | Available APIs                                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Actions              | Button, ButtonGroup, IconButton                                                                                     |
+| Forms                | Input/TextArea, Select, Checkbox, Radio, Switch, Slider, InputNumber, RangeController, Form, DatePicker, TimePicker |
+| Data                 | DataTable, DataGrid, ColumnResizeHandle, ResizableHeaderCell                                                        |
+| Navigation           | Tabs, Breadcrumb, Menu, Dropdown, Pagination                                                                        |
+| Feedback             | StatusIndicator, Chip, Alert, Progress, Skeleton, Empty, notification, message                                      |
+| Overlays             | Modal, FormModal, Drawer, Tooltip, Popover                                                                          |
+| Financial summaries  | CurrencyAmount, formatCurrency, PnLIndicator, WalletBalanceCard, AccountSummary, FinancialKPICard                   |
+| Financial operations | KYCStatus, ClientStatus, TransactionStatus, RiskLevelIndicator                                                      |
+| Quotes               | SymbolPriceDisplay, BidAskDisplay (supplied spread)                                                                 |
+| Composition          | Card, Space, MetricCard (legacy synthetic sparkline)                                                                |
+
+Standard controls retain Ant Design props; wrappers add Fintrix behavior where
+needed. [Usage and decision guidance](docs/components.md).
+
+## Visual evidence
+
+All images are captured from the running application by Playwright. No generated
+mockups are used. [Capture details and asset index](docs/screenshots/README.md).
+
+| Preview                        | Image                                                                                         |
+| ------------------------------ | --------------------------------------------------------------------------------------------- |
+| Button states and core gallery | [Light](docs/screenshots/components-light.png) / [Dark](docs/screenshots/components-dark.png) |
+| Financial dashboard gallery    | [Light](docs/screenshots/financial-light.png) / [Dark](docs/screenshots/financial-dark.png)   |
+| Tokens and typography          | [Light](docs/screenshots/tokens-light.png) / [Dark](docs/screenshots/tokens-dark.png)         |
+| Public documentation           | [Light](docs/screenshots/library-light.png) / [Dark](docs/screenshots/library-dark.png)       |
+| Mobile                         | [Documentation](docs/screenshots/library-mobile.png) / [CRM](docs/screenshots/mobile.png)     |
+
+## Validate
+
+```sh
+npm run build
+npm test
+npm run build-storybook
+npm run validate:consumer
+npx playwright install --with-deps chromium
+npm run test:e2e
+npx playwright test --config playwright.consumer.config.ts
+node scripts/package-metrics.mjs
+npm run build:demo
+```
+
+The independent consumer is installed from `npm pack` in a fresh temporary
+directory outside this workspace. Its build and browser checks verify actual
+package exports, declarations, CSS, fonts, provider, forms and financial display.
+[Architecture](docs/architecture.md) · [Validation and limits](docs/phase-two-report.md)
+· [Tokens](docs/tokens.md) · [Accessibility](docs/accessibility.md)
+· [Design-to-code mapping](docs/design-to-code.md) · [Contributing](CONTRIBUTING.md)
+· [Releases](docs/releases.md).
+
+Fintrix UI is not an official MetaTrader, cTrader or Ant Design product. See
+[MIT license](LICENSE) and [third-party attribution](docs/third-party-notices.md).

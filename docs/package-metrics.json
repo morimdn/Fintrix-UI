@@ -1,0 +1,50 @@
+{
+  "javascriptBytes": 22115,
+  "modules": [
+    {
+      "name": "ColumnResizeHandle.js",
+      "bytes": 2281
+    },
+    {
+      "name": "DataGrid.js",
+      "bytes": 1592
+    },
+    {
+      "name": "IconButton.js",
+      "bytes": 264
+    },
+    {
+      "name": "ThemeProvider.js",
+      "bytes": 6132
+    },
+    {
+      "name": "components.js",
+      "bytes": 3192
+    },
+    {
+      "name": "financial.js",
+      "bytes": 4260
+    },
+    {
+      "name": "index.js",
+      "bytes": 202
+    },
+    {
+      "name": "tokens.js",
+      "bytes": 4192
+    }
+  ],
+  "treeShakingProbes": {
+    "tokens": {
+      "bytes": 2465,
+      "gzipBytes": 1088,
+      "retainsAntDesign": false
+    },
+    "amount": {
+      "bytes": 784,
+      "gzipBytes": 485,
+      "retainsAntDesign": false
+    }
+  },
+  "notes": "Probes bundle Fintrix only, externalizing peers. Not application bundle sizes. Fonts and generated JSON dominate archive size."
+}

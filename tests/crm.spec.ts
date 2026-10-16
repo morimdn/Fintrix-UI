@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 test("client workflow, themes, columns, sorting and real screenshots", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?view=crm");
   await expect(
     page.getByRole("heading", { name: /Client management/ }),
   ).toBeVisible();
@@ -109,7 +109,7 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
 });
 test("mobile table scroll and filters", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("/?view=crm");
   await page.getByRole("combobox", { name: "Filter status" }).click();
   await page.getByTitle("Pending", { exact: true }).click();
   await expect(

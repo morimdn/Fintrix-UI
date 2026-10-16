@@ -1,0 +1,10 @@
+{
+  "datasetRows": 10000,
+  "pageSize": 25,
+  "renderedRows": 25,
+  "mountMs": 635,
+  "sortMs": 89,
+  "browser": "Chromium",
+  "environment": "Managed cloud, dev server; includes Playwright action/wait overhead",
+  "virtualization": false
+}

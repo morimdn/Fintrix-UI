@@ -1,0 +1,43 @@
+{
+  "name": "fintrix-ui-preview",
+  "version": "0.2.0",
+  "description": "Provisional Fintrix React design system package; namespace not reserved",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "dist",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
+    },
+    "./styles.css": {
+      "types": "./dist/styles.css.d.ts",
+      "default": "./dist/styles.css"
+    },
+    "./fonts.css": {
+      "types": "./dist/fonts.css.d.ts",
+      "default": "./dist/fonts.css"
+    },
+    "./tokens.json": "./dist/tokens.json"
+  },
+  "peerDependencies": {
+    "react": "^18.3.0 || ^19.0.0",
+    "react-dom": "^18.3.0 || ^19.0.0",
+    "antd": "^6.0.0"
+  },
+  "scripts": {
+    "build": "node ../../scripts/build-library.mjs"
+  }
+}

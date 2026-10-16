@@ -1,0 +1,193 @@
+.fintrix-root {
+  font-family: var(--fx-font);
+  color: var(--fx-text);
+  background: var(--fx-canvas);
+  font-size: var(--fx-typography-body);
+  line-height: var(--fx-typography-lineHeight);
+  font-variant-numeric: tabular-nums;
+}
+.fintrix-root *,
+.fintrix-root *::before,
+.fintrix-root *::after {
+  box-sizing: border-box;
+}
+.fintrix-root
+  :is(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--fx-focus);
+  outline-offset: 3px;
+}
+.fintrix-root .financial-positive {
+  color: var(--fx-positive);
+}
+.fintrix-root .financial-negative {
+  color: var(--fx-negative);
+}
+.fintrix-root .financial-neutral {
+  color: var(--fx-neutral);
+}
+.fintrix-root .fx-button-group {
+  display: inline-flex;
+  gap: var(--fx-space-xs);
+  flex-wrap: wrap;
+}
+.fintrix-root .fx-status {
+  border-radius: var(--fx-radius-pill);
+}
+.fintrix-root .fx-status i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.fintrix-root .tone-success {
+  color: var(--fx-success);
+  background: var(--fx-successSoft);
+}
+.fintrix-root .tone-warning {
+  color: var(--fx-warning);
+  background: var(--fx-warningSoft);
+}
+.fintrix-root .tone-danger {
+  color: var(--fx-danger);
+  background: var(--fx-dangerSoft);
+}
+.fintrix-root .tone-info {
+  color: var(--fx-info);
+  background: var(--fx-infoSoft);
+}
+.fintrix-root .tone-neutral {
+  color: var(--fx-muted);
+  background: var(--fx-subtle);
+}
+
+.fintrix-root .fx-financial-card {
+  border: 1px solid var(--fx-border);
+  border-radius: var(--fx-radius-card);
+  padding: var(--fx-space-xl);
+  background: var(--fx-surface);
+  box-shadow: var(--fx-shadow);
+}
+.fintrix-root .fx-financial-card h3 {
+  margin: 0 0 var(--fx-space-md);
+  font-size: var(--fx-typography-label);
+  color: var(--fx-muted);
+}
+.fintrix-root .fx-financial-card strong {
+  font-size: var(--fx-typography-title);
+}
+.fintrix-root .fx-data-table {
+  max-width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fintrix-root *,
+  .fintrix-root *::before,
+  .fintrix-root *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.fintrix-root .ant-table-thead > tr > th {
+  position: relative;
+}
+.fintrix-root .column-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -12px;
+  width: 24px;
+  z-index: 4;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fintrix-root .column-resize-handle::before {
+  content: "";
+  width: 2px;
+  height: 45%;
+  background: var(--fx-controlBorder);
+  border-radius: var(--fx-radius-pill);
+}
+.fintrix-root .column-resize-handle:hover::before,
+.fintrix-root .column-resize-handle:focus::before {
+  background: var(--fx-primary);
+  width: 3px;
+}
+.fintrix-root .range-controller {
+  display: grid;
+  gap: var(--fx-space-md);
+}
+
+.metric {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+.metric .ant-card-body {
+  padding: var(--fx-space-xl);
+}
+.metric-label {
+  font-size: var(--fx-typography-table);
+  color: var(--fx-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fx-space-sm);
+}
+.metric-icon {
+  color: var(--fx-muted);
+  background: var(--fx-subtle);
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--fx-border);
+  border-radius: var(--fx-radius-control);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.metric strong {
+  font-size: clamp(22px, 1.85vw, 30px);
+  letter-spacing: -1px;
+  display: block;
+  margin: var(--fx-space-lg) 0 var(--fx-space-sm);
+  font-weight: 650;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+.metric-detail {
+  font-size: var(--fx-typography-caption);
+  color: var(--fx-muted);
+  position: relative;
+  z-index: 1;
+}
+.metric-detail span {
+  font-weight: 600;
+  margin-right: var(--fx-space-xs);
+}
+.financial-positive {
+  color: var(--fx-positive);
+}
+.financial-negative {
+  color: var(--fx-negative);
+}
+.financial-neutral {
+  color: var(--fx-neutral);
+}
+.sparkline {
+  position: absolute;
+  width: 64px;
+  height: 24px;
+  right: 0;
+  bottom: 50px;
+  opacity: 0.25;
+}
+.sparkline path {
+  fill: none;
+  stroke: var(--fx-primary);
+  stroke-width: 2;
+}

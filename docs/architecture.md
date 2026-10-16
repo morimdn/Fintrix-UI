@@ -1,44 +1,38 @@
-# Architecture decision record
+# Package architecture
 
-## Scope and identity
+Fintrix uses npm workspaces. `packages/fintrix-ui` owns reusable React components,
+semantic tokens, the provider and package CSS. `apps/showcase` owns public examples
+and the synthetic brokerage CRM. `examples/consumer-app` is deliberately outside
+the workspace so validation cannot silently resolve a source alias.
 
-Fintrix UI is an original, MIT-licensed POC for financial operations software. Blue actions, cool neutral surfaces, restrained elevation, labeled states, and tabular figures prioritize calm daily use. The visual identity and CSS were authored for this project. No proprietary terminal assets, fonts, charts, or trading-platform layouts are used. This is not an official Ant Design theme.
+The provisional, private package is `fintrix-ui-preview@0.2.0`. No registry name or
+organization ownership is assumed. No package has been published.
 
-## Layers
+`npm run build:library` emits native ESM modules and TypeScript declarations with
+explicit `.js` specifiers. It does not bundle React, React DOM or Ant Design.
+They remain peers (React 18.3/19 and Ant Design 6); actual validation currently uses
+React 19.3.1 and Ant Design 6.6.6. React 18 is a declared compatibility range, not
+an independently tested matrix. CSS is opt-in and marked as side-effectful.
 
-- `src/system/tokens.ts`: typed foundations, semantic light/dark palettes, independent density values, CSS variable adapter.
-- `src/system/ThemeProvider.tsx`: React context, Ant Design algorithms and component mappings, scoped variables and popup containers. Light/dark and comfortable/compact are orthogonal; dark + compact is supported.
-- `src/system/components.tsx`: thin Ant Design exports plus specialized presentation primitives. `IconButton.tsx` is a small independent entry; `ColumnResizeHandle.tsx` supplies pointer/keyboard resizing and its header adapter. Native Ant Design prop contracts are retained. Controlled widgets accept value/onChange. `FormModal` provides a theme-scoped large modal shell; the demo composes it with Ant Form. `DataTable<T>` accepts Ant Design `TableProps<T>` and defaults to an `id` key; override `rowKey` for another identity.
-- `src/demo`: synthetic client model, in-memory data operations and CRM-specific form. Business logic stays here. No backend, authentication, payments, or persistence.
-- Storybook: isolated actions, states, controller, gallery and full CRM with theme/density toolbar controls.
+Exports: root components/types, `/tokens`, `/tokens.json`, `/styles.css`, and
+`/fonts.css`. The last entry self-hosts Inter and includes its OFL notice.
+Importing the token subpath avoids loading the component graph. The showcase
+imports the workspace package's **built output**, never a Vite source alias.
 
-Use `FintrixProvider` once at the application boundary and import system CSS. Portals must stay inside its variable scope: popovers/selects use the provider container; the demo modal renders inline. Imperative feedback uses Ant Design App context. Multiple independent provider roots are not a validated use case yet.
+Build order: `npm ci`, `npm run build`, `npm run validate:consumer`, `npm test`,
+`npm run build-storybook`, `npm run test:e2e`, then
+`npx playwright test --config playwright.consumer.config.ts`.
 
-## Reuse example
+The consumer validation script packs the library, copies the example to a fresh
+OS temporary directory, installs the tarball and peers, and runs TypeScript and
+Vite production builds there. `.consumer-path` records that temporary directory
+for browser verification and is ignored by Git. No source-directory imports are
+allowed in the example. Temporary outputs can be deleted after verification.
 
-```tsx
-import {
-  FintrixProvider,
-  Button,
-  StatusIndicator,
-  RangeController,
-} from "./system";
-import "./styles.css";
-
-<FintrixProvider initialMode="dark" initialDensity="compact">
-  <Button type="primary">Create client</Button>
-  <StatusIndicator label="Verified" tone="success" />
-</FintrixProvider>;
-```
-
-`useFintrixTheme()` exposes `mode`, `density`, `setMode`, `setDensity`. Settings are session-local. `MetricCard` requires explicit text for change and comparison period. The POC trend figures are illustrative, not calculated historical analytics.
-
-## Technology and delivery
-
-React, TypeScript, Vite and Ant Design are the sole UI foundation. Lucide supplies icons. Vitest/RTL check token invariants, combined filters, provider state and form validation. Playwright verifies the real browser workflow and captures screenshots. Dependencies are pinned in package.json and package-lock.json. Node 24 is the validated runtime.
-
-This repository remains an application POC, not an npm package. Phase 2 should extract system CSS from demo CSS, define a package build with peer dependencies, add individual component stories, perform accessibility and localization audits, and validate scale before release.
-
-## Visual refinement
-
-See [refinement decisions](refinement.md) for the surface contract, local Inter font, mobile drawer, accessible column resizing, measurement-row compatibility fix and lazy loading. The showcase provides Foundations, Core components and Financial UI documentation tabs. Density never reduces caption text below 12px.
+The legacy CRM behavior remains in the showcase: sorting, search, filters,
+pagination, selection, controlled column visibility/reordering, fixed identity
+column, pointer/keyboard resizing, density and client forms. The library's generic
+`DataGrid<T>` adds controlled widths and visibility to Ant Table; consumers own
+business filtering and persistence. Pass Ant `TableProps<T>` for selection,
+sorting, pagination, scrolling and virtualization. Grouped column definitions
+are currently supported by `DataTable`, not the convenience `DataGrid` API.

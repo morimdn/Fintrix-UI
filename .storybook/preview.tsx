@@ -1,8 +1,9 @@
 import type { Preview } from "@storybook/react-vite";
 import "@fontsource-variable/inter/wght.css";
 import "antd/dist/reset.css";
-import "../src/styles.css";
-import { FintrixProvider } from "../src/system";
+import "fintrix-ui-preview/styles.css";
+import "../apps/showcase/src/styles.css";
+import { FintrixProvider } from "fintrix-ui-preview";
 const preview: Preview = {
   globalTypes: {
     mode: {
