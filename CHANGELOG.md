@@ -2,6 +2,8 @@
 
 ## 0.2.0 — Unreleased
 
+- Correct default-button hover/pressed contrast using semantic foreground tokens.
+
 - Refine app shell scrolling: stationary sidebar/header, navigation-only overflow,
   anchored profile, responsive drawer and light/dark regression evidence.
 

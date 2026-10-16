@@ -175,7 +175,11 @@ for (const mode of ["light", "dark"] as const) {
       expect(
         violations.map((v) => ({
           id: v.id,
-          targets: v.nodes.map((n) => n.target),
+          nodes: v.nodes.map((n) => ({
+            target: n.target,
+            summary: n.failureSummary,
+            data: n.any.map((check) => check.data),
+          })),
         })),
       ).toEqual([]);
     });

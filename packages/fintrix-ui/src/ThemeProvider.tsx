@@ -106,6 +106,11 @@ export function FintrixProvider({
               primaryShadow: "none",
               fontWeight: 500,
               defaultBorderColor: t.color.controlBorder,
+              // Outlined actions need foreground colors, not filled-action backgrounds.
+              defaultHoverColor: t.color.primaryHover,
+              defaultHoverBorderColor: t.color.primaryHover,
+              defaultActiveColor: t.color.primary,
+              defaultActiveBorderColor: t.color.primary,
               primaryColor: t.color.onAction,
             },
             Card: {
