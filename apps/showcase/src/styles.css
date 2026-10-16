@@ -180,6 +180,7 @@ button {
 }
 .workspace strong,
 .profile strong {
+  color: var(--fx-text);
   font-size: var(--fx-typography-table);
   font-weight: 600;
 }
@@ -266,6 +267,7 @@ button {
   letter-spacing: 0.5px;
 }
 .poc-note strong {
+  color: var(--fx-text);
   display: block;
   font-size: var(--fx-typography-body);
   margin: var(--fx-space-sm) 0;
