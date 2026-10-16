@@ -39,6 +39,20 @@ for (const mode of ["light", "dark"]) {
       });
       await code.focus();
       await expect(code).toBeFocused();
+      if (label === "desktop") {
+        // Shell copy must follow Fintrix tokens even while Ant replaces its styles.
+        for (const selector of [".workspace strong", ".poc-note strong"]) {
+          const colors = await page
+            .locator(`.sidebar ${selector}`)
+            .evaluate((element) => ({
+              actual: getComputedStyle(element).color,
+              expected: getComputedStyle(
+                document.querySelector(".fintrix-root")!,
+              ).color,
+            }));
+          expect(colors.actual).toBe(colors.expected);
+        }
+      }
       expect(
         (
           await new AxeBuilder({ page })

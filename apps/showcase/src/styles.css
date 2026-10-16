@@ -60,6 +60,7 @@ button {
   line-height: 1.6;
 }
 .app-shell {
+  color: var(--fx-text);
   display: flex;
   height: 100vh;
   height: 100dvh;

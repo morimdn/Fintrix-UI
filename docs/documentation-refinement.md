@@ -25,6 +25,8 @@ after its tab becomes visible. Home/End explicitly navigate to the boundaries
 when the main scroll region itself has focus, including long pages in WebKit;
 child controls retain their own key handling. Inline prose links use underlines and semantic
 foreground colors in both themes.
+The app shell also binds its inherited text color directly to the Fintrix token,
+keeping sidebar copy consistent during Ant's theme style replacement in WebKit.
 
 Getting Started now separates prerequisites, cloning, locked dependency install,
 library build, tarball creation, separate consumer install, styles/fonts, provider,
