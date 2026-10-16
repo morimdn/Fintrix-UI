@@ -105,6 +105,8 @@ test("mobile table scroll and filters", async ({ page }) => {
   await page.getByTitle("All KYC", { exact: true }).click();
   await page.keyboard.press("Escape");
   await expect(page.locator(".client-link").first()).toBeVisible();
+  await page.getByRole("heading",{name:"Client directory"}).click();
+  await expect(page.locator(".ant-select-dropdown:visible")).toHaveCount(0);
   await page.screenshot({
     path: "docs/screenshots/mobile.png",
     fullPage: true,
