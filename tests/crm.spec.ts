@@ -2,6 +2,9 @@ import { test, expect } from "@playwright/test";
 test("client workflow, themes, columns, sorting and real screenshots", async ({
   page,
 }) => {
+  // This workflow captures six screens and opens several animated overlays.
+  // Keep individual assertion deadlines unchanged on slower CI browser engines.
+  test.setTimeout(60_000);
   await page.goto("/?view=crm");
   await expect(
     page.getByRole("heading", { name: /Client management/ }),
