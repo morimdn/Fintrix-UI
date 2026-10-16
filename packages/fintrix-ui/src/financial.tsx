@@ -1,3 +1,4 @@
+import type { IconTone } from "./FintrixIcon";
 import type { ReactNode } from "react";
 import { StatusIndicator, type StatusTone } from "./components";
 
@@ -57,16 +58,25 @@ export function PnLIndicator({ label = "P&L", ...amount }: PnLIndicatorProps) {
 }
 export interface WalletBalanceCardProps extends CurrencyAmountProps {
   title?: string;
+  icon?: ReactNode;
+  iconTone?: IconTone;
   detail?: ReactNode;
 }
 export function WalletBalanceCard({
   title = "Wallet balance",
+  icon,
+  iconTone = "neutral",
   detail,
   ...amount
 }: WalletBalanceCardProps) {
   return (
     <section className="fx-financial-card" aria-label={title}>
-      <h3>{title}</h3>
+      <h3>
+        <span aria-hidden="true" style={{ color: `var(--fx-${iconTone})` }}>
+          {icon}
+        </span>{" "}
+        {title}
+      </h3>
       <strong>
         <CurrencyAmount {...amount} />
       </strong>
@@ -100,17 +110,26 @@ export function AccountSummary({
   );
 }
 export function FinancialKPICard({
+  icon,
+  iconTone = "neutral",
   label,
   value,
   detail,
 }: {
   label: string;
+  icon?: ReactNode;
+  iconTone?: IconTone;
   value: ReactNode;
   detail?: ReactNode;
 }) {
   return (
     <section className="fx-financial-card" aria-label={label}>
-      <h3>{label}</h3>
+      <h3>
+        <span aria-hidden="true" style={{ color: `var(--fx-${iconTone})` }}>
+          {icon}
+        </span>{" "}
+        {label}
+      </h3>
       <strong>{value}</strong>
       {detail && <div>{detail}</div>}
     </section>

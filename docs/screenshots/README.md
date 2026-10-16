@@ -28,3 +28,13 @@ The shell now scrolls inside `.main-scroll`; full-page browser screenshots captu
 the viewport-bound shell. Section-specific captures still scroll the relevant
 section into view. Use the running application to inspect content beyond the
 visible viewport.
+
+Phase 3: `iconography-light-chromium.png`, `iconography-dark-chromium.png` and
+`iconography-mobile.png` are real Playwright Chromium captures of searchable
+iconography and size/stroke/tone customization. Engine-specific CI captures are
+uploaded as workflow artifacts. See `../phase-three-report.md` for limitations.
+
+Documentation refinement: `docs-{desktop,tablet,mobile}-{light,dark}-chromium.png`
+shows the updated Getting Started section in six real browser layouts. Public
+section navigation and code access are exercised in the same capture tests.
+These images represent PR #5, not the currently deployed Phase 2 website.

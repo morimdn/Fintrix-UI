@@ -16,7 +16,9 @@
     "typecheck": "tsc --noEmit",
     "validate:consumer": "node scripts/validate-consumer.mjs",
     "test:consumer": "playwright test --config playwright.consumer.config.ts",
-    "measure:package": "node scripts/package-metrics.mjs"
+    "measure:package": "node scripts/package-metrics.mjs",
+    "docs:sync": "node scripts/sync-documentation.mjs",
+    "docs:check": "node scripts/sync-documentation.mjs --check"
   },
   "dependencies": {
     "@fontsource-variable/inter": "5.3.0",

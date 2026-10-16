@@ -60,6 +60,7 @@ button {
   line-height: 1.6;
 }
 .app-shell {
+  color: var(--fx-text);
   display: flex;
   height: 100vh;
   height: 100dvh;
@@ -179,6 +180,7 @@ button {
 }
 .workspace strong,
 .profile strong {
+  color: var(--fx-text);
   font-size: var(--fx-typography-table);
   font-weight: 600;
 }
@@ -265,6 +267,7 @@ button {
   letter-spacing: 0.5px;
 }
 .poc-note strong {
+  color: var(--fx-text);
   display: block;
   font-size: var(--fx-typography-body);
   margin: var(--fx-space-sm) 0;
@@ -599,6 +602,10 @@ main {
   background: var(--fx-subtle);
 }
 .money {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
   font-weight: 600;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -1668,4 +1675,146 @@ footer b {
   color: var(--fx-primary);
   border-bottom-color: var(--fx-primary);
   font-weight: var(--fx-typography-weightMedium);
+}
+
+.iconography {
+  display: grid;
+  gap: 24px;
+}
+.iconography-intro h2 {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.iconography-intro p {
+  color: var(--fx-muted);
+}
+.icon-controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 24px;
+}
+.icon-controls label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.icon-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 16px;
+}
+.icon-gallery .ant-card {
+  min-width: 0;
+}
+.icon-preview {
+  display: grid;
+  place-items: center;
+  min-height: 80px;
+  background: var(--fx-subtle);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.iconography pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .icon-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.doc-nav-group {
+  display: grid;
+  gap: 2px;
+}
+.doc-nav-group > strong {
+  color: var(--fx-text);
+  font-size: 12px;
+  padding: 8px;
+}
+.documentation-nav {
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+}
+.documentation-nav a[aria-current="location"] {
+  color: var(--fx-primary);
+  background: var(--fx-primarySoft);
+  font-weight: 650;
+}
+.doc-intro,
+.documentation-section {
+  overflow-wrap: anywhere;
+}
+.documentation-section h2 {
+  font-size: 22px;
+}
+.doc-permalink {
+  font-size: 16px;
+  margin-left: 8px;
+}
+.doc-summary {
+  color: var(--fx-muted);
+  font-weight: 500;
+}
+.documentation-section ul,
+.documentation-section ol {
+  padding-left: 24px;
+  display: grid;
+  gap: 12px;
+}
+.doc-code {
+  min-width: 0;
+}
+.doc-code summary {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 12px 0;
+}
+.doc-code pre {
+  max-height: 420px;
+  margin-bottom: 12px;
+}
+.doc-copy-status {
+  margin-left: 12px;
+  font-size: 13px;
+}
+.doc-table-scroll {
+  overflow-x: auto;
+}
+.doc-table-scroll table {
+  width: 100%;
+  min-width: 530px;
+  border-collapse: collapse;
+}
+.doc-table-scroll th,
+.doc-table-scroll td {
+  padding: 12px;
+  border-bottom: 1px solid var(--fx-border);
+  text-align: left;
+  vertical-align: top;
+}
+.doc-table-scroll caption {
+  text-align: left;
+  padding-bottom: 12px;
+  font-weight: 650;
+}
+@media (max-width: 1000px) {
+  .documentation-nav {
+    max-height: none;
+    overflow: visible;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.documentation-content a,
+.iconography a {
+  color: var(--fx-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.documentation-content a:hover,
+.iconography a:hover {
+  color: var(--fx-primaryHover);
 }

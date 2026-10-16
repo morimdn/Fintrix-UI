@@ -1,6 +1,6 @@
 import { ShowcaseTabBar } from "./ShowcaseTabBar";
 import { Documentation } from "./Documentation";
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   Card,
   Input,
@@ -44,6 +44,7 @@ import {
   foundations,
 } from "fintrix-ui-preview";
 import type { StatusTone } from "fintrix-ui-preview";
+const Iconography = lazy(() => import("./Iconography"));
 const tokensByRole = {
   Surfaces: ["canvas", "sidebar", "surface", "elevated", "subtle"],
   Interaction: ["primary", "primarySoft", "action", "focus"],
@@ -75,6 +76,31 @@ function ExampleCard({
   );
 }
 export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
+  function sectionFromHash() {
+    const hash = window.location.hash.slice(1);
+    if (hash.startsWith("docs-")) return "documentation";
+    return [
+      "foundations",
+      "components",
+      "financial",
+      "documentation",
+      "iconography",
+    ].includes(hash)
+      ? hash
+      : "foundations";
+  }
+  const [section, setSection] = useState(sectionFromHash);
+  useEffect(() => {
+    const navigate = () => setSection(sectionFromHash());
+    window.addEventListener("hashchange", navigate);
+    return () => window.removeEventListener("hashchange", navigate);
+  }, []);
+  useEffect(() => {
+    if (!window.location.hash.startsWith("#docs-")) {
+      const scroller = document.querySelector(".main-scroll");
+      if (scroller) scroller.scrollTop = 0;
+    }
+  }, [section]);
   const { mode, density, setDensity } = useFintrixTheme();
   const color = palettes[mode];
   const [range, setRange] = useState<[number, number]>([20, 80]),
@@ -617,7 +643,7 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
           </p>
         </div>
         <div className="hero-meta">
-          <StatusIndicator label="Phase 2 · Library preview" tone="info" />
+          <StatusIndicator label="Phase 3 · Library preview" tone="info" />
           <span>React + Ant Design</span>
           <span>Inter Variable · Semantic tokens</span>
         </div>
@@ -625,19 +651,32 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
       <Tabs
         className="showcase-tabs"
         renderTabBar={(props) => <ShowcaseTabBar {...props} />}
-        defaultActiveKey="foundations"
+        activeKey={section}
+        onChange={(key) => {
+          setSection(key);
+          window.location.hash = key;
+        }}
         items={[
           {
             key: "foundations",
             label: "Foundations",
             children: foundationsView,
           },
+          {
+            key: "iconography",
+            label: "Iconography",
+            children: (
+              <Suspense fallback={<p role="status">Loading iconography…</p>}>
+                <Iconography />
+              </Suspense>
+            ),
+          },
           { key: "components", label: "Core components", children: coreView },
           { key: "financial", label: "Financial UI", children: financialView },
           {
             key: "documentation",
             label: "Documentation",
-            children: <Documentation />,
+            children: <Documentation visible={section === "documentation"} />,
           },
         ]}
       />

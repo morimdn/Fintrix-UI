@@ -10,9 +10,8 @@ organization ownership is assumed. No package has been published.
 
 `npm run build:library` emits native ESM modules and TypeScript declarations with
 explicit `.js` specifiers. It does not bundle React, React DOM or Ant Design.
-They remain peers (React 18.3/19 and Ant Design 6); actual validation currently uses
-React 19.3.1 and Ant Design 6.6.6. React 18 is a declared compatibility range, not
-an independently tested matrix. CSS is opt-in and marked as side-effectful.
+They remain peers (React 18.3/19 and Ant Design 6); independent tarball validation covers React 18.3.1/19.3.1 with
+Ant Design 6.0.0/6.6.6. Other versions within the ranges are not individually tested. CSS is opt-in and marked as side-effectful.
 
 Exports: root components/types, `/tokens`, `/tokens.json`, `/styles.css`, and
 `/fonts.css`. The last entry self-hosts Inter and includes its OFL notice.
@@ -36,3 +35,8 @@ column, pointer/keyboard resizing, density and client forms. The library's gener
 business filtering and persistence. Pass Ant `TableProps<T>` for selection,
 sorting, pagination, scrolling and virtualization. Grouped column definitions
 are currently supported by `DataTable`, not the convenience `DataGrid` API.
+
+Documentation examples live in examples/documentation. The public guide imports
+them as raw text; validate:consumer copies the same files into its independent
+installation for typechecking and browser exercise. docs:check verifies that the
+Markdown onboarding example matches its TypeScript source. No source alias is used.

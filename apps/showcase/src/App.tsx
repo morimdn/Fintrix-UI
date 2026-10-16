@@ -22,7 +22,8 @@ const Showcase = lazy(() =>
 );
 export default function App() {
   const [view, setView] = useState(
-    new URLSearchParams(window.location.search).get("view") === "crm"
+    new URLSearchParams(window.location.search).get("view") === "crm" &&
+      !/^#(docs-|documentation|iconography)/.test(window.location.hash)
       ? "crm"
       : "showcase",
   );
@@ -178,6 +179,22 @@ export default function App() {
           className="main-scroll"
           tabIndex={0}
           aria-label="Scrollable page content"
+          onKeyDown={(event) => {
+            // Keep boundary navigation consistent for long pages across engines.
+            // Inputs, tablists and grid resize handles retain their own key handling.
+            if (
+              event.target !== event.currentTarget ||
+              event.altKey ||
+              event.ctrlKey ||
+              event.metaKey
+            )
+              return;
+            if (event.key === "Home" || event.key === "End") {
+              event.preventDefault();
+              event.currentTarget.scrollTop =
+                event.key === "Home" ? 0 : event.currentTarget.scrollHeight;
+            }
+          }}
         >
           <main id="main-content" tabIndex={-1}>
             <Suspense

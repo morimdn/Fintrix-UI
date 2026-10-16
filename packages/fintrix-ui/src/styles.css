@@ -91,6 +91,25 @@
 .fintrix-root .ant-table-thead > tr > th {
   position: relative;
 }
+/* Keep the header text on the same right edge as its figures. Sort controls
+   precede the label; the independent resize handle stays on the column edge. */
+.fintrix-root .fx-data-table .fx-cell-right {
+  font-variant-numeric: tabular-nums;
+}
+.fintrix-root .fx-data-table .fx-cell-right .ant-table-column-sorters {
+  justify-content: flex-end;
+}
+.fintrix-root .fx-data-table .fx-cell-right .ant-table-column-title {
+  flex: 0 1 auto;
+}
+.fintrix-root .fx-data-table .fx-cell-right .ant-table-column-sorter {
+  order: -1;
+  flex-shrink: 0;
+  margin-inline: 0 var(--fx-space-xs);
+}
+.fintrix-root .fx-currency {
+  font-variant-numeric: tabular-nums;
+}
 .fintrix-root .column-resize-handle {
   position: absolute;
   top: 0;

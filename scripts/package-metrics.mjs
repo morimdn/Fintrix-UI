@@ -10,6 +10,9 @@ const js = readdirSync(dist)
 const probes = {};
 for (const [label, source] of Object.entries({
   tokens: 'export { getTokens } from "fintrix-ui-preview/tokens";',
+  icon: 'export { FintrixIcon } from "fintrix-ui-preview";',
+  walletIcon:
+    'import { FintrixIcon } from "fintrix-ui-preview"; import { Wallet } from "lucide-react"; export const WalletIcon = () => FintrixIcon({ icon: Wallet });',
   amount: 'export { CurrencyAmount } from "fintrix-ui-preview";',
 })) {
   const probe = resolve(root, `.probe-${label}.js`);
@@ -31,8 +34,11 @@ for (const [label, source] of Object.entries({
       .filter((item) => item.type === "chunk")
       .map((item) => item.code)
       .join("\n");
-    if (label === "amount" && /from\s*["']antd/.test(code))
-      throw new Error("Amount-only import retained Ant Design");
+    if (
+      ["amount", "icon", "walletIcon"].includes(label) &&
+      /from\s*["']antd/.test(code)
+    )
+      throw new Error(`${label} import retained Ant Design`);
     probes[label] = {
       bytes: Buffer.byteLength(code),
       gzipBytes: gzipSync(code).length,

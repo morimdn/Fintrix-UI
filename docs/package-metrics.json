@@ -1,5 +1,5 @@
 {
-  "javascriptBytes": 22115,
+  "javascriptBytes": 23606,
   "modules": [
     {
       "name": "ColumnResizeHandle.js",
@@ -10,34 +10,48 @@
       "bytes": 1592
     },
     {
+      "name": "FintrixIcon.js",
+      "bytes": 405
+    },
+    {
       "name": "IconButton.js",
-      "bytes": 264
+      "bytes": 472
     },
     {
       "name": "ThemeProvider.js",
-      "bytes": 6132
+      "bytes": 6543
     },
     {
       "name": "components.js",
-      "bytes": 3192
+      "bytes": 3291
     },
     {
       "name": "financial.js",
-      "bytes": 4260
+      "bytes": 4532
     },
     {
       "name": "index.js",
-      "bytes": 202
+      "bytes": 236
     },
     {
       "name": "tokens.js",
-      "bytes": 4192
+      "bytes": 4254
     }
   ],
   "treeShakingProbes": {
     "tokens": {
-      "bytes": 2465,
-      "gzipBytes": 1088,
+      "bytes": 2494,
+      "gzipBytes": 1104,
+      "retainsAntDesign": false
+    },
+    "icon": {
+      "bytes": 447,
+      "gzipBytes": 308,
+      "retainsAntDesign": false
+    },
+    "walletIcon": {
+      "bytes": 5280,
+      "gzipBytes": 2135,
       "retainsAntDesign": false
     },
     "amount": {

@@ -17,3 +17,17 @@
 
 Phase 1 proof of concept, brokerage CRM, semantic tokens, theme/density provider,
 interactive gallery, resizing and browser/accessibility evidence.
+
+## Unreleased — Phase 3 (recommended public preview 0.3.0)
+
+- Add a lazy searchable Iconography gallery with 36 curated Lucide icons.
+- Add FintrixIcon, semantic iconTone on appropriate controls/cards, and typed per-mode color overrides.
+- Add icon accessibility/contrast tests, Storybook examples and customization guidance.
+- Extend tarball consumer validation to React 18/19 and Ant Design 6 endpoints; prepare release checklist and metadata while keeping publication disabled.
+
+### Phase 3 documentation refinement
+
+- Correct current Phase 2 deployment status and distinguish the pending Phase 3 PR from npm/GitHub/Figma deliverables.
+- Add a ten-step installation guide and eight runnable examples validated against external tarball consumers.
+- Expand all 14 public documentation topics, add grouped navigation/deep links, and improve code copying and inline link accessibility.
+- Add documentation browser coverage for desktop/tablet/mobile in both themes and extend Firefox/WebKit CI checks.

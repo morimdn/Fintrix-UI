@@ -59,3 +59,42 @@ visual continuity. Use `FinancialKPICard` for arbitrary production metrics.
 See individual Storybook stories for actions, forms, wallet, KYC, grid and modal.
 Toolbar globals select theme/density. The public Showcase retains the full
 foundations/core/financial galleries and adds a 14-section documentation view.
+
+Phase 3 adds `FintrixIcon`, optional `iconTone` on IconButton/MetricCard/financial
+cards, and provider color overrides. See [customization](customization.md) for
+copyable examples and supported extension points.
+
+## Practical examples and selection
+
+The local Showcase Documentation tab keeps 14 topics with runnable examples,
+component decision guidance and direct section anchors. These Phase 3 refinements
+are not yet deployed. Start with [Getting Started](getting-started.md), then render
+these exported examples inside FintrixProvider:
+
+| Example | What it demonstrates |
+| --- | --- |
+| [Actions](../examples/documentation/Actions.tsx) | Primary/secondary/text actions, ButtonGroup and labeled IconButton |
+| [Forms](../examples/documentation/Forms.tsx) | Input/TextArea, multi-select, Radio, Switch, Checkbox and precise range entry |
+| [Overlays](../examples/documentation/Overlays.tsx) | Controlled Modal/Drawer and Tooltip/Popover |
+| [Feedback](../examples/documentation/Feedback.tsx) | Ant contextual notification, Alert, Chip, StatusIndicator, Tabs, Skeleton and Empty |
+| [Grid](../examples/documentation/Grid.tsx) | Typed columns, visibility, resizing, sorting/filtering, selection and pagination |
+| [Financial](../examples/documentation/Financial.tsx) | All financial display/status components with synthetic decimal strings |
+| [Icons](../examples/documentation/Icons.tsx) | Decorative/meaningful icons and semantic component icon overrides |
+
+Modal suits a focused decision or critical transaction confirmation; Drawer suits
+client details, quick edits and advanced filters. Use a full page for multi-step
+KYC, extensive audit histories or complex product configuration. Preserve focus
+containment, Escape behavior and return to the trigger in either overlay.
+
+Use Radio for a short exclusive choice and Select for longer lists. Tooltip is a
+brief, nonessential hint; Popover supports richer contextual content. Keep essential
+help visible outside either. Chip labels a category/filter; StatusIndicator labels
+a workflow state. Card summarizes one record, whereas DataGrid compares many.
+Use one primary decision, secondary alternatives and tertiary low-emphasis help.
+Prefer visible button text where an icon's meaning might be unfamiliar.
+
+Standard controls are Ant Design re-exports, including Chip (Tag). Fintrix owns
+ButtonGroup grouping semantics, IconButton labeling/tooltip, RangeController's
+numeric alternatives, DataTable/Grid extensions, FormModal defaults and financial
+formatting/status wrappers. Light/Dark appearance comes from FintrixProvider;
+Ant Design supplies native control interactions and most typed props.

@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  Button,
+  CurrencyAmount,
   Checkbox,
   DataGrid,
   KYCStatus,
@@ -13,87 +13,47 @@ import {
   FinancialKPICard,
   AccountSummary,
 } from "fintrix-ui-preview";
-const quickstart = `import { FintrixProvider, WalletBalanceCard } from 'fintrix-ui-preview';
-import 'fintrix-ui-preview/styles.css';
-import 'fintrix-ui-preview/fonts.css';
-
-<FintrixProvider initialMode="dark" initialDensity="compact">
-  <WalletBalanceCard value="128450.00" currency="USD" />
-</FintrixProvider>`;
-const sections = [
-  [
-    "overview",
-    "Introduction / Overview",
-    "Fintrix UI is an independent MIT React design system for financial software teams. Use semantic financial direction, explicit statuses and readable data. All examples use synthetic data.",
-  ],
-  [
-    "getting-started",
-    "Getting Started",
-    "Build locally, pack packages/fintrix-ui, then install the generated tarball in your React application. The provisional package name is not published or reserved. Install React, React DOM and Ant Design 6 as peers.",
-  ],
-  [
-    "principles",
-    "Design Principles",
-    "Clarity before decoration. Preserve context, make amounts and currencies explicit, and communicate status through text as well as color.",
-  ],
-  [
-    "tokens",
-    "Color Palette & Tokens",
-    "Foundations shows the complete semantic palette. getTokens(mode, density), scoped --fx-* CSS variables and fintrix-ui-preview/tokens.json share one source. Positive/negative represent direction; success/danger represent workflow states.",
-  ],
-  [
-    "typography",
-    "Typography",
-    "Self-hosted Inter Variable. Display 36, title 28, section 20, body and label 14, table 13, caption 12px. Use tabular figures for numeric comparison.",
-  ],
-  [
-    "layout",
-    "Spacing, Grid and Layout",
-    "Use a 4px rhythm: 4, 8, 12, 16, 24, 32, 40px. Controls are 40px comfortable and 32px compact. Keep narrow screens scrollable within data tables; never hide critical financial context.",
-  ],
-  [
-    "core",
-    "Core Components",
-    "Use one Primary action per decision. Secondary supports alternatives; Text is low emphasis. Destructive actions need explicit wording and confirmation. IconButton requires an accessible label. ButtonGroup groups related actions. Hover signals availability, focus signals keyboard position, active confirms pressing, disabled explains unavailability, loading signals progress. Try these states in Core components.",
-  ],
-  [
-    "forms",
-    "Forms and Controls",
-    "Use persistent visible labels, specific validation feedback and input types matching the data. Prefer radio buttons for a few visible exclusive choices, dropdowns for longer choices, multi-select for multiple choices. RangeController includes numeric alternatives to dragging.",
-  ],
-  [
-    "navigation",
-    "Navigation and Feedback",
-    "Modal: short focused decisions and confirmations. Drawer: contextual inspection, filters and quick edits. Full page: complex multi-step work with history. Tooltip: brief nonessential labels. Popover: richer contextual information. Chips describe categories or removable selections; badges describe status.",
-  ],
-  [
-    "grid",
-    "Data Grid",
-    "Use cards for a summary and DataGrid for comparing records. Ant Design retains sorting, filtering, pagination and selection. Fintrix adds controlled visibility and keyboard/pointer resizing. Fixed columns remain visible. Try the synthetic 10,000-row dataset below; only one page renders at a time.",
-  ],
-  [
-    "financial",
-    "FinTech Components",
-    "Amounts accept decimal text to preserve display precision. P&L, KYC, transaction and risk states remain separate. Quotes and spreads are supplied values; no trading or accounting calculations occur.",
-  ],
-  [
-    "dashboards",
-    "Dashboard Examples",
-    "Compose FinancialKPICard, AccountSummary and WalletBalanceCard with standard layout components. The Brokerage CRM remains a working example with search, filters, selection, resizing and client editing.",
-  ],
-  [
-    "accessibility",
-    "Accessibility",
-    "Use semantic names and visible focus rings. Never rely on color alone. Support keyboard resizing, form errors and horizontal table navigation. Reduced motion is respected. Automated checks cover selected workflows and do not establish WCAG certification.",
-  ],
-  [
-    "developers",
-    "Developer Documentation",
-    "The ESM package preserves modules and excludes React and Ant Design from its output. Import typed components from the root, tokens from /tokens and opt into /styles.css and /fonts.css. See repository docs for architecture, release guidelines and design-to-code mapping.",
-  ],
-] as const;
-export function Documentation() {
-  const [copied, setCopied] = useState("Copy React example");
+import {
+  topics,
+  snippets,
+  links,
+  installCommands,
+  decisions,
+} from "./docs/content";
+import { CodeExample } from "./docs/CodeExample";
+export function Documentation({ visible = true }: { visible?: boolean }) {
+  const [active, setActive] = useState("overview");
+  useEffect(() => {
+    if (!visible) return;
+    const scroller = document.querySelector(".main-scroll");
+    function openHash() {
+      if (!window.location.hash.startsWith("#docs-")) return;
+      const target = document.getElementById(window.location.hash.slice(1));
+      if (target) {
+        target.scrollIntoView({ block: "start" });
+        target.querySelector<HTMLElement>("h2")?.focus({ preventScroll: true });
+        setActive(target.id.replace("docs-", ""));
+      }
+    }
+    function updateActive() {
+      const top = (scroller?.getBoundingClientRect().top ?? 0) + 100;
+      const current = topics
+        .filter((topic) => {
+          const el = document.getElementById(`docs-${topic.id}`);
+          return el && el.getBoundingClientRect().top <= top;
+        })
+        .at(-1);
+      if (current) setActive(current.id);
+    }
+    const frame = requestAnimationFrame(openHash);
+    window.addEventListener("hashchange", openHash);
+    scroller?.addEventListener("scroll", updateActive, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("hashchange", openHash);
+      scroller?.removeEventListener("scroll", updateActive);
+    };
+  }, [visible]);
   const [hidden, setHidden] = useState(false);
   const [widths, setWidths] = useState<Record<string, number>>({});
   const rows = useMemo(
@@ -109,41 +69,135 @@ export function Documentation() {
   return (
     <div className="documentation-layout">
       <nav aria-label="Documentation sections" className="documentation-nav">
-        {sections.map(([id, title]) => (
-          <a href={`#docs-${id}`} key={id}>
-            {title}
-          </a>
-        ))}
+        {Array.from(new Set(topics.map((topic) => topic.group))).map(
+          (group) => (
+            <div className="doc-nav-group" key={group}>
+              <strong>{group}</strong>
+              {topics
+                .filter((topic) => topic.group === group)
+                .map(({ id, title }) => (
+                  <a
+                    href={`#docs-${id}`}
+                    key={id}
+                    aria-current={active === id ? "location" : undefined}
+                  >
+                    {title}
+                  </a>
+                ))}
+            </div>
+          ),
+        )}
       </nav>
       <div className="documentation-content">
-        {sections.map(([id, title, text]) => (
-          <section id={`docs-${id}`} key={id} className="documentation-section">
-            <span className="eyebrow">FINTRIX UI / DOCUMENTATION</span>
-            <h2>{title}</h2>
-            <p>{text}</p>
+        <p className="doc-intro">
+          Developer and designer guides ·{" "}
+          <a href="#iconography">Browse Iconography</a> ·{" "}
+          <a href="#components">Try core components</a>
+        </p>
+        {topics.map(({ id, title, summary, paragraphs, bullets, snippet }) => (
+          <section
+            id={`docs-${id}`}
+            key={id}
+            className="documentation-section"
+            aria-labelledby={`heading-${id}`}
+          >
+            <h2 id={`heading-${id}`} tabIndex={-1}>
+              {title}{" "}
+              <a
+                className="doc-permalink"
+                href={`#docs-${id}`}
+                aria-label={`Link to ${title}`}
+              >
+                #
+              </a>
+            </h2>
+            <p className="doc-summary">{summary}</p>
+            {paragraphs.map((text) => (
+              <p key={text}>{text}</p>
+            ))}
+            {bullets && (
+              <ol>
+                {bullets.map((text) => (
+                  <li key={text}>{text.replace(/^\d+\.\s*/, "")}</li>
+                ))}
+              </ol>
+            )}
+            {id === "overview" && (
+              <p>
+                <a href={links.live}>Live Phase 2 Showcase</a> ·{" "}
+                <a href={links.repository}>GitHub repository</a> ·{" "}
+                <a href={links.installation}>Installation guide</a>
+              </p>
+            )}
             {id === "getting-started" && (
+              <pre tabIndex={0} aria-label="Installation commands">
+                <code>{installCommands}</code>
+              </pre>
+            )}
+            {snippet && (
+              <CodeExample
+                title={title}
+                code={snippets[snippet]}
+                expanded={id === "getting-started"}
+              />
+            )}
+            {id === "core" && (
               <>
-                <pre tabIndex={0} aria-label="Installation command">
-                  <code>
-                    npm install ./fintrix-ui-preview-0.2.0.tgz antd react
-                    react-dom
-                  </code>
-                </pre>
-                <pre tabIndex={0} aria-label="React usage example">
-                  <code>{quickstart}</code>
-                </pre>
-                <Button
-                  onClick={async () => {
-                    try {
-                      await navigator.clipboard.writeText(quickstart);
-                      setCopied("Copied");
-                    } catch {
-                      setCopied("Select and copy the example above");
-                    }
-                  }}
+                <h3>Iconography</h3>
+                <p>
+                  <a href="#iconography">Browse the 36-icon gallery</a>: search
+                  a name or category, set size/stroke/tone, and copy the exact
+                  React example. Use 16px for supporting detail, 20px for
+                  controls and 24px for prominent card icons; these are
+                  conventions, not fixed API constraints. The default stroke is
+                  2; keep stroke widths consistent within a view.
+                </p>
+                <p>
+                  Tones are neutral, primary, success, warning, danger and info.
+                  Prefer neutral or inherited foregrounds. FintrixIcon is
+                  decorative by default; add label only when an image conveys
+                  meaning without adjacent text. Put action names on IconButton.
+                  Tones resolve through Light/Dark tokens and typed overrides,
+                  not fixed icon colors.
+                </p>
+                <CodeExample title="Iconography" code={snippets.icons} />
+                <a href="https://lucide.dev/icons/">
+                  Complete official Lucide catalog
+                </a>
+              </>
+            )}
+            {id === "navigation" && (
+              <>
+                <div
+                  className="doc-table-scroll"
+                  role="region"
+                  aria-label="Component selection guidance"
+                  tabIndex={0}
                 >
-                  {copied}
-                </Button>
+                  <table>
+                    <caption>Choose a component for the task</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Surface</th>
+                        <th scope="col">Use for</th>
+                        <th scope="col">Boundary</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {decisions.map(([name, use, avoid]) => (
+                        <tr key={name}>
+                          <th scope="row">{name}</th>
+                          <td>{use}</td>
+                          <td>{avoid}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <CodeExample
+                  title="Feedback and tabs"
+                  code={snippets.feedback}
+                />
               </>
             )}
             {id === "grid" && (
@@ -190,6 +244,12 @@ export function Documentation() {
                       title: "Illustrative balance",
                       dataIndex: "balance",
                       align: "right",
+                      render: (_, row) => (
+                        <CurrencyAmount
+                          value={row.balance}
+                          currency={row.currency}
+                        />
+                      ),
                     },
                   ]}
                   scroll={{ x: 720 }}
@@ -239,9 +299,11 @@ export function Documentation() {
               </div>
             )}
             {id === "developers" && (
-              <a href="https://github.com/morimdn/Fintrix-UI/tree/feat/phase-two-library/docs">
-                Read repository documentation
-              </a>
+              <p>
+                <a href={links.docs}>Read repository documentation</a> ·{" "}
+                <a href={links.contributing}>Contribute through GitHub</a> ·{" "}
+                <a href={links.releases}>Release checklist</a>
+              </p>
             )}
           </section>
         ))}
