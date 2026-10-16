@@ -6,7 +6,7 @@ import {
   Modal,
   Popover,
   Tooltip,
-} from "fintrix-ui-preview";
+} from "fintrix-ui";
 
 export default function Overlays() {
   const [modal, setModal] = useState(false);

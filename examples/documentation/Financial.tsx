@@ -11,7 +11,7 @@ import {
   SymbolPriceDisplay,
   TransactionStatus,
   WalletBalanceCard,
-} from "fintrix-ui-preview";
+} from "fintrix-ui";
 
 export default function FinancialExamples() {
   return (

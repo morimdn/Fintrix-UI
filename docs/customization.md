@@ -15,9 +15,9 @@ import {
   FintrixProvider,
   WalletBalanceCard,
   useFintrixTheme,
-} from "fintrix-ui-preview";
-import "fintrix-ui-preview/styles.css";
-import "fintrix-ui-preview/fonts.css"; // Optional self-hosted Inter Variable
+} from "fintrix-ui";
+import "fintrix-ui/styles.css";
+import "fintrix-ui/fonts.css"; // Optional self-hosted Inter Variable
 
 function WalletPage() {
   const { mode, setMode, density, setDensity } = useFintrixTheme();
@@ -84,7 +84,7 @@ Render this exported example inside FintrixProvider, as shown in Getting Started
 ```tsx
 import { useState } from "react";
 import { Settings, Wallet } from "lucide-react";
-import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui-preview";
+import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui";
 
 export default function Icons() {
   const [status, setStatus] = useState("Ready");

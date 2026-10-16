@@ -107,3 +107,8 @@ const readme = readFileSync(resolve(root, "README.md"), "utf8").replace(
 );
 writeFileSync(`${pkg}/README.md`, readme);
 copyFileSync(resolve(root, "LICENSE"), `${pkg}/LICENSE`);
+
+copyFileSync(
+  resolve(root, "node_modules/lucide-react/LICENSE"),
+  `${pkg}/dist/LUCIDE-LICENSE.txt`,
+);

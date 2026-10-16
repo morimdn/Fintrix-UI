@@ -34,7 +34,7 @@ import {
   StatusIndicator,
   RangeController,
   ResizableHeaderCell,
-} from "fintrix-ui-preview";
+} from "fintrix-ui";
 import { clients, filterClients, money, type Client } from "./data";
 import { ClientModal } from "./ClientModal";
 const fieldNames = [

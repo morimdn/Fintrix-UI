@@ -5,7 +5,7 @@ semantic tokens, the provider and package CSS. `apps/showcase` owns public examp
 and the synthetic brokerage CRM. `examples/consumer-app` is deliberately outside
 the workspace so validation cannot silently resolve a source alias.
 
-The provisional, private package is `fintrix-ui-preview@0.2.0`. No registry name or
+The proposed public preview is `fintrix-ui@0.3.0`, still guarded by `private: true`. No registry name or
 organization ownership is assumed. No package has been published.
 
 `npm run build:library` emits native ESM modules and TypeScript declarations with

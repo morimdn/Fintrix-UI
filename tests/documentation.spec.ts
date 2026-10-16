@@ -111,7 +111,7 @@ test("clipboard rejection preserves readable source and reports recovery", async
   );
   await expect(
     page.getByLabel("Getting Started source code", { exact: true }),
-  ).toContainText('from "fintrix-ui-preview"');
+  ).toContainText('from "fintrix-ui"');
 });
 
 test("long documentation scroll region supports boundary keys without intercepting code", async ({

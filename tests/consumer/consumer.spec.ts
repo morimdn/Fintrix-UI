@@ -147,6 +147,31 @@ for (const example of [
     await expect(
       page.getByRole("heading", { name: "Documentation example" }),
     ).toBeVisible();
+    if (example === "icons") {
+      const icon = page.getByRole("img", { name: "Wallet", exact: true });
+      await expect(icon).toBeVisible();
+      await expect(icon).toHaveCSS("color", "rgb(89, 65, 169)");
+      await page.getByRole("button", { name: "Wallet settings" }).click();
+      await expect(page.getByRole("status")).toHaveText("Settings selected");
+      const color = await page
+        .locator(".fx-financial-card svg")
+        .evaluate((el) => getComputedStyle(el).color);
+      const success = await page
+        .locator(".fintrix-root")
+        .evaluate((el) =>
+          getComputedStyle(el).getPropertyValue("--fx-success").trim(),
+        );
+      expect(color).toBe(
+        await page.evaluate((value) => {
+          const el = document.createElement("span");
+          el.style.color = value;
+          document.body.append(el);
+          const color = getComputedStyle(el).color;
+          el.remove();
+          return color;
+        }, success),
+      );
+    }
     if (example === "actions") {
       await page
         .getByRole("button", { name: "Create report", exact: true })

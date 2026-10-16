@@ -43,7 +43,7 @@ import {
   IconButton,
   WalletBalanceCard,
   type IconTone,
-} from "fintrix-ui-preview";
+} from "fintrix-ui";
 const categories = {
   Navigation: { ArrowLeft, ArrowRight, Home, Search },
   Actions: { Plus, Copy, Pencil, Trash2 },
@@ -164,7 +164,7 @@ export default function Iconography() {
           <h3>{category}</h3>
           <div className="icon-gallery">
             {icons.map(([name, icon]) => {
-              const code = `import { ${name} } from "lucide-react";\nimport { FintrixIcon } from "fintrix-ui-preview";\n\n<FintrixIcon icon={${name}} tone="${tone}" size={${size}} strokeWidth={${stroke}} />`;
+              const code = `import { ${name} } from "lucide-react";\nimport { FintrixIcon } from "fintrix-ui";\n\n<FintrixIcon icon={${name}} tone="${tone}" size={${size}} strokeWidth={${stroke}} />`;
               return (
                 <Card key={name} size="small">
                   <div className="icon-preview">

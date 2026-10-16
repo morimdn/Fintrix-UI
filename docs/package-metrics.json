@@ -1,5 +1,5 @@
 {
-  "javascriptBytes": 23606,
+  "javascriptBytes": 24142,
   "modules": [
     {
       "name": "ColumnResizeHandle.js",
@@ -19,11 +19,11 @@
     },
     {
       "name": "ThemeProvider.js",
-      "bytes": 6543
+      "bytes": 6685
     },
     {
       "name": "components.js",
-      "bytes": 3291
+      "bytes": 3685
     },
     {
       "name": "financial.js",
@@ -40,22 +40,22 @@
   ],
   "treeShakingProbes": {
     "tokens": {
-      "bytes": 2494,
-      "gzipBytes": 1104,
+      "bytes": 2498,
+      "gzipBytes": 1107,
       "retainsAntDesign": false
     },
     "icon": {
-      "bytes": 447,
-      "gzipBytes": 308,
+      "bytes": 451,
+      "gzipBytes": 311,
       "retainsAntDesign": false
     },
     "walletIcon": {
-      "bytes": 5280,
-      "gzipBytes": 2135,
+      "bytes": 5284,
+      "gzipBytes": 2129,
       "retainsAntDesign": false
     },
     "amount": {
-      "bytes": 784,
+      "bytes": 788,
       "gzipBytes": 485,
       "retainsAntDesign": false
     }

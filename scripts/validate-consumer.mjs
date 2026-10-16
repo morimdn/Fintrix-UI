@@ -5,6 +5,7 @@ import {
   readFileSync,
   writeFileSync,
   readdirSync,
+  lstatSync,
 } from "node:fs";
 import { gzipSync } from "node:zlib";
 import { tmpdir } from "node:os";
@@ -43,7 +44,30 @@ execFileSync(
   ["install", "--ignore-scripts", "--no-audit", "--no-fund"],
   { cwd: target, stdio: "inherit" },
 );
+if (lstatSync(resolve(target, "node_modules/fintrix-ui")).isSymbolicLink())
+  throw new Error("Consumer must install the tarball, not a workspace link");
+execFileSync(
+  "node",
+  [
+    "--input-type=module",
+    "-e",
+    `
+  import assert from 'node:assert/strict';
+  import { getTokens } from 'fintrix-ui/tokens';
+  import tokens from 'fintrix-ui/tokens.json' with { type: 'json' };
+  for (const mode of ['light','dark']) for (const density of ['comfortable','compact']) {
+    assert.ok(getTokens(mode,density)); assert.ok(tokens[mode][density]);
+  }
+`,
+  ],
+  { cwd: target, stdio: "inherit" },
+);
 execFileSync("npm", ["run", "build"], { cwd: target, stdio: "inherit" });
+execFileSync("node", [resolve(root, "scripts/package-metrics.mjs")], {
+  cwd: target,
+  env: { ...process.env, CONSUMER_PATH: target },
+  stdio: "inherit",
+});
 writeFileSync(resolve(root, ".consumer-path"), target);
 console.log(`Packed consumer validated outside the workspace: ${target}`);
 

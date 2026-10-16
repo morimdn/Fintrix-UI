@@ -42,8 +42,8 @@ import {
   useFintrixTheme,
   palettes,
   foundations,
-} from "fintrix-ui-preview";
-import type { StatusTone } from "fintrix-ui-preview";
+} from "fintrix-ui";
+import type { StatusTone } from "fintrix-ui";
 const Iconography = lazy(() => import("./Iconography"));
 const tokensByRole = {
   Surfaces: ["canvas", "sidebar", "surface", "elevated", "subtle"],

@@ -7,7 +7,7 @@ import {
   Skeleton,
   StatusIndicator,
   Tabs,
-} from "fintrix-ui-preview";
+} from "fintrix-ui";
 
 export default function Feedback() {
   // FintrixProvider includes Ant App, so contextual notifications inherit its theme.

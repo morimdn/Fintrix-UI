@@ -3,9 +3,9 @@ import {
   FintrixProvider,
   WalletBalanceCard,
   useFintrixTheme,
-} from "fintrix-ui-preview";
-import "fintrix-ui-preview/styles.css";
-import "fintrix-ui-preview/fonts.css"; // Optional self-hosted Inter Variable
+} from "fintrix-ui";
+import "fintrix-ui/styles.css";
+import "fintrix-ui/fonts.css"; // Optional self-hosted Inter Variable
 
 function WalletPage() {
   const { mode, setMode, density, setDensity } = useFintrixTheme();
