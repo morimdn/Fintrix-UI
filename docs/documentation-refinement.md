@@ -50,6 +50,22 @@ context. The runnable example hides a noncritical note column instead.
 Financial examples distinguish direction, workflow status and risk, use synthetic
 decimal strings and perform no accounting or trade execution.
 
+Financial table columns with `align: "right"` now keep the header label on the
+same right edge as the values, with sorting icons before the label and resizing
+controls at the column boundary. CRM amounts and currency labels form a
+right-aligned stack; numeric table cells and CurrencyAmount use tabular figures.
+Active sort labels/arrows use the semantic foreground token in both themes;
+the regression includes axe checks on the sorted table without rule exclusions.
+The mobile CRM defaults its pinned client column to 180px so the balance remains
+readable beside it. Eight geometry regressions cover both themes, both densities
+and desktop/mobile before and after sorting and desktop resizing. The packed
+consumer also verifies balance alignment without Showcase CSS. Real alignment
+screenshots are saved as `screenshots/balance-*.png`.
+See the [desktop Light example](screenshots/balance-desktop-light-comfortable-chromium.png)
+and [mobile Dark/Compact example](screenshots/balance-mobile-dark-compact-chromium.png).
+The alignment refinement passes all 49 Chromium checks, 120 unit tests and 10
+packed-consumer checks locally, plus the library/Showcase builds and TypeScript.
+
 ## Example validation
 
 Eight complete TypeScript modules in `examples/documentation` are the source for

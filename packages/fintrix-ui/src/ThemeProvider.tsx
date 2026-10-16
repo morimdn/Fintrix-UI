@@ -91,6 +91,8 @@ export function FintrixProvider({
               inkBarColor: t.color.primary,
             },
             Table: {
+              // Sort labels and arrows are foregrounds, not filled actions.
+              colorPrimary: t.color.primary,
               fontSize: t.typography.table,
               cellFontSize: t.typography.table,
               cellFontSizeMD: t.typography.table,

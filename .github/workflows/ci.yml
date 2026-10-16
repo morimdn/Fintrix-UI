@@ -68,5 +68,6 @@ jobs:
           name: engine-evidence
           path: |
             docs/screenshots/iconography-*.png
+            docs/screenshots/balance-*.png
             docs/screenshots/docs-*.png
             test-results

@@ -145,13 +145,13 @@ export function CRM() {
   };
   function columnWidth(key: string) {
     const max = key === "name" && narrow ? 240 : key === "name" ? 320 : 380;
-    const min = key === "name" ? 220 : 120;
+    const min = key === "name" ? (narrow ? 180 : 220) : 120;
     return Math.max(
       min,
       Math.min(
         max,
         widths[key] ??
-          (key === "name" && narrow ? 220 : Number(definitions[key].width)),
+          (key === "name" && narrow ? 180 : Number(definitions[key].width)),
       ),
     );
   }
@@ -166,7 +166,7 @@ export function CRM() {
         resize: {
           label: key,
           value: columnWidth(key),
-          min: key === "name" ? 220 : 120,
+          min: key === "name" ? (narrow ? 180 : 220) : 120,
           max: key === "name" && narrow ? 240 : key === "name" ? 320 : 380,
           onChange: (width: number) =>
             setWidths((previous) => ({ ...previous, [key]: width })),
@@ -354,7 +354,7 @@ export function CRM() {
                     <InputNumber
                       aria-label={`${key} column width`}
                       size="small"
-                      min={key === "name" ? 220 : 120}
+                      min={key === "name" ? (narrow ? 180 : 220) : 120}
                       max={
                         key === "name" && narrow
                           ? 240

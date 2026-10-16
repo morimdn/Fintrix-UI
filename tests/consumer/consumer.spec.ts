@@ -154,6 +154,20 @@ for (const example of [
       await expect(page.getByRole("status")).toHaveText("Report requested");
     }
     if (example === "grid") {
+      const right = await page
+        .getByRole("columnheader", { name: /^Balance/ })
+        .evaluate((element) => {
+          const range = document.createRange();
+          range.selectNodeContents(element.firstChild!);
+          return range.getBoundingClientRect().right;
+        });
+      for (const amount of await page
+        .locator(".ant-table-row .fx-currency")
+        .all()) {
+        const box = await amount.boundingBox();
+        expect(Math.abs(box!.x + box!.width - right)).toBeLessThan(1);
+        await expect(amount).toHaveCSS("font-variant-numeric", "tabular-nums");
+      }
       await page.getByRole("checkbox", { name: "Hide note column" }).check();
       await expect(
         page.getByRole("columnheader", { name: "Note", exact: true }),

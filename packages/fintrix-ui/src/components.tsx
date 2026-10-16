@@ -133,6 +133,19 @@ export function RangeController({
     </div>
   );
 }
+function alignTableColumns<T extends object>(
+  columns: TableProps<T>["columns"],
+): TableProps<T>["columns"] {
+  return columns?.map((column) => ({
+    ...column,
+    className: [column.className, column.align === "right" && "fx-cell-right"]
+      .filter(Boolean)
+      .join(" "),
+    ...("children" in column && {
+      children: alignTableColumns(column.children)!,
+    }),
+  }));
+}
 export function DataTable<T extends object>(props: TableProps<T>) {
   const host = useRef<HTMLDivElement>(null);
   // Ant Design 6 clones selection titles into an aria-hidden measurement row.
@@ -150,6 +163,7 @@ export function DataTable<T extends object>(props: TableProps<T>) {
         rowKey="id"
         scroll={{ x: foundations.layout.tableMin }}
         {...props}
+        columns={alignTableColumns(props.columns)}
       />
     </div>
   );

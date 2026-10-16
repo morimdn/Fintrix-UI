@@ -6,6 +6,7 @@ export default defineConfig({
     "iconography.spec.ts",
     "shell.spec.ts",
     "crm.spec.ts",
+    "financial-alignment.spec.ts",
     "documentation.spec.ts",
   ],
   projects: [
