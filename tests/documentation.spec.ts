@@ -99,3 +99,30 @@ test("clipboard rejection preserves readable source and reports recovery", async
     page.getByLabel("Getting Started source code", { exact: true }),
   ).toContainText('from "fintrix-ui-preview"');
 });
+
+test("long documentation scroll region supports boundary keys without intercepting code", async ({
+  page,
+}) => {
+  await page.goto("/#docs-developers");
+  const scroller = page.getByLabel("Scrollable page content", { exact: true });
+  await scroller.focus();
+  await expect(scroller).toBeFocused();
+  await page.keyboard.press("Home");
+  await expect.poll(() => scroller.evaluate((el) => el.scrollTop)).toBe(0);
+  await page.keyboard.press("End");
+  await expect
+    .poll(() =>
+      scroller.evaluate((el) =>
+        Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop),
+      ),
+    )
+    .toBeLessThan(2);
+  await page.goto("/#docs-getting-started");
+  const code = page.getByLabel("Getting Started source code", { exact: true });
+  await code.focus();
+  await page.keyboard.press("Home");
+  await expect(code).toBeFocused();
+  await expect
+    .poll(() => scroller.evaluate((el) => el.scrollTop))
+    .toBeGreaterThan(0);
+});

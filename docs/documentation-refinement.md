@@ -21,7 +21,9 @@ FinTech, Accessibility, and Contribution & release. Repeated decorative labels
 were removed. Native section permalinks, active navigation, keyboard-focusable
 code blocks, copy success/failure feedback and cross-tab links make the content
 navigable. Hash deep links, browser Back and reload restore the requested section
-after its tab becomes visible. Inline prose links use underlines and semantic
+after its tab becomes visible. Home/End explicitly navigate to the boundaries
+when the main scroll region itself has focus, including long pages in WebKit;
+child controls retain their own key handling. Inline prose links use underlines and semantic
 foreground colors in both themes.
 
 Getting Started now separates prerequisites, cloning, locked dependency install,
@@ -69,6 +71,8 @@ future scaffolding versions may require a fresh validation.
 - Storybook production build: passed.
 - Unit suite: 120 passed; no accessibility rules or contrast thresholds reduced.
 - Full Chromium regression suite: 40 passed, including all prior CRM/grid/shell checks.
+  After adding the WebKit boundary-key fix and its regression, the 19 documentation
+  and shell tests also pass locally; final CI includes the additional test.
 - Documentation/iconography targeted Chromium suite: 11 passed, covering desktop,
   tablet and mobile in Light/Dark, reduced motion, deep links, Back/reload, code
   keyboard access, copy fallback, tooltip states and axe checks.
