@@ -12,7 +12,7 @@ import {
   SymbolPriceDisplay,
   FinancialKPICard,
   AccountSummary,
-} from "fintrix-ui-preview";
+} from "fintrix-ui";
 import {
   topics,
   snippets,

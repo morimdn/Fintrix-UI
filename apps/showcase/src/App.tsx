@@ -14,8 +14,8 @@ import {
   Layers,
   ArrowUpRight,
 } from "lucide-react";
-import { useFintrixTheme } from "fintrix-ui-preview";
-import { IconButton } from "fintrix-ui-preview";
+import { useFintrixTheme } from "fintrix-ui";
+import { IconButton } from "fintrix-ui";
 const CRM = lazy(() => import("./demo/CRM").then((m) => ({ default: m.CRM })));
 const Showcase = lazy(() =>
   import("./demo/Showcase").then((m) => ({ default: m.Showcase })),

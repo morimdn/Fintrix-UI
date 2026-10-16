@@ -16,17 +16,32 @@ It extends Ant Design; it is not a standalone replacement for it.
 | Deliverable | Current status |
 | --- | --- |
 | Phase 2 | Merged and publicly deployed at the Live Showcase |
-| Phase 3 | Implemented in [PR #5](https://github.com/morimdn/Fintrix-UI/pull/5); not yet merged or deployed |
+| Phase 3 | Merged and deployed; included in this release candidate |
 | React library | Independently buildable, packable and installable from a local tarball |
-| npm package | **Not published**; provisional `fintrix-ui-preview@0.2.0` remains private |
+| npm package | **Not published**; proposed `fintrix-ui@0.3.0` remains private |
 | GitHub Release | Not created |
 | Editable Figma UI Kit | Not created; future work |
 
-The live site currently shows Phase 2. Phase 3 screenshots and APIs below describe
-the reviewed branch, not a deployed update. No `npm install fintrix-ui` command is
-available. Release naming, ownership and publication require separate owner approval.
+Phase 4 prepares the first public preview; it does not publish or deploy it.
+Package-name ownership still requires owner confirmation. See the
+[release guide](docs/releases.md), [developer documentation](docs/developer-documentation.md)
+and [owner setup](docs/npm-owner-setup.md).
+
+### Future registry installation (only after publication)
+
+```sh
+npm install fintrix-ui antd
+# In a new application, also install matching React peers and TypeScript types:
+npm install react@19 react-dom@19
+npm install --save-dev @types/react@19 @types/react-dom@19
+```
+
+Use the tarball method below until publication is confirmed.
 
 ## Install the current artifact
+
+Before Phase 4 merges, check out [PR #6](https://github.com/morimdn/Fintrix-UI/pull/6)
+(`gh pr checkout 6`) after cloning and before building. After merge, use `main`.
 
 Use Node 24, npm and Git for repository development. Consumers use React/React DOM
 18.3 or 19 and Ant Design 6 as peers. Independent validation covers React
@@ -38,15 +53,13 @@ cd Fintrix-UI
 npm ci
 npm run build:library
 mkdir -p artifacts
-npm pack --workspace fintrix-ui-preview --pack-destination ./artifacts
+npm pack --workspace fintrix-ui --pack-destination ./artifacts
 ```
 
-These commands build the checked-out source. Until PR #5 merges, use its reviewed
-checkout (`gh pr checkout 5`) **before building** to try the Phase 3 APIs. In a
-separate React app, install the resulting tarball by its actual absolute path:
+In a separate React app, install the resulting tarball by its actual absolute path:
 
 ```sh
-npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-preview-0.2.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
 Follow the [complete Getting Started guide](docs/getting-started.md) for a new
@@ -81,18 +94,17 @@ No ledger, trading engine, broker integration, payment system or live data feed 
 
 ```sh
 npm run build
-npm run dev        # Local Showcase, including unreleased Phase 3 on this branch
+npm run dev        # Local Showcase, including Phase 3
 npm run storybook  # Local component stories
 ```
 
 The public documentation retains 14 topics grouped for developers and designers.
 Local deep links such as `/#docs-getting-started`, `/#docs-grid` and `/#iconography`
-open the relevant section. These navigation improvements reach the live site only
-after an approved merge and deployment. Browse the Iconography tab to search
+open the relevant section.  Browse the Iconography tab to search
 36 curated icons and copy size/stroke/tone examples; Lucide remains usable directly.
 
 ![Phase 3 searchable Iconography in dark mode](docs/screenshots/iconography-dark-chromium.png)
-_Real browser capture from the Phase 3 branch; not yet deployed._
+_Real browser capture of Phase 3._
 
 The **brokerage CRM is an example application**, separate from the reusable
 package. It demonstrates synthetic clients, filters, selection, resizing and

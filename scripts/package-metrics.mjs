@@ -3,19 +3,22 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
 import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
-const dist = resolve(root, "packages/fintrix-ui/dist");
+const consumer = process.env.CONSUMER_PATH;
+const dist = consumer
+  ? resolve(consumer, "node_modules/fintrix-ui/dist")
+  : resolve(root, "packages/fintrix-ui/dist");
 const js = readdirSync(dist)
   .filter((name) => name.endsWith(".js"))
   .map((name) => ({ name, bytes: statSync(resolve(dist, name)).size }));
 const probes = {};
 for (const [label, source] of Object.entries({
-  tokens: 'export { getTokens } from "fintrix-ui-preview/tokens";',
-  icon: 'export { FintrixIcon } from "fintrix-ui-preview";',
+  tokens: 'export { getTokens } from "fintrix-ui/tokens";',
+  icon: 'export { FintrixIcon } from "fintrix-ui";',
   walletIcon:
-    'import { FintrixIcon } from "fintrix-ui-preview"; import { Wallet } from "lucide-react"; export const WalletIcon = () => FintrixIcon({ icon: Wallet });',
-  amount: 'export { CurrencyAmount } from "fintrix-ui-preview";',
+    'import { FintrixIcon } from "fintrix-ui"; import { Wallet } from "lucide-react"; export const WalletIcon = () => FintrixIcon({ icon: Wallet });',
+  amount: 'export { CurrencyAmount } from "fintrix-ui";',
 })) {
-  const probe = resolve(root, `.probe-${label}.js`);
+  const probe = resolve(consumer || root, `.probe-${label}.js`);
   writeFileSync(probe, source);
   try {
     const result = await build({

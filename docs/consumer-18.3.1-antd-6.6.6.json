@@ -8,14 +8,14 @@
   "productionBuild": "passed",
   "assets": [
     {
-      "name": "index-8PGBmfjw.js",
-      "bytes": 875242,
-      "gzipBytes": 280465
+      "name": "index-Cb1CIVjX.css",
+      "bytes": 6004,
+      "gzipBytes": 1763
     },
     {
-      "name": "index-BxZa8Ifz.css",
-      "bytes": 5563,
-      "gzipBytes": 1692
+      "name": "index-DBFck8Hn.js",
+      "bytes": 985266,
+      "gzipBytes": 312928
     }
   ],
   "notes": "Independent tarball install; application assets include peers. Browser checks run separately with test:consumer."

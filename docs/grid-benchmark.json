@@ -2,8 +2,8 @@
   "datasetRows": 10000,
   "pageSize": 25,
   "renderedRows": 25,
-  "mountMs": 824,
-  "sortMs": 114,
+  "mountMs": 1156,
+  "sortMs": 181,
   "browser": "Chromium",
   "environment": "Managed cloud, dev server; includes Playwright action/wait overhead",
   "virtualization": false

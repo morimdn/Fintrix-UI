@@ -21,9 +21,9 @@ import {
   WalletBalanceCard,
   PnLIndicator,
   KYCStatus,
-} from "fintrix-ui-preview";
-import "fintrix-ui-preview/styles.css";
-import "fintrix-ui-preview/fonts.css";
+} from "fintrix-ui";
+import "fintrix-ui/styles.css";
+import "fintrix-ui/fonts.css";
 function Consumer() {
   const [dialog, setDialog] = useState(false);
   const [drawer, setDrawer] = useState(false);

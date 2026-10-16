@@ -33,11 +33,11 @@ cd Fintrix-UI
 npm ci
 npm run build:library
 mkdir -p artifacts
-npm pack --workspace fintrix-ui-preview --pack-destination ./artifacts
+npm pack --workspace fintrix-ui --pack-destination ./artifacts
 
 # In your separate React/TypeScript application:
 # Replace this path with the absolute path printed for your repository.
-npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-preview-0.2.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 # If you use React 18, pair react@18.3.1 with react-dom@18.3.1 and React 18 types.`;
 export interface Topic {
   id: string;
@@ -57,7 +57,7 @@ export const topics: Topic[] = [
       "A React foundation for teams building brokerage CRMs, wallet interfaces and risk dashboards.",
     paragraphs: [
       "Fintrix adds financial display components, semantic tokens, density, icon conventions and grid extensions to Ant Design 6. Standard controls remain Ant Design components; this is not a replacement framework. The brokerage CRM is an example application using synthetic records, separate from the reusable library.",
-      "Release status: Phase 2 is merged and publicly deployed. Phase 3 is implemented in PR #5 and is not yet merged or deployed. The React library is independently packable; no public npm package, GitHub Release or editable Figma UI Kit exists. The live site may therefore differ from this local Phase 3 preview.",
+      "Release status: Phase 3 is merged and deployed. Phase 4 prepares fintrix-ui@0.3.0 as a private release candidate. No npm publication, GitHub Release or editable Figma UI Kit exists. Registry installation (npm install fintrix-ui antd) is a future instruction, usable only after publication.",
     ],
   },
   {
@@ -68,14 +68,14 @@ export const topics: Topic[] = [
       "Install the generated artifact in your own application. The npm registry package is not available.",
     paragraphs: [
       "Repository tooling requires Node 24, npm and Git. Browser consumers need React and React DOM 18.3 or 19, Ant Design 6, and a TypeScript/ESM-capable bundler. Validated combinations are React 18.3.1 / 19.3.1 with Ant 6.0.0 / 6.6.6; peer ranges do not certify every intermediate version. Node 24 is a build-tool requirement, not browser runtime code.",
-      "Clone main for the deployed foundation. Phase 3 icon and override APIs remain in PR #5 until merged; use the reviewed PR checkout or its owner-provided tarball to try them today. The commands below preserve the provisional name and private 0.2.0 version.",
+      "Use the reviewed Phase 4 checkout for the fintrix-ui@0.3.0 candidate. Phase 3 APIs are already on main. The package remains private until explicit owner approval.",
     ],
     bullets: [
       "Check prerequisites: Node 24/npm/Git for the repository, matching React/React DOM peers for your application.",
-      "Clone the repository. For Phase 3 before merge, inspect and check out PR #5 using gh pr checkout 5, or obtain its reviewed artifact.",
+      "Clone the repository and check out the reviewed Phase 4 branch to build the 0.3.0 candidate before it merges.",
       "Install the repository's locked dependencies with npm ci.",
       "Build the independent library with npm run build:library.",
-      "Create artifacts and run npm pack to generate fintrix-ui-preview-0.2.0.tgz.",
+      "Create artifacts and run npm pack to generate fintrix-ui-0.3.0.tgz.",
       "In a separate React/TypeScript app, install the tarball by its real absolute path with compatible peers. The installation guide also explains creating a fresh Vite app.",
       "Import styles.css once; fonts.css optionally serves Inter locally. Remove conflicting scaffold CSS such as Vite's centered-body index.css.",
       "Initialize FintrixProvider around your application. Call useFintrixTheme only inside the provider.",
@@ -228,10 +228,10 @@ export const topics: Topic[] = [
     summary:
       "Stable exports, tested examples and an explicit publication boundary.",
     paragraphs: [
-      "The package preserves ESM modules and declarations. React/React DOM and Ant Design are peers; Lucide is a declared dependency. Import components from fintrix-ui-preview, token helpers from /tokens, and CSS/fonts through their exported paths. The full Lucide catalog is not bundled into the library; the curated gallery is a lazy Showcase chunk.",
+      "The package preserves ESM modules and declarations. React/React DOM and Ant Design are peers; Lucide is a declared dependency. Import components from fintrix-ui, token helpers from /tokens, and CSS/fonts through their exported paths. The full Lucide catalog is not bundled into the library; the curated gallery is a lazy Showcase chunk.",
       "Examples shown here are real TypeScript files installed and typechecked against the packed artifact in React 18/19 consumers. The installation guide provides a complete App, while other exported example components are intended to render inside FintrixProvider. No example needs source aliases.",
       "Contribute through a focused GitHub pull request targeting main. Explain the problem, include relevant checks and real screenshots for visual changes, and update usage guidance when changing public APIs. Preserve semantic tokens, synthetic demo data and MIT attribution.",
-      "Phase 2 is public. Phase 3 awaits review/merge/deployment in PR #5. npm publication, GitHub Release and an editable Figma UI Kit remain future deliverables. The package remains private at 0.2.0; a controlled 0.3.0 public preview requires owner-approved naming, access and release checks. ESM-only support does not imply CommonJS or SSR hydration validation.",
+      "Phase 3 is public. fintrix-ui@0.3.0 is prepared but not published. The private safeguard remains; owner-approved naming, account setup and release checks are required. npm publication, GitHub Release and an editable Figma UI Kit remain future deliverables. ESM-only support does not imply CommonJS or SSR hydration validation.",
     ],
   },
 ];

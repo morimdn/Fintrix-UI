@@ -68,7 +68,7 @@ copyable examples and supported extension points.
 
 The local Showcase Documentation tab keeps 14 topics with runnable examples,
 component decision guidance and direct section anchors. These Phase 3 refinements
-are not yet deployed. Start with [Getting Started](getting-started.md), then render
+are included in the merged Phase 3. Start with [Getting Started](getting-started.md), then render
 these exported examples inside FintrixProvider:
 
 | Example | What it demonstrates |

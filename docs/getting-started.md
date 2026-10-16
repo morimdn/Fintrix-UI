@@ -1,8 +1,10 @@
 # Getting Started
 
 The npm registry package is **not published**. Use the generated
-`fintrix-ui-preview-0.2.0.tgz` artifact today. The provisional name is not a claim
-to registry ownership; `npm install fintrix-ui` is not an installation option.
+`fintrix-ui-0.3.0.tgz` artifact today. The proposed name is not a claim
+to registry ownership. After publication only, existing React apps may run
+`npm install fintrix-ui antd`; new apps must also install matching React/React DOM
+and their TypeScript types as described below.
 
 ## 1. Prerequisites
 
@@ -19,12 +21,8 @@ git clone https://github.com/morimdn/Fintrix-UI.git
 cd Fintrix-UI
 ```
 
-`main` contains the merged and deployed Phase 2 foundation. Phase 3 is under
-review in [PR #5](https://github.com/morimdn/Fintrix-UI/pull/5), not merged or
-published. Until it merges, obtain the reviewed PR checkout or an owner-provided
-tarball to use FintrixIcon, iconTone and colorOverrides. With GitHub CLI you can
-inspect/check out the PR with `gh pr checkout 5` after cloning. Permanent docs
-links target main; new Phase 3 files will appear there when merged.
+`main` includes merged Phase 3. Use the reviewed Phase 4 checkout to build
+the proposed `fintrix-ui@0.3.0` candidate before Phase 4 merges.
 
 ## 3. Install repository dependencies
 
@@ -48,10 +46,10 @@ Rebuild after changing library source.
 
 ```sh
 mkdir -p artifacts
-npm pack --workspace fintrix-ui-preview --pack-destination ./artifacts
+npm pack --workspace fintrix-ui --pack-destination ./artifacts
 ```
 
-The generated file is `artifacts/fintrix-ui-preview-0.2.0.tgz`. Record its absolute
+The generated file is `artifacts/fintrix-ui-0.3.0.tgz`. Record its absolute
 path. `npm pack` creates a local archive; it does not publish to npm.
 
 ## 6. Install in a separate React application
@@ -68,7 +66,7 @@ npm install
 Install the real tarball path, replacing the clearly marked example path below:
 
 ```sh
-npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-preview-0.2.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
 For an existing React 18 application use `react@18.3.1 react-dom@18.3.1` instead
@@ -82,8 +80,8 @@ npm install lucide-react@1.58.0
 
 ## 7. Import CSS and optional fonts
 
-Import `fintrix-ui-preview/styles.css` once in your app. Optionally import
-`fintrix-ui-preview/fonts.css` to self-host Inter Variable. These are exported
+Import `fintrix-ui/styles.css` once in your app. Optionally import
+`fintrix-ui/fonts.css` to self-host Inter Variable. These are exported
 package paths; do not import library source files or depend on remote fonts.
 
 ## 8. Initialize FintrixProvider
@@ -108,9 +106,9 @@ import {
   FintrixProvider,
   WalletBalanceCard,
   useFintrixTheme,
-} from "fintrix-ui-preview";
-import "fintrix-ui-preview/styles.css";
-import "fintrix-ui-preview/fonts.css"; // Optional self-hosted Inter Variable
+} from "fintrix-ui";
+import "fintrix-ui/styles.css";
+import "fintrix-ui/fonts.css"; // Optional self-hosted Inter Variable
 
 function WalletPage() {
   const { mode, setMode, density, setDensity } = useFintrixTheme();

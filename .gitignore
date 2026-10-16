@@ -157,3 +157,5 @@ playwright-report/
 .consumer-path
 
 consumer-test-results/
+
+artifacts/

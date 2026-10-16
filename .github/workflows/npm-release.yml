@@ -1,0 +1,67 @@
+name: Stage npm release for owner approval
+on:
+  workflow_dispatch:
+    inputs:
+      authorization:
+        description: "Type stage fintrix-ui@0.3.0 to authorize uploading this release"
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+jobs:
+  stage:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: npm-release
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - name: Verify authorization and successful CI on current main
+        uses: actions/github-script@v7
+        env:
+          AUTHORIZATION: ${{ inputs.authorization }}
+          RELEASE_ENABLED: ${{ vars.NPM_RELEASE_ENABLED }}
+        with:
+          script: |
+            if (process.env.RELEASE_ENABLED !== 'true') throw new Error('Owner must configure and enable npm-release first');
+            if (process.env.AUTHORIZATION !== 'stage fintrix-ui@0.3.0') throw new Error('Exact release authorization required');
+            const {data: branch} = await github.rest.repos.getBranch({...context.repo, branch:'main'});
+            if (branch.commit.sha !== context.sha) throw new Error('Dispatch must target current main');
+            const {data} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', head_sha:context.sha, event:'push', per_page:100});
+            const latest = data.workflow_runs.sort((a,b) => b.id-a.id)[0];
+            if (!latest || latest.status !== 'completed' || latest.conclusion !== 'success') throw new Error('Latest main CI run must succeed for this exact commit');
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --global npm@11.15.0
+      - name: Check release manifest and retained safeguard
+        run: |
+          node --input-type=module -e "import p from './packages/fintrix-ui/package.json' with {type:'json'}; if(p.name!=='fintrix-ui'||p.version!=='0.3.0'||p.private!==false) throw Error('Release blocked: owner-approved follow-up must explicitly set private=false');"
+      - run: npm ci
+      - run: npm run build:library
+      - run: npm run inspect:package
+      - name: Reject duplicate versions and registry failures
+        run: node scripts/check-registry-version.mjs
+      - name: Confirm main has not changed during preparation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {data} = await github.rest.repos.getBranch({...context.repo,branch:'main'});
+            if (data.commit.sha !== context.sha) throw new Error('Main changed; rerun CI and release review');
+      - name: Stage with OIDC and provenance; never approve automatically
+        working-directory: packages/fintrix-ui
+        run: npm stage publish --access public --provenance --tag latest
+      - name: Owner follow-up
+        run: echo 'Review the stage ID in npm, inspect the archive and provenance, and approve with 2FA only after explicit release authorization.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Failure guidance
+        if: failure()
+        run: echo 'Release staging failed. Inspect the failed step and npm staging queue before retrying; no automatic approval or retry is performed.' >> "$GITHUB_STEP_SUMMARY"

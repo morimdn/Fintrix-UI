@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Settings, Wallet } from "lucide-react";
-import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui-preview";
+import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui";
 
 export default function Icons() {
   const [status, setStatus] = useState("Ready");

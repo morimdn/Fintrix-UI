@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — unreleased public preview candidate
+
+- Prepare the proposed `fintrix-ui` package name and public ESM/types, CSS/fonts and token exports.
+- Preserve Phase 3 components, docs, iconography and Brokerage CRM.
+- Validate independent React 18/19 × Ant Design 6 tarball consumers.
+- Add package inspection, guarded manual OIDC release workflow and owner setup guide.
+- Keep `private: true`; no npm publication or deployment has occurred in Phase 4.
+
+
 ## 0.2.0 — Unreleased
 
 - Correct default-button hover/pressed contrast using semantic foreground tokens.

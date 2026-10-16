@@ -1,59 +1,77 @@
 # Versioning and releases
 
-Use SemVer. Document breaking props/token names as major changes, additive APIs
-as minor changes, and compatible fixes as patches. Keep preview status explicit
-until consumer/browser support and accessibility are reviewed.
+`fintrix-ui@0.3.0` is the proposed first public preview, **not published**.
+Phase 3 is merged and deployed. Phase 4 prepares an artifact and release controls;
+it does not merge, publish npm, create a GitHub Release or deploy Pages.
+Use SemVer; preview support remains limited to the tested environments.
 
-Before publication: verify ownership/availability of the chosen npm name, replace
-the provisional name consistently, review package contents (`npm pack --dry-run`),
-confirm peer compatibility, licenses, changelog and clean installation. The
-package is currently `private: true` to prevent accidental registry publication.
+## Candidate verification
 
-Maintainer approval is required before npm publication, production release,
-merging this phase or deploying Pages. There is no npm publishing workflow.
-Pages has only `workflow_dispatch`; running the reviewed workflow on main is the
-explicit publication action. The deployment job holds pages/id-token write
-permissions; build jobs have only contents read. Pull requests do not deploy.
+```sh
+npm ci
+npm run build
+npm run docs:check
+npm test
+npm run build-storybook
+npm run inspect:package
+npm run measure:package
+npm run validate:consumer
+npm run test:consumer
+npm run test:e2e
+```
 
-## Current delivery status
+`inspect:package` compares pack dry-run with an actual archive, extracts it,
+checks exports, CSS/font files, tokens and notices, and runs **only**
+`npm publish --dry-run`. A dry-run success does not establish registry ownership
+or authorization. `validate:consumer` installs the actual tarball outside the
+monorepo, compiles the documentation, builds a production app and checks tree
+shaking against that installation. CI repeats consumer build/browser tests for
+React 18.3.1/19.3.1 × Ant Design 6.0.0/6.6.6.
 
-Phase 2 is merged and publicly deployed at
-[the Live Showcase](https://morimdn.github.io/Fintrix-UI/).
-Phase 3 is implemented in [PR #5](https://github.com/morimdn/Fintrix-UI/pull/5)
-but is not yet merged or deployed. The library can be independently installed
-from its generated tarball. The npm package is not published, no GitHub Release
-has been created, and no editable Figma UI Kit exists.
+## Publication controls
 
-The existing Pages workflow is manual-only; nothing in this PR triggers a
-new deployment. Historical validation reports retain their original observations
-and must not be read as current release status. `npm run build:demo` prepares the
-project base path without publishing anything.
+The committed package retains `private: true`. The new `npm-release.yml` is
+manual-only and deliberately blocked until a separately reviewed, explicitly
+owner-authorized change sets the package to `private: false`. This PR does not
+perform that change. The private workspace root remains private permanently.
 
-## Phase 3 controlled first release checklist
+The release job additionally requires:
 
-Recommended first public version: **0.3.0**, for additive preview APIs after the
-local 0.2.0 artifact. The artifact stays private at 0.2.0 during this PR. Do not
-call this 1.0 until the owner approves stability and support commitments.
+- Current `main`, protected by required PR review and required CI checks.
+- Latest push CI run successful for the exact dispatched commit, including all jobs.
+- Protected `npm-release` environment and `NPM_RELEASE_ENABLED=true` environment variable.
+- Exact dispatch authorization `stage fintrix-ui@0.3.0`.
+- Verified package name/version, no existing registry version, and no registry errors other than E404.
+- An npm Trusted Publisher bound to this repository, workflow and environment.
 
-Read-only npm registry checks on 2026-10-16 returned E404 for `fintrix-ui` and
-`@fintrix/ui`. No public metadata was returned; this is not a reservation or
-proof that either name can be registered. Prefer `fintrix-ui` if the owner can
-claim it; use `@fintrix/ui` only with confirmed organization/scope access.
+The job uses Node 24, npm 11.15.0, a GitHub-hosted runner, contents/actions read
+and job-scoped OIDC permission. It stages with provenance and the `latest` tag.
+No token is stored, no publish occurs on pushes/PRs, no staged version is approved
+automatically, and one release job runs at a time. Main is rechecked before the
+upload. If a stage already exists, review the queue before retrying; registry
+version checks cannot detect a pending stage. The registry rejects duplicate
+published versions. Failures stop the job and add guidance to its summary.
 
-Before publication the owner must:
+## Why staged publishing
 
-- [ ] Approve final name, npm account/scope ownership and public access.
-- [ ] Rename imports/manifests/examples together and set version 0.3.0.
-- [ ] Review this PR, changelog, API boundaries, MIT and third-party notices.
-- [ ] Review React 18.3.1/19.3.1 × Ant 6.0.0/6.6.6 CI and browser engine results.
-- [ ] Complete manual keyboard and screen-reader review; no WCAG certification is claimed.
-- [ ] Run clean build, Storybook, tests and external tarball consumers.
-- [ ] Inspect npm pack --dry-run --json: ESM/types, CSS, local fonts, Inter license, tokens JSON, README, LICENSE and third-party notices; no tests/gallery source.
-- [ ] Approve removing private: true only in the reviewed publication change.
-- [ ] Configure npm 2FA and least-privilege publishing or trusted publishing with an owner-protected GitHub environment and required reviewers.
-- [ ] If adding automation, require manual dispatch, explicit version/name checks, protected environment, provenance and no publication from PRs.
-- [ ] Separately approve npm publication, GitHub Release and Pages deployment.
+[Current npm staged-publishing docs](https://docs.npmjs.com/staged-publishing/)
+require npm 11.15.0+ and add a final owner review with 2FA. This is appropriate
+for Fintrix's controlled preview. **Staging a new package creates a public
+`0.0.0-stage` placeholder**, so initial staging is itself an owner-approved
+registry write. It is not a harmless dry-run and is not performed in Phase 4.
+Trusted publisher setup uses package settings; the owner must establish the
+package first or confirm npm offers an applicable bootstrap path.
 
-No registry account, publication, Release, merge or deployment is performed by
-Phase 3. Existing ESM-only exports remain unchanged. CommonJS, SSR hydration,
-older React and every Ant 6 minor are not implied by the peer ranges.
+See [owner setup](npm-owner-setup.md) for bootstrap and exact configuration.
+For subsequent automated stages use stage-only Trusted Publisher permission;
+keep direct publication disabled. Review the staged archive and provenance before
+2FA approval. `latest` is intentional so the documented unqualified installation command works
+after approval; the version remains a 0.x public preview.
+
+## Remaining release review
+
+Confirm legal/name rights and npm publish access, approve the release diff and
+CI evidence, inspect the artifact, and complete manual keyboard/screen-reader
+review. Automated axe checks do not establish WCAG certification. CommonJS,
+SSR hydration, React before 18.3 and every Ant Design 6 minor are not verified.
+Pages retains its separate manual workflow; this workflow never deploys it.
