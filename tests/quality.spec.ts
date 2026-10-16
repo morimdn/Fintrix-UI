@@ -13,7 +13,7 @@ async function noViolations(page: Page) {
     await Promise.all(
       Array.from(
         document.querySelectorAll(
-          ".ant-modal, .ant-modal-mask, .ant-drawer-content-wrapper, .ant-popover",
+          ".ant-modal, .ant-modal-mask, .ant-drawer-content-wrapper, .ant-popover, .ant-form-item",
         ),
       )
         .flatMap((element) => element.getAnimations({ subtree: true }))
@@ -42,7 +42,7 @@ async function noViolations(page: Page) {
 for (const mode of ["light", "dark"] as const)
   for (const density of ["comfortable", "compact"] as const)
     test(`CRM accessibility and font: ${mode} ${density}`, async ({ page }) => {
-      await page.goto("/");
+      await page.goto("/?view=crm");
       await ready(page);
       if (mode === "dark")
         await page
@@ -90,7 +90,7 @@ for (const mode of ["light", "dark"] as const)
     });
 for (const mode of ["light", "dark"] as const)
   test(`showcase accessibility and screenshots: ${mode}`, async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/?view=crm");
     await ready(page);
     if (mode === "dark")
       await page.getByRole("button", { name: "Switch to dark theme" }).click();
@@ -135,7 +135,7 @@ test("mobile navigation, table scroll, touch sizes and modal", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("/?view=crm");
   await ready(page);
   await page.getByText("Compact", { exact: true }).click();
   for (const control of [
@@ -215,7 +215,7 @@ test("mobile navigation, table scroll, touch sizes and modal", async ({
 });
 test("tablet layout and keyboard resize limits", async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 900 });
-  await page.goto("/");
+  await page.goto("/?view=crm");
   await ready(page);
   expect(
     await page.evaluate(

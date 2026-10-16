@@ -153,3 +153,7 @@ storybook-static/
 test-results/
 playwright-report/
 *.tsbuildinfo
+
+.consumer-path
+
+consumer-test-results/

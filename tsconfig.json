@@ -11,5 +11,10 @@
     "esModuleInterop": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": ["src", "vite.config.ts", ".storybook"]
+  "include": [
+    "apps/showcase/src",
+    "packages/fintrix-ui/src",
+    "vite.config.ts",
+    ".storybook"
+  ]
 }
