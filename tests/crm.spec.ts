@@ -19,6 +19,10 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   );
   await expect(page.getByText("Phoenix Baker")).toHaveCount(0);
   await page.getByRole("button", { name: /Olivia Rhye/ }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("dialog")).not.toHaveClass(
+    /ant-zoom-(enter|appear)/,
+  );
   await page.getByRole("textbox", { name: "Full name" }).fill("Olivia Updated");
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
@@ -30,6 +34,10 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   ).toBeVisible();
   await page.getByRole("textbox", { name: "Search clients" }).fill("");
   await page.getByRole("button", { name: "Customize columns" }).click();
+  await expect(page.locator(".ant-popover")).toBeVisible();
+  await expect(page.locator(".ant-popover")).not.toHaveClass(
+    /ant-zoom-big-(enter|appear)/,
+  );
   await page.getByRole("checkbox", { name: "Manager", exact: true }).uncheck();
   await page.getByRole("button", { name: "Move tier left" }).click();
   await page.getByRole("button", { name: "Customize columns" }).click();
@@ -73,6 +81,13 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
     fullPage: true,
   });
   await page.getByRole("button", { name: "Add client" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("dialog")).not.toHaveClass(
+    /ant-zoom-(enter|appear)/,
+  );
+  await expect(page.getByRole("textbox", { name: "Full name" })).toHaveValue(
+    "",
+  );
   await page.getByRole("button", { name: "Create client" }).click();
   await expect(page.getByText("Enter a full name")).toBeVisible();
   await page.screenshot({
