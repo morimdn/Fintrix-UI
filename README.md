@@ -45,6 +45,12 @@ Labeled drawer navigation, 44px touch controls, reflowing metrics, single-column
 
 All previews are captured from the actual running application with Playwright. Additional light/dark, financial and tablet captures live in [docs/screenshots](docs/screenshots).
 
+## Web demo deployment
+
+The `Publish web demo` workflow builds and deploys the application from `main` to GitHub Pages. The `build:demo` script sets the project subpath `/Fintrix-UI/`, including lazy-loaded chunks and font assets. Pull requests build the same deployment artifact without publishing it.
+
+Repository owners must enable **Settings → Pages → Build and deployment → Source: GitHub Actions** once. Then run **Actions → Publish web demo → Run workflow** for the initial deployment; subsequent pushes to `main` publish automatically. The deployment job records the live URL in its `github-pages` environment after a successful release. No npm package is published by this workflow.
+
 ## Run locally
 
 Validated with Node 24 and npm 11.
