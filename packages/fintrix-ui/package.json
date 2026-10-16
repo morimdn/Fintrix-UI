@@ -4,7 +4,7 @@
   "description": "React components and design tokens for brokerage CRMs and financial applications",
   "type": "module",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "files": [
     "dist",
     "LICENSE",
