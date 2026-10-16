@@ -6,7 +6,7 @@ React and React DOM: MIT, Meta Platforms and contributors. External peers.
 Ant Design: MIT, Ant UED and contributors. External peer; its transitive
 packages retain their own notices in the consuming application.
 Inter Variable: SIL Open Font License 1.1, The Inter Project Authors
-(https://github.com/rsms/inter). Fontsource packaging: MIT. The complete Inter
+(https://github.com/rsms/inter). The installed @fontsource-variable/inter package declares OFL-1.1. The complete Inter
 license is shipped as dist/INTER-LICENSE.txt with optional self-hosted fonts.
 
 Showcase icons: Lucide, ISC with MIT-licensed Feather-derived icons, Lucide Contributors (https://lucide.dev/license).

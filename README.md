@@ -40,6 +40,9 @@ Use the tarball method below until publication is confirmed.
 
 ## Install the current artifact
 
+Before Phase 4 merges, check out [PR #6](https://github.com/morimdn/Fintrix-UI/pull/6)
+(`gh pr checkout 6`) after cloning and before building. After merge, use `main`.
+
 Use Node 24, npm and Git for repository development. Consumers use React/React DOM
 18.3 or 19 and Ant Design 6 as peers. Independent validation covers React
 18.3.1/19.3.1 × Ant 6.0.0/6.6.6; other versions in the peer ranges are not individually verified.
