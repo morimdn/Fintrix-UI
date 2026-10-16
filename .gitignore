@@ -147,3 +147,9 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# POC build and test outputs
+storybook-static/
+test-results/
+playwright-report/
+*.tsbuildinfo
