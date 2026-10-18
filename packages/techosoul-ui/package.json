@@ -45,12 +45,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morimdn/Fintrix-UI.git",
+    "url": "git+https://github.com/morimdn/Techosoul-UI.git",
     "directory": "packages/techosoul-ui"
   },
-  "homepage": "https://github.com/morimdn/Fintrix-UI#readme",
+  "homepage": "https://github.com/morimdn/Techosoul-UI#readme",
   "bugs": {
-    "url": "https://github.com/morimdn/Fintrix-UI/issues"
+    "url": "https://github.com/morimdn/Techosoul-UI/issues"
   },
   "keywords": [
     "react",

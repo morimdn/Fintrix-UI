@@ -13,8 +13,8 @@ Foundations, Components, FinTech, Accessibility, and Contribution & release.
 Deep links include `/#docs-getting-started`, `/#docs-core`, `/#docs-grid`,
 `/#docs-financial` and `/#iconography`.
 
-[Existing deployed Showcase](https://morimdn.github.io/Fintrix-UI/) ·
-[Repository](https://github.com/morimdn/Fintrix-UI) ·
+[Project-site Showcase](https://morimdn.github.io/Techosoul-UI/) ·
+[Repository](https://github.com/morimdn/Techosoul-UI) ·
 [Contributing](../CONTRIBUTING.md) · [Release checklist](releases.md)
 
 The repository has not been renamed. The deployed site may show its previous
@@ -32,3 +32,5 @@ instructions. Earlier changelog entries are also preserved.
 New runs write screenshots to `artifacts/screenshots` and measurements to
 `artifacts/validation`, uploaded by CI. See [rebrand validation](techosoul-validation.md)
 for the new candidate's evidence and limits.
+
+See [Pages deployment and future domain](pages.md) for manual deployment instructions.

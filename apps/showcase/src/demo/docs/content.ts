@@ -17,19 +17,19 @@ export const snippets = {
   feedback,
 };
 export const links = {
-  repository: "https://github.com/morimdn/Fintrix-UI",
-  docs: "https://github.com/morimdn/Fintrix-UI/tree/main/docs",
+  repository: "https://github.com/morimdn/Techosoul-UI",
+  docs: "https://github.com/morimdn/Techosoul-UI/tree/main/docs",
   installation:
-    "https://github.com/morimdn/Fintrix-UI/blob/main/docs/getting-started.md",
+    "https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md",
   contributing:
-    "https://github.com/morimdn/Fintrix-UI/blob/main/CONTRIBUTING.md",
-  releases: "https://github.com/morimdn/Fintrix-UI/blob/main/docs/releases.md",
-  live: "https://morimdn.github.io/Fintrix-UI/",
+    "https://github.com/morimdn/Techosoul-UI/blob/main/CONTRIBUTING.md",
+  releases:
+    "https://github.com/morimdn/Techosoul-UI/blob/main/docs/releases.md",
+  live: "https://morimdn.github.io/Techosoul-UI/",
 };
 export const installCommands = `# In the cloned repository (Node 24 and npm)
-git clone https://github.com/morimdn/Fintrix-UI.git
-cd Fintrix-UI
-# Before this rebrand merges: git switch feat/techosoul-rebrand
+git clone https://github.com/morimdn/Techosoul-UI.git
+cd Techosoul-UI
 npm ci
 npm run build:library
 node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
@@ -37,7 +37,7 @@ npm pack --workspace @techosoul/ui --pack-destination ./artifacts
 
 # In your separate React/TypeScript application:
 # Replace this path with the absolute path printed for your repository.
-npm install /absolute/path/to/Fintrix-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Techosoul-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 # If you use React 18, pair react@18.3.1 with react-dom@18.3.1 and React 18 types.`;
 export interface Topic {
   id: string;
@@ -68,11 +68,11 @@ export const topics: Topic[] = [
       "Install the generated artifact in your own application. The npm registry package is not available.",
     paragraphs: [
       "Repository tooling requires Node 24, npm and Git. Browser consumers need React and React DOM 18.3 or 19, Ant Design 6, and a TypeScript/ESM-capable bundler. Validated combinations are React 18.3.1 / 19.3.1 with Ant 6.0.0 / 6.6.6; peer ranges do not certify every intermediate version. Node 24 is a build-tool requirement, not browser runtime code.",
-      "Use feat/techosoul-rebrand before it merges, then updated main. The @techosoul/ui@0.3.0 package remains private until a separately reviewed owner authorization.",
+      "Use the latest merged main from morimdn/Techosoul-UI. The @techosoul/ui@0.3.0 package remains private until a separately reviewed owner authorization.",
     ],
     bullets: [
       "Check prerequisites: Node 24/npm/Git for the repository, matching React/React DOM peers for your application.",
-      "Clone the repository and check out the reviewed Phase 4 branch to build the 0.3.0 candidate before it merges.",
+      "Clone morimdn/Techosoul-UI and use the latest merged main to build the private 0.3.0 candidate.",
       "Install the repository's locked dependencies with npm ci.",
       "Build the independent library with npm run build:library.",
       "Create artifacts and run npm pack to generate techosoul-ui-0.3.0.tgz.",

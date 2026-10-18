@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
-  testIgnore: "**/consumer/**",
+  testIgnore: ["**/consumer/**", "**/pages/**"],
   use: {
     launchOptions: {
       executablePath:

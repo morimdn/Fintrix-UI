@@ -23,6 +23,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: npx playwright test --config playwright.consumer.config.ts
+      - run: npm run test:pages
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -32,6 +33,7 @@ jobs:
             artifacts/validation
             test-results
             consumer-test-results
+            pages-test-results
 
   consumers:
     runs-on: ubuntu-latest

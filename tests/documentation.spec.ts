@@ -88,7 +88,7 @@ for (const mode of ["light", "dark"]) {
         page.getByRole("link", { name: "Read repository documentation" }),
       ).toHaveAttribute(
         "href",
-        "https://github.com/morimdn/Fintrix-UI/tree/main/docs",
+        "https://github.com/morimdn/Techosoul-UI/tree/main/docs",
       );
     });
   }

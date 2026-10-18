@@ -1,7 +1,7 @@
 # Versioning and releases
 
 `@techosoul/ui@0.3.0` is the proposed first public preview, **not published**.
-This rebrand prepares a private candidate. It does not merge, stage or publish npm,
+The merged rebrand remains a private candidate. The URL migration does not stage or publish npm,
 create a GitHub Release, deploy Pages, or change DNS. The registered techosoul.com
 domain does not establish npm scope ownership.
 Use SemVer; preview support remains limited to the tested environments.
@@ -79,3 +79,10 @@ CI evidence, inspect the artifact, and complete manual keyboard/screen-reader
 review. Automated axe checks do not establish WCAG certification. CommonJS,
 SSR hydration, React before 18.3 and every Ant Design 6 minor are not verified.
 Pages retains its separate manual workflow; this workflow never deploys it.
+
+## Repository and web deployment
+
+The current repository is [morimdn/Techosoul-UI](https://github.com/morimdn/Techosoul-UI).
+Verify that any npm Trusted Publisher binding reflects this name before separately
+authorized staging. npm status and safeguards are unchanged by the URL migration.
+See [Pages instructions](pages.md) for the independent, manual-only web workflow.

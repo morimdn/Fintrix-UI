@@ -6,11 +6,11 @@ It combines Ant Design 6 controls with financial display
 components, semantic Light/Dark tokens, two density modes and Lucide icon conventions.
 It extends Ant Design; it is not a standalone replacement for it.
 
-[Live Showcase](https://morimdn.github.io/Fintrix-UI/) ·
+[Live Showcase](https://morimdn.github.io/Techosoul-UI/) ·
 [Component documentation](docs/components.md) ·
 [Iconography](docs/customization.md#icons) ·
 [Installation guide](docs/getting-started.md) ·
-[GitHub repository](https://github.com/morimdn/Fintrix-UI)
+[GitHub repository](https://github.com/morimdn/Techosoul-UI)
 
 ## Current candidate
 
@@ -22,10 +22,12 @@ Owner control of the npm scope and publishing rights must be confirmed before
 any registry write. No publication, staging, deployment or GitHub Release is
 part of this rebrand.
 
-The GitHub repository and current Pages URL still use `Fintrix-UI`; those real
-URLs are intentionally retained. The linked deployed site may show the earlier
-brand until a separately authorized deployment. See the
-[migration and owner checklist](docs/techosoul-rebrand.md),
+The repository is [morimdn/Techosoul-UI](https://github.com/morimdn/Techosoul-UI).
+The project-site URL is `https://morimdn.github.io/Techosoul-UI/`; deployment
+remains manual. See [Pages deployment and future custom domain](docs/pages.md)
+for owner instructions. `ui.techosoul.com` is a future UI host, while
+`techosoul.com` remains reserved for the umbrella-brand website.
+See the [migration checklist](docs/techosoul-rebrand.md),
 [release guide](docs/releases.md) and [owner setup](docs/npm-owner-setup.md).
 
 ### Future registry installation (only after publication)
@@ -41,16 +43,15 @@ Use the tarball method below until publication is confirmed.
 
 ## Install the current artifact
 
-Before this rebrand merges, check out `feat/techosoul-rebrand` after cloning.
-After owner review and merge, use the updated `main`.
+Use the latest merged `main` after cloning.
 
 Use Node 24, npm and Git for repository development. Consumers use React/React DOM
 18.3 or 19 and Ant Design 6 as peers. Independent validation covers React
 18.3.1/19.3.1 × Ant 6.0.0/6.6.6; other versions in the peer ranges are not individually verified.
 
 ```sh
-git clone https://github.com/morimdn/Fintrix-UI.git
-cd Fintrix-UI
+git clone https://github.com/morimdn/Techosoul-UI.git
+cd Techosoul-UI
 npm ci
 npm run build:library
 node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
@@ -60,7 +61,7 @@ npm pack --workspace @techosoul/ui --pack-destination ./artifacts
 In a separate React app, install the resulting tarball by its actual absolute path:
 
 ```sh
-npm install /absolute/path/to/Fintrix-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Techosoul-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
 Follow the [complete Getting Started guide](docs/getting-started.md) for a new

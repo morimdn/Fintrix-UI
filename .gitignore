@@ -159,3 +159,5 @@ playwright-report/
 consumer-test-results/
 
 artifacts/
+
+pages-test-results/

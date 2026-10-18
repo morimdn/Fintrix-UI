@@ -6,11 +6,11 @@ It combines Ant Design 6 controls with financial display
 components, semantic Light/Dark tokens, two density modes and Lucide icon conventions.
 It extends Ant Design; it is not a standalone replacement for it.
 
-[Live Showcase](https://morimdn.github.io/Fintrix-UI/) ·
-[Component documentation](https://github.com/morimdn/Fintrix-UI/blob/main/docs/components.md) ·
-[Iconography](https://github.com/morimdn/Fintrix-UI/blob/main/docs/customization.md#icons) ·
-[Installation guide](https://github.com/morimdn/Fintrix-UI/blob/main/docs/getting-started.md) ·
-[GitHub repository](https://github.com/morimdn/Fintrix-UI)
+[Live Showcase](https://morimdn.github.io/Techosoul-UI/) ·
+[Component documentation](https://github.com/morimdn/Techosoul-UI/blob/main/docs/components.md) ·
+[Iconography](https://github.com/morimdn/Techosoul-UI/blob/main/docs/customization.md#icons) ·
+[Installation guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md) ·
+[GitHub repository](https://github.com/morimdn/Techosoul-UI)
 
 ## Current candidate
 
@@ -22,11 +22,13 @@ Owner control of the npm scope and publishing rights must be confirmed before
 any registry write. No publication, staging, deployment or GitHub Release is
 part of this rebrand.
 
-The GitHub repository and current Pages URL still use `Fintrix-UI`; those real
-URLs are intentionally retained. The linked deployed site may show the earlier
-brand until a separately authorized deployment. See the
-[migration and owner checklist](https://github.com/morimdn/Fintrix-UI/blob/main/docs/techosoul-rebrand.md),
-[release guide](https://github.com/morimdn/Fintrix-UI/blob/main/docs/releases.md) and [owner setup](https://github.com/morimdn/Fintrix-UI/blob/main/docs/npm-owner-setup.md).
+The repository is [morimdn/Techosoul-UI](https://github.com/morimdn/Techosoul-UI).
+The project-site URL is `https://morimdn.github.io/Techosoul-UI/`; deployment
+remains manual. See [Pages deployment and future custom domain](https://github.com/morimdn/Techosoul-UI/blob/main/docs/pages.md)
+for owner instructions. `ui.techosoul.com` is a future UI host, while
+`techosoul.com` remains reserved for the umbrella-brand website.
+See the [migration checklist](https://github.com/morimdn/Techosoul-UI/blob/main/docs/techosoul-rebrand.md),
+[release guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/releases.md) and [owner setup](https://github.com/morimdn/Techosoul-UI/blob/main/docs/npm-owner-setup.md).
 
 ### Future registry installation (only after publication)
 
@@ -41,16 +43,15 @@ Use the tarball method below until publication is confirmed.
 
 ## Install the current artifact
 
-Before this rebrand merges, check out `feat/techosoul-rebrand` after cloning.
-After owner review and merge, use the updated `main`.
+Use the latest merged `main` after cloning.
 
 Use Node 24, npm and Git for repository development. Consumers use React/React DOM
 18.3 or 19 and Ant Design 6 as peers. Independent validation covers React
 18.3.1/19.3.1 × Ant 6.0.0/6.6.6; other versions in the peer ranges are not individually verified.
 
 ```sh
-git clone https://github.com/morimdn/Fintrix-UI.git
-cd Fintrix-UI
+git clone https://github.com/morimdn/Techosoul-UI.git
+cd Techosoul-UI
 npm ci
 npm run build:library
 node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
@@ -60,12 +61,12 @@ npm pack --workspace @techosoul/ui --pack-destination ./artifacts
 In a separate React app, install the resulting tarball by its actual absolute path:
 
 ```sh
-npm install /absolute/path/to/Fintrix-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Techosoul-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
-Follow the [complete Getting Started guide](https://github.com/morimdn/Fintrix-UI/blob/main/docs/getting-started.md) for a new
+Follow the [complete Getting Started guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md) for a new
 React/TypeScript app, CSS and optional local Inter fonts, TechosoulProvider, a wallet
-and working theme/density controls. The [complete App example](https://github.com/morimdn/Fintrix-UI/blob/main/examples/documentation/App.tsx)
+and working theme/density controls. The [complete App example](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/App.tsx)
 is compiled against the installed artifact, along with the other documentation examples.
 
 ## Components and customization
@@ -86,8 +87,8 @@ is compiled against the installed artifact, along with the other documentation e
 | Composition         | Card, Space, MetricCard (legacy decorative synthetic sparkline)                                                                            |
 
 Standard controls are Ant Design re-exports; Techosoul wrappers add the documented
-semantics and behavior. Use [component guidance](https://github.com/morimdn/Fintrix-UI/blob/main/docs/components.md) to choose
-between controls and [customization](https://github.com/morimdn/Fintrix-UI/blob/main/docs/customization.md) for typed theme/icon
+semantics and behavior. Use [component guidance](https://github.com/morimdn/Techosoul-UI/blob/main/docs/components.md) to choose
+between controls and [customization](https://github.com/morimdn/Techosoul-UI/blob/main/docs/customization.md) for typed theme/icon
 overrides. Financial values are display-only; decimal strings are preferred.
 No ledger, trading engine, broker integration, payment system or live data feed is included.
 
@@ -104,7 +105,7 @@ Local deep links such as `/#docs-getting-started`, `/#docs-grid` and `/#iconogra
 open the relevant section. Browse the Iconography tab to search
 36 curated icons and copy size/stroke/tone examples; Lucide remains usable directly.
 
-Historical visual evidence is retained in [the screenshot archive](https://github.com/morimdn/Fintrix-UI/blob/main/docs/screenshots/README.md);
+Historical visual evidence is retained in [the screenshot archive](https://github.com/morimdn/Techosoul-UI/blob/main/docs/screenshots/README.md);
 it predates the rebrand. Fresh screenshots are produced under `artifacts/screenshots`
 and uploaded by CI.
 
@@ -115,9 +116,9 @@ mobile navigation uses a Drawer.
 
 The CRM uses illustrative records, not live customer or market data.
 
-More [real screenshots](https://github.com/morimdn/Fintrix-UI/blob/main/docs/screenshots/README.md),
-[financial examples](https://github.com/morimdn/Fintrix-UI/blob/main/examples/documentation/Financial.tsx) and
-[DataGrid example](https://github.com/morimdn/Fintrix-UI/blob/main/examples/documentation/Grid.tsx).
+More [real screenshots](https://github.com/morimdn/Techosoul-UI/blob/main/docs/screenshots/README.md),
+[financial examples](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/Financial.tsx) and
+[DataGrid example](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/Grid.tsx).
 
 ## Validate and contribute
 
@@ -140,14 +141,14 @@ React 18/19 with Ant 6 endpoints and selected Firefox/WebKit workflows.
 Automated accessibility checks do not establish WCAG certification; manual
 assistive-technology testing remains part of release review.
 
-Open focused GitHub pull requests targeting main. Follow [Contributing](https://github.com/morimdn/Fintrix-UI/blob/main/CONTRIBUTING.md),
+Open focused GitHub pull requests targeting main. Follow [Contributing](https://github.com/morimdn/Techosoul-UI/blob/main/CONTRIBUTING.md),
 include relevant test evidence, and preserve semantic tokens and synthetic data.
-See [architecture](https://github.com/morimdn/Fintrix-UI/blob/main/docs/architecture.md), [token contract](https://github.com/morimdn/Fintrix-UI/blob/main/docs/tokens.md),
-[Phase 3 validation](https://github.com/morimdn/Fintrix-UI/blob/main/docs/phase-three-report.md),
-[documentation refinement validation](https://github.com/morimdn/Fintrix-UI/blob/main/docs/documentation-refinement.md), and
-[release checklist](https://github.com/morimdn/Fintrix-UI/blob/main/docs/releases.md). Older validation reports describe their
+See [architecture](https://github.com/morimdn/Techosoul-UI/blob/main/docs/architecture.md), [token contract](https://github.com/morimdn/Techosoul-UI/blob/main/docs/tokens.md),
+[Phase 3 validation](https://github.com/morimdn/Techosoul-UI/blob/main/docs/phase-three-report.md),
+[documentation refinement validation](https://github.com/morimdn/Techosoul-UI/blob/main/docs/documentation-refinement.md), and
+[release checklist](https://github.com/morimdn/Techosoul-UI/blob/main/docs/releases.md). Older validation reports describe their
 original test dates, not current deployment status.
 
-MIT licensed. See [LICENSE](https://github.com/morimdn/Fintrix-UI/blob/main/LICENSE) and [third-party attribution](https://github.com/morimdn/Fintrix-UI/blob/main/docs/third-party-notices.md).
+MIT licensed. See [LICENSE](https://github.com/morimdn/Techosoul-UI/blob/main/LICENSE) and [third-party attribution](https://github.com/morimdn/Techosoul-UI/blob/main/docs/third-party-notices.md).
 Techosoul UI is independent and has no implied affiliation with MetaTrader,
 cTrader or Ant Design. The editable Figma UI Kit and official npm release remain future deliverables.
