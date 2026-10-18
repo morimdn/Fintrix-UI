@@ -111,7 +111,7 @@ writeFileSync(
 const readme = readFileSync(resolve(root, "README.md"), "utf8").replace(
   /(!?\[[^\]]*\])\((?!https?:|#)([^)]+)\)/g,
   (_, label, path) =>
-    `${label}(${label.startsWith("!") ? "https://raw.githubusercontent.com/morimdn/Fintrix-UI/main/" : "https://github.com/morimdn/Fintrix-UI/blob/main/"}${path})`,
+    `${label}(${label.startsWith("!") ? "https://raw.githubusercontent.com/morimdn/Techosoul-UI/main/" : "https://github.com/morimdn/Techosoul-UI/blob/main/"}${path})`,
 );
 writeFileSync(`${pkg}/README.md`, readme);
 copyFileSync(resolve(root, "LICENSE"), `${pkg}/LICENSE`);

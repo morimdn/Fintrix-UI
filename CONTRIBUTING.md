@@ -30,5 +30,6 @@ authorization. See [migration and owner actions](docs/techosoul-rebrand.md).
 Historical reports and screenshots retain their original results; write new
 evidence to `artifacts/validation` and `artifacts/screenshots`. Run build/script
 checks before browser checks: the build recreates `dist`, which a running dev
-server consumes. The current repository name and Pages base stay `Fintrix-UI`
-until a separately authorized repository rename.
+server consumes. The repository is `morimdn/Techosoul-UI`; `npm run test:pages` builds and tests
+the production site at `/Techosoul-UI/`. See [Pages instructions](docs/pages.md)
+for manual deployment and the future custom-domain plan.

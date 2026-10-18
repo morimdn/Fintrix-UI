@@ -17,12 +17,11 @@ individually tested. Node 24 is for repository tooling, not code shipped to the 
 ## 2. Obtain the source
 
 ```sh
-git clone https://github.com/morimdn/Fintrix-UI.git
-cd Fintrix-UI
+git clone https://github.com/morimdn/Techosoul-UI.git
+cd Techosoul-UI
 ```
 
-Before the rebrand merges, use `git switch feat/techosoul-rebrand`. After merge,
-use updated `main`. The candidate remains private at version `0.3.0`.
+Use the latest merged `main`. The candidate remains private at version `0.3.0`.
 
 ## 3. Install repository dependencies
 
@@ -66,7 +65,7 @@ npm install
 Install the real tarball path, replacing the clearly marked example path below:
 
 ```sh
-npm install /absolute/path/to/Fintrix-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Techosoul-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
 For an existing React 18 application use `react@18.3.1 react-dom@18.3.1` instead

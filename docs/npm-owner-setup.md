@@ -3,7 +3,7 @@
 The target is **@techosoul/ui@0.3.0**. The library remains `private: true`, and
 the monorepo root must remain private permanently. Registration of techosoul.com
 does **not** prove npm organization control. No account, registry, DNS or hosting
-configuration is changed by this rebrand.
+configuration is changed by the repository URL migration.
 
 1. Sign in to your own npm account, verify email, enable 2FA and retain recovery
    methods securely. Use your own interactive `npm login`; do not commit or share
@@ -16,8 +16,8 @@ configuration is changed by this rebrand.
    **npm-release** environment: restrict to main, require owner review, and
    prevent self-review/bypass where supported. If reviewers cannot be enforced,
    leave release enablement off until an equivalent owner-controlled process is
-   agreed. Keep `NPM_RELEASE_ENABLED` unset/false during rebrand review.
-3. Review and merge the rebrand only when explicitly approved. Close/supersede
+   agreed. Keep `NPM_RELEASE_ENABLED` unset/false until separate release authorization.
+3. The rebrand is merged. Close/supersede
    old release-authorization PR #8; it authorizes the previous package identity
    and must not be reused. After scope control is verified, create a fresh,
    separately reviewed authorization PR setting **only the library's** `private`
@@ -38,7 +38,7 @@ configuration is changed by this rebrand.
    | Field             | Value                                                   |
    | ----------------- | ------------------------------------------------------- |
    | Organization/user | `morimdn`                                               |
-   | Repository        | `Fintrix-UI` (until separately renamed)                 |
+   | Repository        | `Techosoul-UI`                                          |
    | Workflow filename | `npm-release.yml`                                       |
    | Environment       | `npm-release`                                           |
    | Allowed actions   | Stage only; direct publish and dist-tag writes disabled |
@@ -46,8 +46,9 @@ configuration is changed by this rebrand.
    Require 2FA and disallow traditional publishing tokens. The workflow retains
    `contents: read`, `actions: read`, and job-only `id-token: write`; no stored
    npm token is required. Reconfirm npm's current publisher setup/expiry rules
-   before the first stage. After a repository rename, update this binding before
-   enabling any workflow; see the [rename checklist](techosoul-rebrand.md).
+   before the first stage. The repository has been renamed: verify the binding
+   uses `morimdn/Techosoul-UI` before enabling any npm workflow. GitHub redirects
+   do not update npm publisher bindings. See the [checklist](techosoul-rebrand.md).
 
 6. Only after verification, set protected-environment
    `NPM_SCOPE_OWNER_CONFIRMED=techosoul`. This records the owner's attestation;
