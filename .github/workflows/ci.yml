@@ -69,6 +69,8 @@ jobs:
       - run: npx playwright install --with-deps firefox webkit
       - name: Repeat Firefox documentation boundary-key regression
         run: npx playwright test --config playwright.engines.config.ts --project=firefox tests/documentation.spec.ts --grep "long documentation scroll region" --repeat-each=20 --workers=2
+      - name: Repeat WebKit dark documentation accessibility regression
+        run: npx playwright test --config playwright.engines.config.ts --project=webkit tests/documentation.spec.ts --grep "documentation deep links and accessibility dark (desktop|mobile)" --repeat-each=20 --workers=2
       - name: Repeat WebKit tooltip regression
         run: npx playwright test --config playwright.engines.config.ts --project=webkit tests/shell.spec.ts --grep "app shell mobile-landscape dark|theme tooltip supports keyboard focus" --repeat-each=20 --workers=2
       - run: npx playwright test --config playwright.engines.config.ts --workers=2
