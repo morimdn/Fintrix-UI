@@ -13,7 +13,27 @@ export function CodeExample({
   return (
     <details className="doc-code" open={expanded || undefined}>
       <summary>{title} — React / TypeScript</summary>
-      <pre tabIndex={0} aria-label={`${title} source code`}>
+      <pre
+        tabIndex={0}
+        aria-label={`${title} source code`}
+        onKeyDown={(event) => {
+          if (
+            event.target !== event.currentTarget ||
+            event.altKey ||
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey
+          )
+            return;
+          if (event.key === "Home" || event.key === "End") {
+            // Native boundary keys can scroll an ancestor when this nested
+            // region is already at its boundary. Keep focus and scrolling here.
+            event.preventDefault();
+            event.currentTarget.scrollTop =
+              event.key === "Home" ? 0 : event.currentTarget.scrollHeight;
+          }
+        }}
+      >
         <code>{code}</code>
       </pre>
       <Button

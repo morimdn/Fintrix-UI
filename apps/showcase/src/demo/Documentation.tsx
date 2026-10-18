@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import {
   CurrencyAmount,
   Checkbox,
@@ -23,7 +23,7 @@ import {
 import { CodeExample } from "./docs/CodeExample";
 export function Documentation({ visible = true }: { visible?: boolean }) {
   const [active, setActive] = useState("overview");
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!visible) return;
     const scroller = document.querySelector(".main-scroll");
     function openHash() {
@@ -45,11 +45,12 @@ export function Documentation({ visible = true }: { visible?: boolean }) {
         .at(-1);
       if (current) setActive(current.id);
     }
-    const frame = requestAnimationFrame(openHash);
+    // The lazy documentation DOM exists at commit. Complete anchor focus before
+    // paint so a deferred frame cannot override the next keyboard interaction.
+    openHash();
     window.addEventListener("hashchange", openHash);
     scroller?.addEventListener("scroll", updateActive, { passive: true });
     return () => {
-      cancelAnimationFrame(frame);
       window.removeEventListener("hashchange", openHash);
       scroller?.removeEventListener("scroll", updateActive);
     };

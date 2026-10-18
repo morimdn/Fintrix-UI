@@ -118,6 +118,8 @@ test("long documentation scroll region supports boundary keys without intercepti
   page,
 }) => {
   await page.goto("/#docs-developers");
+  await expect(page.locator("#heading-developers")).toBeFocused();
+  await page.evaluate(() => document.fonts.ready);
   const scroller = page.getByLabel("Scrollable page content", { exact: true });
   await scroller.focus();
   await expect(scroller).toBeFocused();
@@ -132,45 +134,33 @@ test("long documentation scroll region supports boundary keys without intercepti
     )
     .toBeLessThan(2);
   await page.goto("/#docs-getting-started");
+  await expect(page.locator("#heading-getting-started")).toBeFocused();
+  await expect(page.locator("#heading-getting-started")).toBeInViewport();
   const code = page.getByLabel("Getting Started source code", { exact: true });
   await code.focus();
-  const before = await code.evaluate((el) => {
-    const outer = document.querySelector(".main-scroll")!;
-    const state = () => ({
-      outer: outer.scrollTop,
-      inner: el.scrollTop,
-      height: el.scrollHeight,
-      client: el.clientHeight,
-      active: document.activeElement?.getAttribute("aria-label"),
-      hash: location.hash,
-    });
-    const events: unknown[] = [];
-    (window as any).__scrollDiagnostic = { before: state(), events };
-    window.addEventListener("keydown", (event) =>
-      events.push({
-        key: event.key,
-        target: (event.target as HTMLElement).getAttribute("aria-label"),
-        prevented: event.defaultPrevented,
-        ...state(),
-      }),
-    );
-    return state();
-  });
+  await expect(code).toBeFocused();
+  const outerTop = await scroller.evaluate((el) => el.scrollTop);
+  expect(outerTop).toBeGreaterThan(0);
+  // Exercise both boundaries inside the nested region, including an already
+  // reached boundary. The shell must not consume these descendant key events.
+  await page.keyboard.press("End");
+  await expect
+    .poll(() =>
+      code.evaluate((el) =>
+        Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop),
+      ),
+    )
+    .toBeLessThan(2);
+  await expect
+    .poll(() => scroller.evaluate((el) => el.scrollTop))
+    .toBe(outerTop);
+  await page.keyboard.press("Home");
+  await expect.poll(() => code.evaluate((el) => el.scrollTop)).toBe(0);
   await page.keyboard.press("Home");
   await expect(code).toBeFocused();
-  console.log(
-    "scroll diagnostic",
-    before,
-    await page.evaluate(() => ({
-      ...(window as any).__scrollDiagnostic,
-      after: {
-        outer: document.querySelector(".main-scroll")!.scrollTop,
-        inner: document.querySelector<HTMLElement>(
-          '[aria-label="Getting Started source code"]',
-        )!.scrollTop,
-      },
-    })),
-  );
+  await expect
+    .poll(() => scroller.evaluate((el) => el.scrollTop))
+    .toBe(outerTop);
   await expect
     .poll(() => scroller.evaluate((el) => el.scrollTop))
     .toBeGreaterThan(0);
