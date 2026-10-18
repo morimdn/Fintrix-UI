@@ -8,7 +8,7 @@ import {
   RangeController,
   Select,
   Switch,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 
 export default function Preferences() {
   const [range, setRange] = useState<[number, number]>([20, 80]);

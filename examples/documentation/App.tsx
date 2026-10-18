@@ -1,14 +1,14 @@
 import {
   Button,
-  FintrixProvider,
+  TechosoulProvider,
   WalletBalanceCard,
-  useFintrixTheme,
-} from "fintrix-ui";
-import "fintrix-ui/styles.css";
-import "fintrix-ui/fonts.css"; // Optional self-hosted Inter Variable
+  useTechosoulTheme,
+} from "@techosoul/ui";
+import "@techosoul/ui/styles.css";
+import "@techosoul/ui/fonts.css"; // Optional self-hosted Inter Variable
 
 function WalletPage() {
-  const { mode, setMode, density, setDensity } = useFintrixTheme();
+  const { mode, setMode, density, setDensity } = useTechosoulTheme();
   return (
     <main style={{ padding: 24 }}>
       <h1>My wallet</h1>
@@ -34,7 +34,7 @@ function WalletPage() {
 // Replace src/App.tsx in a React/TypeScript Vite app with this file.
 export default function App() {
   return (
-    <FintrixProvider
+    <TechosoulProvider
       initialMode="dark"
       initialDensity="comfortable"
       colorOverrides={{
@@ -43,6 +43,6 @@ export default function App() {
       }}
     >
       <WalletPage />
-    </FintrixProvider>
+    </TechosoulProvider>
   );
 }

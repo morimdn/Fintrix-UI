@@ -98,13 +98,13 @@ for (const mode of ["light", "dark"] as const) {
         expect(
           (
             await new AxeBuilder({ page })
-              .include(".fx-data-table")
+              .include(".techosoul-data-table")
               .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
               .analyze()
           ).violations,
         ).toEqual([]);
         await page.screenshot({
-          path: `docs/screenshots/balance-${layout}-${mode}-${density}-${testInfo.project.name || "chromium"}.png`,
+          path: `artifacts/screenshots/balance-${layout}-${mode}-${density}-${testInfo.project.name || "chromium"}.png`,
         });
       });
     }

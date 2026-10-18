@@ -1,6 +1,6 @@
 # Third-party attribution
 
-Fintrix UI: MIT (see LICENSE).
+Techosoul UI: MIT (see LICENSE).
 
 React and React DOM: MIT, Meta Platforms and contributors. External peers.
 Ant Design: MIT, Ant UED and contributors. External peer; its transitive
@@ -14,7 +14,7 @@ Build/test tools include Vite, TypeScript, Storybook, Vitest, Testing Library,
 Playwright and axe-core; their upstream licenses remain applicable. This notice
 is attribution, not a full transitive software bill of materials.
 
-Fintrix UI is an independent project. It is not an official MetaTrader, cTrader
+Techosoul UI is an independent project. It is not an official MetaTrader, cTrader
 or Ant Design product and has no implied affiliation or endorsement.
 
 The complete Lucide ISC and Feather MIT notices are included in the package at

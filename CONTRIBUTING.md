@@ -3,7 +3,7 @@
 Use Node 24 and npm. Run `npm ci` then `npm run build` before starting the
 showcase (`npm run dev`). The library must be rebuilt after package source edits.
 
-Run `npm test`, `npm run build-storybook`, `npm run validate:consumer`,
+Run `npm run test:scripts`, `npm run inspect:package`, `npm run docs:check`, `npm test`, `npm run build-storybook`, `npm run validate:consumer`,
 `npx playwright install --with-deps chromium`, `npm run test:e2e` and
 `npx playwright test --config playwright.consumer.config.ts` before a PR.
 Consumer validation must follow the final library build. Do not replace tarball
@@ -24,5 +24,11 @@ tarball. Use stable repository main links in public documentation, and clearly
 label features that exist only in a pending PR. Open a focused PR targeting main
 with a short explanation and validation evidence; do not publish from a PR.
 
-Phase 2 is deployed; Phase 3 remains in PR #5 until separately approved.
-See docs/releases.md for the current status and publication boundary.
+Techosoul UI is a private `@techosoul/ui@0.3.0` candidate. Both root and library
+remain private; scope ownership must be confirmed before separate release
+authorization. See [migration and owner actions](docs/techosoul-rebrand.md).
+Historical reports and screenshots retain their original results; write new
+evidence to `artifacts/validation` and `artifacts/screenshots`. Run build/script
+checks before browser checks: the build recreates `dist`, which a running dev
+server consumes. The current repository name and Pages base stay `Fintrix-UI`
+until a separately authorized repository rename.

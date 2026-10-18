@@ -1,5 +1,5 @@
 import { App, Form, Input, Select, Divider, InputNumber, Alert } from "antd";
-import { FormModal } from "fintrix-ui";
+import { FormModal } from "@techosoul/ui";
 import { useEffect } from "react";
 import type { Client } from "./data";
 export function ClientModal({

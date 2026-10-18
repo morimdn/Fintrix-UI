@@ -14,8 +14,8 @@ import {
   Layers,
   ArrowUpRight,
 } from "lucide-react";
-import { useFintrixTheme } from "fintrix-ui";
-import { IconButton } from "fintrix-ui";
+import { useTechosoulTheme } from "@techosoul/ui";
+import { IconButton } from "@techosoul/ui";
 const CRM = lazy(() => import("./demo/CRM").then((m) => ({ default: m.CRM })));
 const Showcase = lazy(() =>
   import("./demo/Showcase").then((m) => ({ default: m.Showcase })),
@@ -28,7 +28,7 @@ export default function App() {
       : "showcase",
   );
   const [navigationOpen, setNavigationOpen] = useState(false);
-  const { mode, setMode, density, setDensity } = useFintrixTheme();
+  const { mode, setMode, density, setDensity } = useTechosoulTheme();
   function navigate(next: string) {
     setView(next);
     setNavigationOpen(false);
@@ -44,12 +44,12 @@ export default function App() {
           <span className="brand-mark">
             <Activity size={24} />
           </span>
-          fintrix<span className="brand-ui">UI</span>
+          Techosoul<span className="brand-ui">UI</span>
         </a>
         <div className="workspace">
-          <span className="workspace-icon">F</span>
+          <span className="workspace-icon">T</span>
           <div>
-            <strong>Fintrix UI</strong>
+            <strong>Techosoul UI</strong>
             <small>Open-source design system</small>
           </div>
         </div>

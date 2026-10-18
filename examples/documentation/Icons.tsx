@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Settings, Wallet } from "lucide-react";
-import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui";
+import { TechosoulIcon, IconButton, WalletBalanceCard } from "@techosoul/ui";
 
 export default function Icons() {
   const [status, setStatus] = useState("Ready");
   return (
     <>
-      <FintrixIcon icon={Wallet} size={20} strokeWidth={2} />
-      <FintrixIcon icon={Wallet} tone="primary" label="Wallet" />
+      <TechosoulIcon icon={Wallet} size={20} strokeWidth={2} />
+      <TechosoulIcon icon={Wallet} tone="primary" label="Wallet" />
       <IconButton
         label="Wallet settings"
         icon={<Settings size={20} />}

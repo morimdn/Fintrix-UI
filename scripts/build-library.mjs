@@ -12,7 +12,7 @@ import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 const require = createRequire(import.meta.url);
 const root = resolve(import.meta.dirname, "..");
-const pkg = resolve(root, "packages/fintrix-ui");
+const pkg = resolve(root, "packages/techosoul-ui");
 const typescriptManifest = require.resolve("typescript/package.json");
 const tsc = resolve(
   dirname(typescriptManifest),

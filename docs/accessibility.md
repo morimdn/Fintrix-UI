@@ -1,6 +1,6 @@
 # Accessibility
 
-Ant Design supplies control and overlay behavior. Fintrix adds semantic tokens,
+Ant Design supplies control and overlay behavior. Techosoul adds semantic tokens,
 visible focus, named icon buttons, keyboard resize sliders, numeric alternatives
 to range dragging and text accompanying financial/status colors. Providers scope
 theme variables to overlays. Public documentation keeps native anchor navigation.

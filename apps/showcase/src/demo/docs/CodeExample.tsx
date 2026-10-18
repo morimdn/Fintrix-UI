@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "fintrix-ui";
+import { Button } from "@techosoul/ui";
 export function CodeExample({
   title,
   code,

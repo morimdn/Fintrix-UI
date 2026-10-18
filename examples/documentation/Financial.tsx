@@ -11,7 +11,7 @@ import {
   SymbolPriceDisplay,
   TransactionStatus,
   WalletBalanceCard,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 
 export default function FinancialExamples() {
   return (

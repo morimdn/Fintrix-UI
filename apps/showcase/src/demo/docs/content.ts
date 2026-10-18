@@ -29,15 +29,15 @@ export const links = {
 export const installCommands = `# In the cloned repository (Node 24 and npm)
 git clone https://github.com/morimdn/Fintrix-UI.git
 cd Fintrix-UI
-# Before building Phase 3 until merge: gh pr checkout 5
+# Before this rebrand merges: git switch feat/techosoul-rebrand
 npm ci
 npm run build:library
-mkdir -p artifacts
-npm pack --workspace fintrix-ui --pack-destination ./artifacts
+node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
+npm pack --workspace @techosoul/ui --pack-destination ./artifacts
 
 # In your separate React/TypeScript application:
 # Replace this path with the absolute path printed for your repository.
-npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Fintrix-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 # If you use React 18, pair react@18.3.1 with react-dom@18.3.1 and React 18 types.`;
 export interface Topic {
   id: string;
@@ -56,8 +56,8 @@ export const topics: Topic[] = [
     summary:
       "A React foundation for teams building brokerage CRMs, wallet interfaces and risk dashboards.",
     paragraphs: [
-      "Fintrix adds financial display components, semantic tokens, density, icon conventions and grid extensions to Ant Design 6. Standard controls remain Ant Design components; this is not a replacement framework. The brokerage CRM is an example application using synthetic records, separate from the reusable library.",
-      "Release status: Phase 3 is merged and deployed. Phase 4 prepares fintrix-ui@0.3.0 as a private release candidate. No npm publication, GitHub Release or editable Figma UI Kit exists. Registry installation (npm install fintrix-ui antd) is a future instruction, usable only after publication.",
+      "Techosoul adds financial display components, semantic tokens, density, icon conventions and grid extensions to Ant Design 6. Standard controls remain Ant Design components; this is not a replacement framework. The brokerage CRM is an example application using synthetic records, separate from the reusable library.",
+      "Techosoul UI is the React design system under Techosoul. The @techosoul/ui@0.3.0 candidate remains private. The owner has registered techosoul.com, but npm organization control and publishing rights must be confirmed separately. Registry installation (npm install @techosoul/ui antd) is a future instruction, usable only after owner-approved publication.",
     ],
   },
   {
@@ -68,17 +68,17 @@ export const topics: Topic[] = [
       "Install the generated artifact in your own application. The npm registry package is not available.",
     paragraphs: [
       "Repository tooling requires Node 24, npm and Git. Browser consumers need React and React DOM 18.3 or 19, Ant Design 6, and a TypeScript/ESM-capable bundler. Validated combinations are React 18.3.1 / 19.3.1 with Ant 6.0.0 / 6.6.6; peer ranges do not certify every intermediate version. Node 24 is a build-tool requirement, not browser runtime code.",
-      "Use the reviewed Phase 4 checkout for the fintrix-ui@0.3.0 candidate. Phase 3 APIs are already on main. The package remains private until explicit owner approval.",
+      "Use feat/techosoul-rebrand before it merges, then updated main. The @techosoul/ui@0.3.0 package remains private until a separately reviewed owner authorization.",
     ],
     bullets: [
       "Check prerequisites: Node 24/npm/Git for the repository, matching React/React DOM peers for your application.",
       "Clone the repository and check out the reviewed Phase 4 branch to build the 0.3.0 candidate before it merges.",
       "Install the repository's locked dependencies with npm ci.",
       "Build the independent library with npm run build:library.",
-      "Create artifacts and run npm pack to generate fintrix-ui-0.3.0.tgz.",
+      "Create artifacts and run npm pack to generate techosoul-ui-0.3.0.tgz.",
       "In a separate React/TypeScript app, install the tarball by its real absolute path with compatible peers. The installation guide also explains creating a fresh Vite app.",
       "Import styles.css once; fonts.css optionally serves Inter locally. Remove conflicting scaffold CSS such as Vite's centered-body index.css.",
-      "Initialize FintrixProvider around your application. Call useFintrixTheme only inside the provider.",
+      "Initialize TechosoulProvider around your application. Call useTechosoulTheme only inside the provider.",
       "Replace src/App.tsx with the complete wallet/button example below. Retain main.tsx mounting App into #root.",
       "Run the consumer app, switch Light/Dark and Comfortable/Compact using the labeled buttons, then verify its production build.",
     ],
@@ -102,10 +102,10 @@ export const topics: Topic[] = [
     summary:
       "Choose semantic roles instead of copying hex values from a screenshot.",
     paragraphs: [
-      "Primitive values are raw foundations such as spacing, font sizes and palette hex values. Semantic roles describe intent: canvas, surface and elevated are backgrounds; text and muted are foregrounds. Fintrix exposes semantic light/dark palettes rather than a public numbered brand-color scale.",
+      "Primitive values are raw foundations such as spacing, font sizes and palette hex values. Semantic roles describe intent: canvas, surface and elevated are backgrounds; text and muted are foregrounds. Techosoul exposes semantic light/dark palettes rather than a public numbered brand-color scale.",
       "positive / negative / neutral describe financial direction. success / warning / danger / info describe workflow feedback. primary is an accent foreground; action is a filled-button background paired with onAction. Never substitute a dark filled-action color for a readable outlined-button foreground.",
-      "getTokens(mode, density, overrides?) and cssVariables(mode, density, overrides?) resolve the contract. FintrixProvider.colorOverrides accepts separate typed light/dark partial maps and feeds both Ant ConfigProvider tokens and scoped --fx-* CSS variables. Missing entries retain defaults. The Getting Started example demonstrates primary overrides; update action/actionHover/onAction together if branding filled buttons.",
-      'Use style={{ color: "var(--fx-primary)", background: "var(--fx-surface)" }} inside the provider for consumer-owned layouts. CSS variables follow the nearest provider; do not globally override Ant selectors. Verify customized text at 4.5:1 and meaningful graphics at 3:1 in every interaction state.',
+      "getTokens(mode, density, overrides?) and cssVariables(mode, density, overrides?) resolve the contract. TechosoulProvider.colorOverrides accepts separate typed light/dark partial maps and feeds both Ant ConfigProvider tokens and scoped --techosoul-* CSS variables. Missing entries retain defaults. The Getting Started example demonstrates primary overrides; update action/actionHover/onAction together if branding filled buttons.",
+      'Use style={{ color: "var(--techosoul-primary)", background: "var(--techosoul-surface)" }} inside the provider for consumer-owned layouts. CSS variables follow the nearest provider; do not globally override Ant selectors. Verify customized text at 4.5:1 and meaningful graphics at 3:1 in every interaction state.',
     ],
   },
   {
@@ -126,7 +126,7 @@ export const topics: Topic[] = [
     summary:
       "A 4px rhythm and two density modes support both overview and investigation.",
     paragraphs: [
-      "Spacing steps are 4, 8, 12, 16, 24, 32 and 40px. Comfortable density uses 40px controls and 16px table cell padding; Compact uses 32px and 10px. useFintrixTheme exposes setDensity independently of setMode.",
+      "Spacing steps are 4, 8, 12, 16, 24, 32 and 40px. Comfortable density uses 40px controls and 16px table cell padding; Compact uses 32px and 10px. useTechosoulTheme exposes setDensity independently of setMode.",
       "The Showcase shell keeps its header and sidebar stationary while main content scrolls independently. Only overflowing sidebar navigation scrolls; its brand and profile stay anchored. At narrow widths, navigation moves to a Drawer. Consumer layouts are not required to reuse this shell.",
       "Stack cards and forms on small screens. Contain horizontal overflow within data grids and code blocks, retaining keyboard access. Compact desktop controls are not automatically appropriate for touch; preserve at least 24px targets or sufficient spacing under WCAG 2.2 target-size guidance, and prefer larger controls for frequent touch actions.",
       "Motion uses 120ms fast and 200ms normal durations with cubic-bezier(.2,0,0,1). Reduced-motion styles disable transitions and shorten animations. Hover indicates availability; focus identifies the keyboard target; active indicates a press. Disabled controls cannot be operated, so explain why nearby. Loading should describe finite ongoing work and expose progress or status.",
@@ -137,10 +137,10 @@ export const topics: Topic[] = [
     title: "Core Components",
     group: "Components",
     summary:
-      "Use Ant Design actions with Fintrix grouping, accessible icon buttons and semantic styling.",
+      "Use Ant Design actions with Techosoul grouping, accessible icon buttons and semantic styling.",
     paragraphs: [
-      'Button is an Ant re-export: type="primary", default and type="text" express hierarchy; danger, loading, disabled and size remain native props. Use a real link for navigation and a button for an action. Loading does not replace a meaningful label. Fintrix ButtonGroup adds role="group" and a group label; it is not an exclusive selection control.',
-      "Fintrix IconButton requires label, wraps Ant Button with a Tooltip, and hides its decorative icon from assistive technology. Optional iconTone colors only the icon. Neutral/inherited foregrounds remain preferred; retain the inherited foreground on filled buttons unless contrast is checked. Each control follows the provider’s Light/Dark and density tokens.",
+      'Button is an Ant re-export: type="primary", default and type="text" express hierarchy; danger, loading, disabled and size remain native props. Use a real link for navigation and a button for an action. Loading does not replace a meaningful label. Techosoul ButtonGroup adds role="group" and a group label; it is not an exclusive selection control.',
+      "Techosoul IconButton requires label, wraps Ant Button with a Tooltip, and hides its decorative icon from assistive technology. Optional iconTone colors only the icon. Neutral/inherited foregrounds remain preferred; retain the inherited foreground on filled buttons unless contrast is checked. Each control follows the provider’s Light/Dark and density tokens.",
     ],
     snippet: "actions",
   },
@@ -153,7 +153,7 @@ export const topics: Topic[] = [
     paragraphs: [
       "Input and Input.TextArea are Ant controls for single-line values and longer notes. Use persistent Form.Item labels, name and validation rules; placeholders are hints, not names. Use TextArea for review notes rather than expanding single-line inputs. Ant Form manages validation and field association.",
       'Select handles longer choice lists; mode="multiple" enables multi-select. Radio.Group exposes a short exclusive set such as Daily/Weekly. Checkbox represents independent selections or agreement; Switch represents an immediately understood on/off setting. Do not use a switch for a destructive operation or a long-running workflow.',
-      "Slider supports approximate numeric selection. Fintrix RangeController adds a controlled [minimum, maximum] tuple and two numeric inputs for precision and alternatives to dragging. Its max defaults to 100000; set a domain-appropriate maximum. Use a numeric input rather than a slider where every unit has financial significance. Keyboard behavior and focus treatment are provided by Ant plus Fintrix scoped styles.",
+      "Slider supports approximate numeric selection. Techosoul RangeController adds a controlled [minimum, maximum] tuple and two numeric inputs for precision and alternatives to dragging. Its max defaults to 100000; set a domain-appropriate maximum. Use a numeric input rather than a slider where every unit has financial significance. Keyboard behavior and focus treatment are provided by Ant plus Techosoul scoped styles.",
     ],
     snippet: "forms",
   },
@@ -164,10 +164,10 @@ export const topics: Topic[] = [
     summary:
       "Match the amount of context and consequence to the surface you open.",
     paragraphs: [
-      "Modal and Drawer are Ant re-exports; Fintrix FormModal sets inline mounting, a 760px default width and destroyOnHidden, while retaining Modal props. Always supply a title and controlled open/onCancel or onClose state. Verify Escape, focus containment and return to the trigger. Do not nest complex modal workflows.",
+      "Modal and Drawer are Ant re-exports; Techosoul FormModal sets inline mounting, a 760px default width and destroyOnHidden, while retaining Modal props. Always supply a title and controlled open/onCancel or onClose state. Verify Escape, focus containment and return to the trigger. Do not nest complex modal workflows.",
       "Tooltip supplies short nonessential hints and must also work on focus. Popover holds richer explanations or simple contextual content; choose an explicit click trigger when needed and verify keyboard dismissal. Neither should hold essential instructions that are otherwise undiscoverable.",
-      "Tabs switches related views and inherits Ant keyboard behavior. Chip is Ant Tag, useful for categories or removable filters; StatusIndicator is a Fintrix text-and-dot status wrapper. Neither is an action button or a replacement for an error message.",
-      "Alert is persistent in-page feedback. Use Ant App.useApp().notification/message within FintrixProvider for contextual transient messages; retain persistent confirmation for critical outcomes. Skeleton suggests loading shape, Empty explains absence. Add a named status region for loading and a useful next step for empty results; never show a skeleton indefinitely.",
+      "Tabs switches related views and inherits Ant keyboard behavior. Chip is Ant Tag, useful for categories or removable filters; StatusIndicator is a Techosoul text-and-dot status wrapper. Neither is an action button or a replacement for an error message.",
+      "Alert is persistent in-page feedback. Use Ant App.useApp().notification/message within TechosoulProvider for contextual transient messages; retain persistent confirmation for critical outcomes. Skeleton suggests loading shape, Empty explains absence. Add a named status region for loading and a useful next step for empty results; never show a skeleton indefinitely.",
     ],
     snippet: "overlays",
   },
@@ -176,9 +176,9 @@ export const topics: Topic[] = [
     title: "Data Grid",
     group: "FinTech",
     summary:
-      "Compare records with Ant Table behavior and Fintrix visibility/resizing extensions.",
+      "Compare records with Ant Table behavior and Techosoul visibility/resizing extensions.",
     paragraphs: [
-      "Use stable rowKey values and typed columns. Fintrix controls hiddenColumnKeys and columnWidths through your state; onColumnWidthChange updates widths. Fixed columns always remain visible. minColumnWidth/maxColumnWidth default to 120/480px. Sorting, filtering, pagination and row selection come from Ant Table props, not a separate Fintrix data engine.",
+      "Use stable rowKey values and typed columns. Techosoul controls hiddenColumnKeys and columnWidths through your state; onColumnWidthChange updates widths. Fixed columns always remain visible. minColumnWidth/maxColumnWidth default to 120/480px. Sorting, filtering, pagination and row selection come from Ant Table props, not a separate Techosoul data engine.",
       "Resize handles support Left/Right in 10px steps, Shift in 20px steps, and Home/End to reach bounds. Their slider labels identify the column. Retain readable headers, semantic cell renderers and focus indicators; keyboard resizing must not accidentally sort the column.",
       "The synthetic 10,000-record demo below renders 25 rows per page. It is not a 10,000-DOM-row or virtualization benchmark. For remote or costly datasets use controlled pagination, onChange and server-side sort/filter queries with loading and error handling. Consider Ant virtualization only after measuring actual scrolling/rendering problems; it does not replace data fetching or pagination.",
       "Compact density reduces row padding; scroll.x contains wide layouts on narrow screens. Keep currencies and identifiers persistently visible in transactional/reconciliation workflows. Hiding the currency column below is only a generic visibility demonstration; amounts now retain their currency symbol. Some symbols are ambiguous across currencies, so real workflows should also preserve an explicit currency code. The runnable example hides a noncritical note column instead.",
@@ -228,10 +228,10 @@ export const topics: Topic[] = [
     summary:
       "Stable exports, tested examples and an explicit publication boundary.",
     paragraphs: [
-      "The package preserves ESM modules and declarations. React/React DOM and Ant Design are peers; Lucide is a declared dependency. Import components from fintrix-ui, token helpers from /tokens, and CSS/fonts through their exported paths. The full Lucide catalog is not bundled into the library; the curated gallery is a lazy Showcase chunk.",
-      "Examples shown here are real TypeScript files installed and typechecked against the packed artifact in React 18/19 consumers. The installation guide provides a complete App, while other exported example components are intended to render inside FintrixProvider. No example needs source aliases.",
+      "The package preserves ESM modules and declarations. React/React DOM and Ant Design are peers; Lucide is a declared dependency. Import components from @techosoul/ui, token helpers from /tokens, and CSS/fonts through their exported paths. The full Lucide catalog is not bundled into the library; the curated gallery is a lazy Showcase chunk.",
+      "Examples shown here are real TypeScript files installed and typechecked against the packed artifact in React 18/19 consumers. The installation guide provides a complete App, while other exported example components are intended to render inside TechosoulProvider. No example needs source aliases.",
       "Contribute through a focused GitHub pull request targeting main. Explain the problem, include relevant checks and real screenshots for visual changes, and update usage guidance when changing public APIs. Preserve semantic tokens, synthetic demo data and MIT attribution.",
-      "Phase 3 is public. fintrix-ui@0.3.0 is prepared but not published. The private safeguard remains; owner-approved naming, account setup and release checks are required. npm publication, GitHub Release and an editable Figma UI Kit remain future deliverables. ESM-only support does not imply CommonJS or SSR hydration validation.",
+      "The @techosoul/ui@0.3.0 candidate remains private; the linked live Showcase may retain the earlier brand until a separately approved deployment. The private safeguard remains; owner-approved naming, account setup and release checks are required. npm publication, GitHub Release and an editable Figma UI Kit remain future deliverables. ESM-only support does not imply CommonJS or SSR hydration validation.",
     ],
   },
 ];

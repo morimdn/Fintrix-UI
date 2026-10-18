@@ -5,8 +5,8 @@ import { mkdtempSync, readFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
-const cwd = resolve(root, "packages/fintrix-ui");
-const temp = mkdtempSync(resolve(tmpdir(), "fintrix-inspect-"));
+const cwd = resolve(root, "packages/techosoul-ui");
+const temp = mkdtempSync(resolve(tmpdir(), "techosoul-inspect-"));
 try {
   const [dry] = JSON.parse(
     runNpm(["pack", "--dry-run", "--json"], {
@@ -21,10 +21,15 @@ try {
     }),
   );
   assert.deepEqual(packed.files, dry.files);
+  assert.equal(packed.filename, "techosoul-ui-0.3.0.tgz");
+  assert.equal(
+    JSON.parse(readFileSync(resolve(root, "package.json"))).private,
+    true,
+  );
   execFileSync("tar", ["-xzf", resolve(temp, packed.filename), "-C", temp]);
   const dir = resolve(temp, "package");
   const manifest = JSON.parse(readFileSync(resolve(dir, "package.json")));
-  assert.equal(manifest.name, "fintrix-ui");
+  assert.equal(manifest.name, "@techosoul/ui");
   assert.equal(manifest.version, "0.3.0");
   assert.equal(manifest.license, "MIT");
   assert.equal(manifest.type, "module");
@@ -52,10 +57,10 @@ try {
       /^(dist\/|package\.json$|README\.md$|LICENSE$|THIRD_PARTY_NOTICES\.md$)/,
     );
     assert.doesNotMatch(path, /(^|\/)(node_modules|src|tests|\.env)(\/|$)/);
-    if (/\.(js|ts)$/.test(path))
+    if (/\.(js|ts|css)$/.test(path))
       assert.doesNotMatch(
         readFileSync(resolve(dir, path), "utf8"),
-        /fintrix-ui-preview|workspace:|\/workspace\//,
+        /fintrix|Fintrix|--fx-|workspace:|\/workspace\//,
       );
   }
   const css = readFileSync(resolve(dir, "dist/fonts.css"), "utf8");

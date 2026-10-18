@@ -28,7 +28,8 @@ jobs:
         with:
           name: browser-evidence
           path: |
-            docs/screenshots
+            artifacts/screenshots
+            artifacts/validation
             test-results
             consumer-test-results
 
@@ -72,9 +73,9 @@ jobs:
         with:
           name: engine-evidence
           path: |
-            docs/screenshots/iconography-*.png
-            docs/screenshots/balance-*.png
-            docs/screenshots/docs-*.png
+            artifacts/screenshots/iconography-*.png
+            artifacts/screenshots/balance-*.png
+            artifacts/screenshots/docs-*.png
             test-results
 
   portable-package:
@@ -86,20 +87,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: Fintrix UI
+          path: Techosoul UI
       - uses: actions/setup-node@v4
         with:
           node-version: 24.22.0
           cache: npm
-          cache-dependency-path: Fintrix UI/package-lock.json
+          cache-dependency-path: Techosoul UI/package-lock.json
       - run: npm install --global npm@11.19.1
       - run: npm ci
-        working-directory: Fintrix UI
+        working-directory: Techosoul UI
       - run: npm run test:scripts
-        working-directory: Fintrix UI
+        working-directory: Techosoul UI
       - run: npm run build:library
-        working-directory: Fintrix UI
+        working-directory: Techosoul UI
       - run: npm run inspect:package
-        working-directory: Fintrix UI
+        working-directory: Techosoul UI
       - run: npm run validate:consumer
-        working-directory: Fintrix UI
+        working-directory: Techosoul UI

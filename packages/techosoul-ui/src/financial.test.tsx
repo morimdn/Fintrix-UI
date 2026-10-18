@@ -8,7 +8,7 @@ import {
   WalletBalanceCard,
 } from "./financial";
 import { DataGrid } from "./DataGrid";
-import { FintrixProvider } from "./ThemeProvider";
+import { TechosoulProvider } from "./ThemeProvider";
 describe("financial display contract", () => {
   it("preserves decimal text beyond floating point precision", () => {
     expect(
@@ -32,11 +32,11 @@ describe("financial display contract", () => {
   });
   it("communicates direction and workflow state in text", () => {
     render(
-      <FintrixProvider>
+      <TechosoulProvider>
         <PnLIndicator value="-24.50" currency="USD" />
         <KYCStatus status="pending" />
         <WalletBalanceCard value="128.00" currency="USD" />
-      </FintrixProvider>,
+      </TechosoulProvider>,
     );
     expect(screen.getByText("KYC: pending")).toBeVisible();
     expect(screen.getByText(/P&L:/)).toHaveClass("financial-negative");
@@ -53,7 +53,7 @@ describe("reusable grid contract", () => {
   it("retains fixed identity and exposes keyboard resizing", () => {
     const onChange = vi.fn();
     render(
-      <FintrixProvider>
+      <TechosoulProvider>
         <DataGrid
           columns={[
             {
@@ -70,7 +70,7 @@ describe("reusable grid contract", () => {
           dataSource={[{ id: 1, name: "Synthetic client", currency: "USD" }]}
           pagination={false}
         />
-      </FintrixProvider>,
+      </TechosoulProvider>,
     );
     expect(screen.getByText("Synthetic client")).toBeVisible();
     expect(screen.queryByText("Currency")).not.toBeInTheDocument();

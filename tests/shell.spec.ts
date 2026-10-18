@@ -50,7 +50,7 @@ for (const mode of ["light", "dark"] as const) {
       await expect(page.getByRole("tooltip")).toHaveCount(0);
       await page.screenshot({
         animations: "disabled",
-        path: `docs/screenshots/shell-${viewport.name}-${mode}.png`,
+        path: `artifacts/screenshots/shell-${viewport.name}-${mode}.png`,
       });
 
       if (viewport.width <= 760) {
@@ -85,7 +85,7 @@ for (const mode of ["light", "dark"] as const) {
           .toBeLessThan(1);
         await page.screenshot({
           animations: "disabled",
-          path: `docs/screenshots/shell-drawer-${viewport.name}-${mode}.png`,
+          path: `artifacts/screenshots/shell-drawer-${viewport.name}-${mode}.png`,
         });
         await page.keyboard.press("Escape");
         await expect(drawer).toHaveCount(0);
@@ -243,7 +243,7 @@ for (const mode of ["light", "dark"] as const) {
     await expect(button).toBeFocused();
     await expect(tooltip).toBeVisible();
     await page.keyboard.press("Enter");
-    await expect(page.locator(".fintrix-root")).toHaveAttribute(
+    await expect(page.locator(".techosoul-root")).toHaveAttribute(
       "data-theme",
       mode === "light" ? "dark" : "light",
     );

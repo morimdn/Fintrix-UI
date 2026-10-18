@@ -39,11 +39,11 @@ import {
   MetricCard,
   DataTable,
   FormModal,
-  useFintrixTheme,
+  useTechosoulTheme,
   palettes,
   foundations,
-} from "fintrix-ui";
-import type { StatusTone } from "fintrix-ui";
+} from "@techosoul/ui";
+import type { StatusTone } from "@techosoul/ui";
 const Iconography = lazy(() => import("./Iconography"));
 const tokensByRole = {
   Surfaces: ["canvas", "sidebar", "surface", "elevated", "subtle"],
@@ -101,7 +101,7 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
       if (scroller) scroller.scrollTop = 0;
     }
   }, [section]);
-  const { mode, density, setDensity } = useFintrixTheme();
+  const { mode, density, setDensity } = useTechosoulTheme();
   const color = palettes[mode];
   const [range, setRange] = useState<[number, number]>([20, 80]),
     [period, setPeriod] = useState("Week"),
@@ -146,7 +146,8 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
         <div className="token-note">
           <Info size={16} />
           <span>
-            Use semantic roles in product code: <code>var(--fx-primary)</code>
+            Use semantic roles in product code:{" "}
+            <code>var(--techosoul-primary)</code>
           </span>
         </div>
       </ExampleCard>
@@ -633,7 +634,7 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
     <>
       <div className="showcase-hero">
         <div>
-          <span className="eyebrow">FINTRIX UI · DESIGN SYSTEM</span>
+          <span className="eyebrow">TECHOSOUL UI · DESIGN SYSTEM</span>
           <h1>Precision with a human perspective.</h1>
           <p>
             A practical visual language for financial software.

@@ -4,7 +4,7 @@ import {
   CurrencyAmount,
   DataGrid,
   type DataGridProps,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 
 type Account = {
   id: string;

@@ -123,12 +123,12 @@ export function cssVariables(
   const t = getTokens(mode, density, overrides);
   const vars: Record<string, string | number> = {};
   for (const [key, value] of Object.entries(t.color))
-    vars[`--fx-${key}`] = value;
+    vars[`--techosoul-${key}`] = value;
   for (const group of ["space", "radius", "layout"] as const)
     for (const [key, value] of Object.entries(t[group]))
-      vars[`--fx-${group}-${key}`] = `${value}px`;
+      vars[`--techosoul-${group}-${key}`] = `${value}px`;
   for (const [key, value] of Object.entries(t.typography))
-    vars[`--fx-typography-${key}`] =
+    vars[`--techosoul-typography-${key}`] =
       typeof value === "number" &&
       [
         "caption",
@@ -141,14 +141,14 @@ export function cssVariables(
       ].includes(key)
         ? `${value}px`
         : value;
-  vars["--fx-motion-fast"] = `${t.motion.fast}ms`;
+  vars["--techosoul-motion-fast"] = `${t.motion.fast}ms`;
   Object.assign(vars, {
-    "--fx-font": t.typography.family,
-    "--fx-mono": t.typography.mono,
-    "--fx-control": `${t.sizing.control}px`,
-    "--fx-cell": `${t.sizing.cell}px`,
-    "--fx-motion": `${t.motion.normal}ms`,
-    "--fx-easing": t.motion.easing,
+    "--techosoul-font": t.typography.family,
+    "--techosoul-mono": t.typography.mono,
+    "--techosoul-control": `${t.sizing.control}px`,
+    "--techosoul-cell": `${t.sizing.cell}px`,
+    "--techosoul-motion": `${t.motion.normal}ms`,
+    "--techosoul-easing": t.motion.easing,
   });
   return vars;
 }

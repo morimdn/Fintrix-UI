@@ -12,7 +12,7 @@ test("packed artifact loads CSS, fonts, forms, finance and both theme axes", asy
   await expect(
     page.getByText("$9,007,199,254,740,993.25", { exact: true }),
   ).toBeVisible();
-  await expect(page.locator(".fx-financial-card")).toHaveCSS(
+  await expect(page.locator(".techosoul-financial-card")).toHaveCSS(
     "border-top-style",
     "solid",
   );
@@ -31,11 +31,11 @@ test("packed artifact loads CSS, fonts, forms, finance and both theme axes", asy
     .fill("DEMO-1042");
   await page.getByRole("button", { name: "Theme: light" }).click();
   await page.getByRole("button", { name: "Density: comfortable" }).click();
-  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+  await expect(page.locator(".techosoul-root")).toHaveAttribute(
     "data-theme",
     "dark",
   );
-  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+  await expect(page.locator(".techosoul-root")).toHaveAttribute(
     "data-density",
     "compact",
   );
@@ -116,11 +116,11 @@ test("complete onboarding App works from the independently packed library", asyn
   await expect(page.getByText("€12,500.25", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Theme: dark" }).click();
   await page.getByRole("button", { name: "Density: comfortable" }).click();
-  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+  await expect(page.locator(".techosoul-root")).toHaveAttribute(
     "data-theme",
     "light",
   );
-  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+  await expect(page.locator(".techosoul-root")).toHaveAttribute(
     "data-density",
     "compact",
   );
@@ -154,12 +154,12 @@ for (const example of [
       await page.getByRole("button", { name: "Wallet settings" }).click();
       await expect(page.getByRole("status")).toHaveText("Settings selected");
       const color = await page
-        .locator(".fx-financial-card svg")
+        .locator(".techosoul-financial-card svg")
         .evaluate((el) => getComputedStyle(el).color);
       const success = await page
-        .locator(".fintrix-root")
+        .locator(".techosoul-root")
         .evaluate((el) =>
-          getComputedStyle(el).getPropertyValue("--fx-success").trim(),
+          getComputedStyle(el).getPropertyValue("--techosoul-success").trim(),
         );
       expect(color).toBe(
         await page.evaluate((value) => {
@@ -187,7 +187,7 @@ for (const example of [
           return range.getBoundingClientRect().right;
         });
       for (const amount of await page
-        .locator(".ant-table-row .fx-currency")
+        .locator(".ant-table-row .techosoul-currency")
         .all()) {
         const box = await amount.boundingBox();
         expect(Math.abs(box!.x + box!.width - right)).toBeLessThan(1);

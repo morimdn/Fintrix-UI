@@ -71,7 +71,7 @@ for (const mode of ["light", "dark"]) {
       el.scrollTop = 0;
     });
     await page.screenshot({
-      path: `docs/screenshots/iconography-${mode}-${testInfo.project.name || "chromium"}.png`,
+      path: `artifacts/screenshots/iconography-${mode}-${testInfo.project.name || "chromium"}.png`,
       fullPage: true,
     });
     await page
@@ -104,7 +104,7 @@ test("copy example and dark hover foreground regression", async ({
   await expect(copy).toHaveCSS("color", "rgb(189, 210, 255)");
   await copy.click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toContain(
-    '<FintrixIcon icon={Wallet} tone="neutral"',
+    '<TechosoulIcon icon={Wallet} tone="neutral"',
   );
 });
 
@@ -130,7 +130,7 @@ test("iconography remains usable on a compact narrow screen", async ({
     el.scrollTop = 0;
   });
   await page.screenshot({
-    path: "docs/screenshots/iconography-mobile.png",
+    path: "artifacts/screenshots/iconography-mobile.png",
     fullPage: true,
   });
 });
