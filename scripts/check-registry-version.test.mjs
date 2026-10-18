@@ -7,6 +7,9 @@ import { resolve } from "node:path";
 for (const [label, payload, exitCode, accepted] of [
   ["absent version", { error: { code: "E404" } }, 1, true],
   ["existing version", "0.3.0", 0, false],
+  ["authentication missing", { error: { code: "E401" } }, 1, false],
+  ["network timeout", { error: { code: "ETIMEDOUT" } }, 1, false],
+  ["empty success", "", 0, false],
   ["authentication denied", { error: { code: "E403" } }, 1, false],
   ["registry outage", { error: { code: "E503" } }, 1, false],
   ["malformed response", null, 1, false],

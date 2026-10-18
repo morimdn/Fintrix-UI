@@ -1,9 +1,20 @@
+import { assertDistributableFiles } from "./package-content-guard.mjs";
 import { runNpm } from "./run-npm.mjs";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, existsSync } from "node:fs";
+import {
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  existsSync,
+  copyFileSync,
+  constants,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
+if (process.argv.length > 3)
+  throw new Error("Usage: node scripts/inspect-package.mjs [output.tgz]");
+const output = process.argv[2] && resolve(process.argv[2]);
 const root = resolve(import.meta.dirname, "..");
 const cwd = resolve(root, "packages/techosoul-ui");
 const temp = mkdtempSync(resolve(tmpdir(), "techosoul-inspect-"));
@@ -21,6 +32,7 @@ try {
     }),
   );
   assert.deepEqual(packed.files, dry.files);
+  assertDistributableFiles(packed.files.map(({ path }) => path));
   assert.equal(packed.filename, "techosoul-ui-0.3.0.tgz");
   assert.equal(
     JSON.parse(readFileSync(resolve(root, "package.json"))).private,
@@ -33,6 +45,15 @@ try {
   assert.equal(manifest.version, "0.3.0");
   assert.equal(manifest.license, "MIT");
   assert.equal(manifest.type, "module");
+  assert.deepEqual(manifest.publishConfig, {
+    access: "public",
+    registry: "https://registry.npmjs.org/",
+  });
+  assert.deepEqual(manifest.repository, {
+    type: "git",
+    url: "git+https://github.com/morimdn/Techosoul-UI.git",
+    directory: "packages/techosoul-ui",
+  });
   assert.ok(manifest.dependencies["lucide-react"]);
   assert.deepEqual(manifest.sideEffects, ["**/*.css"]);
   for (const peer of ["react", "react-dom", "antd"])
@@ -78,9 +99,17 @@ try {
       "--ignore-scripts",
       "--access",
       "public",
+      "--registry=https://registry.npmjs.org/",
     ],
     { cwd: temp, stdio: "inherit" },
   );
+  // Save only after every inspection and dry-run succeeds; never replace an archive.
+  if (output)
+    copyFileSync(
+      resolve(temp, packed.filename),
+      output,
+      constants.COPYFILE_EXCL,
+    );
   console.log(
     JSON.stringify(
       {

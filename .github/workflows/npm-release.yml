@@ -6,6 +6,10 @@ on:
         description: "Type stage @techosoul/ui@0.3.0 to authorize uploading this release"
         required: true
         type: string
+      pending_stages:
+        description: "After an authenticated queue check, type no pending stages for @techosoul/ui"
+        required: true
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -24,6 +28,7 @@ jobs:
       - name: Verify authorization and successful CI on current main
         uses: actions/github-script@v7
         env:
+          PENDING_STAGES: ${{ inputs.pending_stages }}
           AUTHORIZATION: ${{ inputs.authorization }}
           RELEASE_ENABLED: ${{ vars.NPM_RELEASE_ENABLED }}
           SCOPE_OWNER_CONFIRMED: ${{ vars.NPM_SCOPE_OWNER_CONFIRMED }}
@@ -31,6 +36,7 @@ jobs:
           script: |
             if (process.env.RELEASE_ENABLED !== 'true') throw new Error('Owner must configure and enable npm-release first');
             if (process.env.SCOPE_OWNER_CONFIRMED !== 'techosoul') throw new Error('Owner must verify control of npm organization techosoul and package publishing rights');
+            if (process.env.PENDING_STAGES !== 'no pending stages for @techosoul/ui') throw new Error('Owner must check the authenticated npm staging queue before each dispatch');
             if (process.env.AUTHORIZATION !== 'stage @techosoul/ui@0.3.0') throw new Error('Exact release authorization required');
             const {data: branch} = await github.rest.repos.getBranch({...context.repo, branch:'main'});
             if (branch.commit.sha !== context.sha) throw new Error('Dispatch must target current main');
@@ -43,25 +49,30 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
-      - run: npm install --global npm@11.15.0
+          node-version: 24.22.0
+      - run: npm install --global npm@11.19.1
       - name: Check release manifest and retained safeguard
         run: |
           node --input-type=module -e "import p from './packages/techosoul-ui/package.json' with {type:'json'}; import root from './package.json' with {type:'json'}; if(root.private!==true) throw Error('Workspace root must remain private'); if(p.name!=='@techosoul/ui'||p.version!=='0.3.0'||p.private!==false) throw Error('Release blocked: owner-approved follow-up must explicitly set private=false');"
       - run: npm ci
       - run: npm run build:library
-      - run: npm run inspect:package
+      - run: npm run test:release
+      - run: npm run validate:consumer
+      - name: Inspect and retain the exact release archive
+        run: node scripts/inspect-package.mjs "$RUNNER_TEMP/techosoul-ui-0.3.0.tgz"
       - name: Reject duplicate versions and registry failures
         run: node scripts/check-registry-version.mjs
-      - name: Confirm main has not changed during preparation
+      - name: Recheck current main and latest CI immediately before staging
         uses: actions/github-script@v7
         with:
           script: |
             const {data} = await github.rest.repos.getBranch({...context.repo,branch:'main'});
             if (data.commit.sha !== context.sha) throw new Error('Main changed; rerun CI and release review');
+            const {data: runs} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', head_sha:context.sha, event:'push', per_page:100});
+            const latest = runs.workflow_runs.sort((a,b) => b.id-a.id)[0];
+            if (!latest || latest.status !== 'completed' || latest.conclusion !== 'success') throw new Error('Latest main CI run must still succeed for this exact commit');
       - name: Stage with OIDC and provenance; never approve automatically
-        working-directory: packages/techosoul-ui
-        run: npm stage publish --access public --provenance --tag latest
+        run: npm stage publish "$RUNNER_TEMP/techosoul-ui-0.3.0.tgz" --ignore-scripts --access public --provenance --tag latest --registry=https://registry.npmjs.org/
       - name: Owner follow-up
         run: echo 'Review the stage ID in npm, inspect the archive and provenance, and approve with 2FA only after explicit release authorization.' >> "$GITHUB_STEP_SUMMARY"
       - name: Failure guidance
