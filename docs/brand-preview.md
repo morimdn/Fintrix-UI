@@ -51,7 +51,10 @@ copy. Their final public presentation is included for owner editorial sign-off.
 No clients, headcount, partnerships or legal company status have been added.
 
 The registered corporate domain is described as a future website without a live
-marketing link. No logo is created. The rationale separates historical project
+marketing link. The application shell uses a typographic “Techosoul UI” wordmark pending an
+official logo. Desktop navigation and the mobile drawer identify the illustrative
+profile as “Demo Admin / Sample Workspace”, with DA initials also in the header.
+The founder attribution is separate from the fictional CRM identity. The rationale separates historical project
 evidence from interpretation and makes no external study or competitor-comparison
 claims. Remaining technical limitations stay in the existing documentation.
 

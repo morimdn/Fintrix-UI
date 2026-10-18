@@ -1,7 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { Avatar, Button, Drawer, Segmented, Skeleton } from "antd";
 import {
-  Activity,
   Users,
   LayoutDashboard,
   Wallet,
@@ -41,10 +40,7 @@ export default function App() {
           href="#main-content"
           onClick={() => navigate("crm")}
         >
-          <span className="brand-mark">
-            <Activity size={24} />
-          </span>
-          Techosoul<span className="brand-ui">UI</span>
+          Techosoul UI
         </a>
         <div className="workspace">
           <span className="workspace-icon">T</span>
@@ -112,10 +108,10 @@ export default function App() {
         </div>
       </div>
       <div className="profile">
-        <Avatar>EW</Avatar>
+        <Avatar aria-hidden="true">DA</Avatar>
         <div>
-          <strong>Emma Wilson</strong>
-          <small>Workspace admin</small>
+          <strong>Demo Admin</strong>
+          <small>Sample Workspace</small>
         </div>
       </div>
     </div>
@@ -172,7 +168,9 @@ export default function App() {
               onClick={() => setMode(mode === "light" ? "dark" : "light")}
             />
             <span className="top-divider" />
-            <Avatar size={32}>EW</Avatar>
+            <span role="img" aria-label="Demo Admin · Sample Workspace">
+              <Avatar size={32}>DA</Avatar>
+            </span>
           </div>
         </header>
         <div
