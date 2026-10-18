@@ -1566,6 +1566,9 @@ footer b {
   }
 }
 .documentation-layout {
+  /* Match our surfaces to our foreground, rather than inheriting the Tabs
+     container's independently generated Ant Design theme color. */
+  color: var(--techosoul-text);
   display: grid;
   grid-template-columns: 230px minmax(0, 1fr);
   gap: var(--techosoul-space-xxl);

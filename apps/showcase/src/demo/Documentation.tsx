@@ -45,6 +45,8 @@ export function Documentation({ visible = true }: { visible?: boolean }) {
         .at(-1);
       if (current) setActive(current.id);
     }
+    // Ant's retained tab pane may still be hidden when this child commits.
+    // Wait for the visibility update before measuring, scrolling or focusing.
     const frame = requestAnimationFrame(openHash);
     window.addEventListener("hashchange", openHash);
     scroller?.addEventListener("scroll", updateActive, { passive: true });
