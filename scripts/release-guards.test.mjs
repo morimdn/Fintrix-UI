@@ -17,7 +17,7 @@ const workflow = readFileSync(
   resolve(import.meta.dirname, "../.github/workflows/npm-release.yml"),
   "utf8",
 );
-const gate = workflow.match(/script: \|\n([\s\S]*?)(?=      - )/)[1];
+const gate = workflow.match(/script: \|\r?\n([\s\S]*?)(?=      - )/)[1];
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 const authorize = new AsyncFunction("process", "github", "context", gate);
 for (const [label, envPatch, branchSha, runs, accepted] of [
