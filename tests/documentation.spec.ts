@@ -12,6 +12,7 @@ for (const mode of ["light", "dark"]) {
       await page.setViewportSize({ width, height });
       await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto("/#docs-getting-started");
+      await expect(page.locator("#heading-getting-started")).toBeFocused();
       if (mode === "dark")
         await page
           .getByRole("button", { name: "Switch to dark theme" })
@@ -82,8 +83,20 @@ for (const mode of ["light", "dark"]) {
       ).toBeVisible();
       await page.goBack();
       await expect(page.locator("#heading-core")).toBeInViewport();
+      await expect(page.locator("#heading-core")).toBeFocused();
+      await page.goForward();
+      await expect(
+        page.getByRole("tab", { name: "Iconography", exact: true }),
+      ).toHaveAttribute("aria-selected", "true");
+      await expect(
+        page.getByRole("textbox", { name: "Search icons" }),
+      ).toBeVisible();
+      await page.goBack();
+      await expect(page.locator("#heading-core")).toBeInViewport();
+      await expect(page.locator("#heading-core")).toBeFocused();
       await page.reload();
       await expect(page.locator("#heading-core")).toBeInViewport();
+      await expect(page.locator("#heading-core")).toBeFocused();
       await expect(
         page.getByRole("link", { name: "Read repository documentation" }),
       ).toHaveAttribute(

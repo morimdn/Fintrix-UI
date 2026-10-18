@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CurrencyAmount,
   Checkbox,
@@ -23,7 +23,7 @@ import {
 import { CodeExample } from "./docs/CodeExample";
 export function Documentation({ visible = true }: { visible?: boolean }) {
   const [active, setActive] = useState("overview");
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!visible) return;
     const scroller = document.querySelector(".main-scroll");
     function openHash() {
@@ -45,12 +45,13 @@ export function Documentation({ visible = true }: { visible?: boolean }) {
         .at(-1);
       if (current) setActive(current.id);
     }
-    // The lazy documentation DOM exists at commit. Complete anchor focus before
-    // paint so a deferred frame cannot override the next keyboard interaction.
-    openHash();
+    // Ant's retained tab pane may still be hidden when this child commits.
+    // Wait for the visibility update before measuring, scrolling or focusing.
+    const frame = requestAnimationFrame(openHash);
     window.addEventListener("hashchange", openHash);
     scroller?.addEventListener("scroll", updateActive, { passive: true });
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener("hashchange", openHash);
       scroller?.removeEventListener("scroll", updateActive);
     };
