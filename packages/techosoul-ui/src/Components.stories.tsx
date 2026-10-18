@@ -4,7 +4,7 @@ import { Showcase } from "../../../apps/showcase/src/demo/Showcase";
 import { CRM } from "../../../apps/showcase/src/demo/CRM";
 import { useState } from "react";
 const meta = {
-  title: "Fintrix/Foundations",
+  title: "Techosoul/Foundations",
   component: Button,
   args: { children: "Primary action", type: "primary" },
 } satisfies Meta<typeof Button>;

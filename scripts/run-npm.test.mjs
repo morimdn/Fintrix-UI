@@ -8,7 +8,7 @@ import { test } from "node:test";
 const helper = new URL("./run-npm.mjs", import.meta.url).href;
 
 test("npm CLI paths and arguments remain literal, including spaces and shell metacharacters", () => {
-  const directory = mkdtempSync(resolve(tmpdir(), "fintrix npm & test-"));
+  const directory = mkdtempSync(resolve(tmpdir(), "techosoul npm & test-"));
   try {
     const cli = resolve(directory, "npm cli.cjs");
     writeFileSync(
@@ -45,7 +45,7 @@ test("npm CLI paths and arguments remain literal, including spaces and shell met
 });
 
 test("npm failures retain their exit status and captured diagnostics", () => {
-  const directory = mkdtempSync(resolve(tmpdir(), "fintrix npm failure-"));
+  const directory = mkdtempSync(resolve(tmpdir(), "techosoul npm failure-"));
   try {
     const cli = resolve(directory, "npm-cli.cjs");
     writeFileSync(

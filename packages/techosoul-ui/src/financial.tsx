@@ -1,4 +1,4 @@
-import type { IconTone } from "./FintrixIcon";
+import type { IconTone } from "./TechosoulIcon";
 import type { ReactNode } from "react";
 import { StatusIndicator, type StatusTone } from "./components";
 
@@ -35,7 +35,7 @@ export function formatCurrency({
   );
 }
 export function CurrencyAmount(props: CurrencyAmountProps) {
-  return <span className="fx-currency">{formatCurrency(props)}</span>;
+  return <span className="techosoul-currency">{formatCurrency(props)}</span>;
 }
 export interface PnLIndicatorProps extends CurrencyAmountProps {
   label?: string;
@@ -70,9 +70,12 @@ export function WalletBalanceCard({
   ...amount
 }: WalletBalanceCardProps) {
   return (
-    <section className="fx-financial-card" aria-label={title}>
+    <section className="techosoul-financial-card" aria-label={title}>
       <h3>
-        <span aria-hidden="true" style={{ color: `var(--fx-${iconTone})` }}>
+        <span
+          aria-hidden="true"
+          style={{ color: `var(--techosoul-${iconTone})` }}
+        >
           {icon}
         </span>{" "}
         {title}
@@ -123,9 +126,12 @@ export function FinancialKPICard({
   detail?: ReactNode;
 }) {
   return (
-    <section className="fx-financial-card" aria-label={label}>
+    <section className="techosoul-financial-card" aria-label={label}>
       <h3>
-        <span aria-hidden="true" style={{ color: `var(--fx-${iconTone})` }}>
+        <span
+          aria-hidden="true"
+          style={{ color: `var(--techosoul-${iconTone})` }}
+        >
           {icon}
         </span>{" "}
         {label}

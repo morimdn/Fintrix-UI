@@ -4,4 +4,4 @@ export * from "./components";
 export * from "./ColumnResizeHandle";
 export * from "./financial";
 export * from "./DataGrid";
-export * from "./FintrixIcon";
+export * from "./TechosoulIcon";

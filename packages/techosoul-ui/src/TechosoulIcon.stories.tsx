@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Wallet } from "lucide-react";
-import { FintrixIcon } from "./FintrixIcon";
+import { TechosoulIcon } from "./TechosoulIcon";
 import { WalletBalanceCard } from "./financial";
-import { FintrixProvider } from "./ThemeProvider";
+import { TechosoulProvider } from "./ThemeProvider";
 const meta = {
-  title: "Foundations/FintrixIcon",
-  component: FintrixIcon,
+  title: "Foundations/TechosoulIcon",
+  component: TechosoulIcon,
   args: { icon: Wallet, size: 24, strokeWidth: 2, tone: "neutral" },
   argTypes: {
     tone: {
@@ -14,7 +14,7 @@ const meta = {
     },
     icon: { control: false },
   },
-} satisfies Meta<typeof FintrixIcon>;
+} satisfies Meta<typeof TechosoulIcon>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Decorative: Story = {};
@@ -25,14 +25,14 @@ export const SemanticTones: Story = {
       {(
         ["neutral", "primary", "success", "warning", "danger", "info"] as const
       ).map((tone) => (
-        <FintrixIcon {...args} key={tone} tone={tone} label={tone} />
+        <TechosoulIcon {...args} key={tone} tone={tone} label={tone} />
       ))}
     </div>
   ),
 };
 export const CustomizedWallet: Story = {
   render: () => (
-    <FintrixProvider
+    <TechosoulProvider
       initialMode="dark"
       initialDensity="compact"
       colorOverrides={{ dark: { primary: "#c4b5fd" } }}
@@ -43,6 +43,6 @@ export const CustomizedWallet: Story = {
         icon={<Wallet />}
         iconTone="primary"
       />
-    </FintrixProvider>
+    </TechosoulProvider>
   ),
 };

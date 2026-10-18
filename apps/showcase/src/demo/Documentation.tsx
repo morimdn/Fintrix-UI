@@ -12,7 +12,7 @@ import {
   SymbolPriceDisplay,
   FinancialKPICard,
   AccountSummary,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 import {
   topics,
   snippets,
@@ -154,7 +154,7 @@ export function Documentation({ visible = true }: { visible?: boolean }) {
                 </p>
                 <p>
                   Tones are neutral, primary, success, warning, danger and info.
-                  Prefer neutral or inherited foregrounds. FintrixIcon is
+                  Prefer neutral or inherited foregrounds. TechosoulIcon is
                   decorative by default; add label only when an image conveys
                   meaning without adjacent text. Put action names on IconButton.
                   Tones resolve through Light/Dark tokens and typed overrides,

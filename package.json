@@ -1,5 +1,5 @@
 {
-  "name": "fintrix-workspace",
+  "name": "techosoul-workspace",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,9 +10,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test:e2e": "playwright test",
-    "format": "prettier --write apps/showcase/src packages/fintrix-ui/src examples/consumer-app/src scripts tests .storybook *.ts docs/*.md README.md",
+    "format": "prettier --write apps/showcase/src packages/techosoul-ui/src examples/consumer-app/src scripts tests .storybook *.ts docs/*.md README.md",
     "build:demo": "npm run build:library && npm run typecheck && vite build --base=/Fintrix-UI/",
-    "build:library": "npm run build -w fintrix-ui",
+    "build:library": "npm run build -w @techosoul/ui",
     "typecheck": "tsc --noEmit",
     "validate:consumer": "node scripts/validate-consumer.mjs",
     "test:consumer": "playwright test --config playwright.consumer.config.ts",
@@ -20,8 +20,8 @@
     "docs:sync": "node scripts/sync-documentation.mjs",
     "docs:check": "node scripts/sync-documentation.mjs --check",
     "inspect:package": "node scripts/inspect-package.mjs",
-    "test:scripts": "node --test scripts/build-library.test.mjs scripts/run-npm.test.mjs scripts/check-registry-version.test.mjs",
-    "test:release": "node --test scripts/check-registry-version.test.mjs"
+    "test:scripts": "node --test scripts/build-library.test.mjs scripts/run-npm.test.mjs scripts/check-registry-version.test.mjs scripts/release-guards.test.mjs",
+    "test:release": "node --test scripts/check-registry-version.test.mjs scripts/release-guards.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "5.3.0",

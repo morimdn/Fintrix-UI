@@ -1,9 +1,9 @@
 import type { Preview } from "@storybook/react-vite";
 import "@fontsource-variable/inter/wght.css";
 import "antd/dist/reset.css";
-import "fintrix-ui/styles.css";
+import "@techosoul/ui/styles.css";
 import "../apps/showcase/src/styles.css";
-import { FintrixProvider } from "fintrix-ui";
+import { TechosoulProvider } from "@techosoul/ui";
 const preview: Preview = {
   globalTypes: {
     mode: {
@@ -18,7 +18,7 @@ const preview: Preview = {
   initialGlobals: { mode: "light", density: "comfortable" },
   decorators: [
     (Story, context) => (
-      <FintrixProvider
+      <TechosoulProvider
         initialMode={context.globals.mode}
         initialDensity={context.globals.density}
         key={`${context.globals.mode}-${context.globals.density}`}
@@ -26,7 +26,7 @@ const preview: Preview = {
         <div style={{ padding: 24 }}>
           <Story />
         </div>
-      </FintrixProvider>
+      </TechosoulProvider>
     ),
   ],
 };

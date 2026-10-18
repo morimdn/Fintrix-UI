@@ -1,9 +1,9 @@
 {
-  "name": "fintrix-showcase",
+  "name": "techosoul-showcase",
   "private": true,
   "version": "0.2.0",
   "type": "module",
   "dependencies": {
-    "fintrix-ui": "0.3.0"
+    "@techosoul/ui": "0.3.0"
   }
 }

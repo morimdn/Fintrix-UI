@@ -1,16 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Wallet } from "lucide-react";
-import { FintrixIcon } from "./FintrixIcon";
+import { TechosoulIcon } from "./TechosoulIcon";
 import { IconButton } from "./IconButton";
-import { FintrixProvider } from "./ThemeProvider";
+import { TechosoulProvider } from "./ThemeProvider";
 import { getTokens, cssVariables, palettes } from "./tokens";
 describe("icon semantics and customization", () => {
   it("hides decorative SVGs and names meaningful images", () => {
     const { container } = render(
       <>
-        <FintrixIcon icon={Wallet} />
-        <FintrixIcon
+        <TechosoulIcon icon={Wallet} />
+        <TechosoulIcon
           icon={Wallet}
           label="Wallet balance"
           tone="success"
@@ -23,13 +23,13 @@ describe("icon semantics and customization", () => {
     const icon = screen.getByRole("img", { name: "Wallet balance" });
     expect(icon).toHaveAttribute("width", "32");
     expect(icon).toHaveAttribute("stroke-width", "1.5");
-    expect(icon).toHaveStyle({ color: "var(--fx-success)" });
+    expect(icon).toHaveStyle({ color: "var(--techosoul-success)" });
   });
   it("names actions once and preserves button semantics", () => {
     render(
-      <FintrixProvider>
+      <TechosoulProvider>
         <IconButton label="Open wallet" icon={<Wallet />} iconTone="primary" />
-      </FintrixProvider>,
+      </TechosoulProvider>,
     );
     expect(screen.getByRole("button", { name: "Open wallet" })).toBeEnabled();
     expect(screen.queryByRole("img")).toBeNull();
@@ -39,9 +39,9 @@ describe("icon semantics and customization", () => {
     expect(getTokens("dark", "compact", overrides).color.primary).toBe(
       "#c4b5fd",
     );
-    expect(cssVariables("dark", "compact", overrides)["--fx-primary"]).toBe(
-      "#c4b5fd",
-    );
+    expect(
+      cssVariables("dark", "compact", overrides)["--techosoul-primary"],
+    ).toBe("#c4b5fd");
     expect(getTokens("light", "comfortable", overrides).color.primary).toBe(
       palettes.light.primary,
     );

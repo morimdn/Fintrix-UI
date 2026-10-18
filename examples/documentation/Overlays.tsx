@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Button,
-  Drawer,
-  Input,
-  Modal,
-  Popover,
-  Tooltip,
-} from "fintrix-ui";
+import { Button, Drawer, Input, Modal, Popover, Tooltip } from "@techosoul/ui";
 
 export default function Overlays() {
   const [modal, setModal] = useState(false);

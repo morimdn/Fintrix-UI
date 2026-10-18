@@ -39,11 +39,11 @@ import {
   Settings2,
 } from "lucide-react";
 import {
-  FintrixIcon,
+  TechosoulIcon,
   IconButton,
   WalletBalanceCard,
   type IconTone,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 const categories = {
   Navigation: { ArrowLeft, ArrowRight, Home, Search },
   Actions: { Plus, Copy, Pencil, Trash2 },
@@ -164,11 +164,11 @@ export default function Iconography() {
           <h3>{category}</h3>
           <div className="icon-gallery">
             {icons.map(([name, icon]) => {
-              const code = `import { ${name} } from "lucide-react";\nimport { FintrixIcon } from "fintrix-ui";\n\n<FintrixIcon icon={${name}} tone="${tone}" size={${size}} strokeWidth={${stroke}} />`;
+              const code = `import { ${name} } from "lucide-react";\nimport { TechosoulIcon } from "@techosoul/ui";\n\n<TechosoulIcon icon={${name}} tone="${tone}" size={${size}} strokeWidth={${stroke}} />`;
               return (
                 <Card key={name} size="small">
                   <div className="icon-preview">
-                    <FintrixIcon
+                    <TechosoulIcon
                       icon={icon}
                       tone={tone}
                       size={size}
@@ -225,8 +225,8 @@ export default function Iconography() {
       </Card>
       <Card title="Accessible by design">
         <p>
-          FintrixIcon is decorative by default. Use label="Verified account" for
-          a meaningful standalone image. Put the accessible action name on
+          TechosoulIcon is decorative by default. Use label="Verified account"
+          for a meaningful standalone image. Put the accessible action name on
           IconButton; an SVG is not an interactive control. Keep status text
           alongside color.
         </p>
@@ -235,13 +235,13 @@ export default function Iconography() {
           <code>
             {'<Wallet size={20} strokeWidth={2} aria-hidden="true" />'}
           </code>
-          . Icons inherit currentColor unless a tone is supplied by Fintrix. Use
-          neutral by default and semantic tones on suitable surfaces; filled
+          . Icons inherit currentColor unless a tone is supplied by Techosoul.
+          Use neutral by default and semantic tones on suitable surfaces; filled
           buttons should retain their inherited foreground.
         </p>
         <p>
           For brand customization, pass typed <code>colorOverrides</code> to
-          FintrixProvider, with separate light and dark palettes. Recheck
+          TechosoulProvider, with separate light and dark palettes. Recheck
           contrast for every customized interaction state.
         </p>
       </Card>

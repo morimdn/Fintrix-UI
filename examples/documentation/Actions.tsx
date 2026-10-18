@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Download } from "lucide-react";
-import { Button, ButtonGroup, IconButton } from "fintrix-ui";
+import { Button, ButtonGroup, IconButton } from "@techosoul/ui";
 
 export default function Actions() {
   const [status, setStatus] = useState("No action selected");

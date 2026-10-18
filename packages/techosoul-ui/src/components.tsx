@@ -1,4 +1,4 @@
-import type { IconTone } from "./FintrixIcon";
+import type { IconTone } from "./TechosoulIcon";
 import {
   Button,
   Card,
@@ -33,7 +33,7 @@ export function ButtonGroup({
   label?: string;
 }) {
   return (
-    <div className="fx-button-group" role="group" aria-label={label}>
+    <div className="techosoul-button-group" role="group" aria-label={label}>
       {children}
     </div>
   );
@@ -47,7 +47,7 @@ export function StatusIndicator({
   tone?: StatusTone;
 }) {
   return (
-    <Tag variant="filled" className={`fx-status tone-${tone}`}>
+    <Tag variant="filled" className={`techosoul-status tone-${tone}`}>
       <i aria-hidden="true" /> {label}
     </Tag>
   );
@@ -76,7 +76,9 @@ export function MetricCard({
         <span
           className="metric-icon"
           aria-hidden="true"
-          style={{ color: iconTone ? `var(--fx-${iconTone})` : undefined }}
+          style={{
+            color: iconTone ? `var(--techosoul-${iconTone})` : undefined,
+          }}
         >
           {icon}
         </span>
@@ -138,7 +140,10 @@ function alignTableColumns<T extends object>(
 ): TableProps<T>["columns"] {
   return columns?.map((column) => ({
     ...column,
-    className: [column.className, column.align === "right" && "fx-cell-right"]
+    className: [
+      column.className,
+      column.align === "right" && "techosoul-cell-right",
+    ]
       .filter(Boolean)
       .join(" "),
     ...("children" in column && {
@@ -158,7 +163,7 @@ export function DataTable<T extends object>(props: TableProps<T>) {
       });
   });
   return (
-    <div className="fx-data-table" ref={host}>
+    <div className="techosoul-data-table" ref={host}>
       <Table<T>
         rowKey="id"
         scroll={{ x: foundations.layout.tableMin }}

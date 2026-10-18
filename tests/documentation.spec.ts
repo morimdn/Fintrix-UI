@@ -40,14 +40,14 @@ for (const mode of ["light", "dark"]) {
       await code.focus();
       await expect(code).toBeFocused();
       if (label === "desktop") {
-        // Shell copy must follow Fintrix tokens even while Ant replaces its styles.
+        // Shell copy must follow Techosoul tokens even while Ant replaces its styles.
         for (const selector of [".workspace strong", ".poc-note strong"]) {
           const colors = await page
             .locator(`.sidebar ${selector}`)
             .evaluate((element) => ({
               actual: getComputedStyle(element).color,
               expected: getComputedStyle(
-                document.querySelector(".fintrix-root")!,
+                document.querySelector(".techosoul-root")!,
               ).color,
             }));
           expect(colors.actual).toBe(colors.expected);
@@ -64,7 +64,7 @@ for (const mode of ["light", "dark"]) {
         .locator("#docs-getting-started")
         .evaluate((el) => el.scrollIntoView({ block: "start" }));
       await page.screenshot({
-        path: `docs/screenshots/docs-${label}-${mode}-${testInfo.project.name || "chromium"}.png`,
+        path: `artifacts/screenshots/docs-${label}-${mode}-${testInfo.project.name || "chromium"}.png`,
       });
       await nav
         .getByRole("link", { name: "Core Components", exact: true })
@@ -111,7 +111,7 @@ test("clipboard rejection preserves readable source and reports recovery", async
   );
   await expect(
     page.getByLabel("Getting Started source code", { exact: true }),
-  ).toContainText('from "fintrix-ui"');
+  ).toContainText('from "@techosoul/ui"');
 });
 
 test("long documentation scroll region supports boundary keys without intercepting code", async ({

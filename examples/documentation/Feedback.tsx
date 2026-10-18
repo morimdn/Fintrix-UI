@@ -7,10 +7,10 @@ import {
   Skeleton,
   StatusIndicator,
   Tabs,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 
 export default function Feedback() {
-  // FintrixProvider includes Ant App, so contextual notifications inherit its theme.
+  // TechosoulProvider includes Ant App, so contextual notifications inherit its theme.
   const { notification } = App.useApp();
   return (
     <>

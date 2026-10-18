@@ -2,6 +2,7 @@ import { runNpm } from "./run-npm.mjs";
 import { execFileSync } from "node:child_process";
 import {
   cpSync,
+  mkdirSync,
   mkdtempSync,
   readFileSync,
   writeFileSync,
@@ -12,7 +13,8 @@ import { gzipSync } from "node:zlib";
 import { tmpdir } from "node:os";
 import { resolve, sep } from "node:path";
 const root = resolve(import.meta.dirname, "..");
-const target = mkdtempSync(resolve(tmpdir(), "fintrix-consumer-"));
+mkdirSync(resolve(root, "artifacts/validation"), { recursive: true });
+const target = mkdtempSync(resolve(tmpdir(), "techosoul-consumer-"));
 cpSync(resolve(root, "examples/consumer-app"), target, {
   recursive: true,
   filter: (path) =>
@@ -25,7 +27,7 @@ cpSync(
   { recursive: true },
 );
 runNpm(["pack", "--pack-destination", target], {
-  cwd: resolve(root, "packages/fintrix-ui"),
+  cwd: resolve(root, "packages/techosoul-ui"),
   stdio: "inherit",
 });
 const manifestPath = resolve(target, "package.json");
@@ -45,7 +47,7 @@ runNpm(["install", "--ignore-scripts", "--no-audit", "--no-fund"], {
   cwd: target,
   stdio: "inherit",
 });
-if (lstatSync(resolve(target, "node_modules/fintrix-ui")).isSymbolicLink())
+if (lstatSync(resolve(target, "node_modules/@techosoul/ui")).isSymbolicLink())
   throw new Error("Consumer must install the tarball, not a workspace link");
 execFileSync(
   process.execPath,
@@ -54,8 +56,8 @@ execFileSync(
     "-e",
     `
   import assert from 'node:assert/strict';
-  import { getTokens } from 'fintrix-ui/tokens';
-  import tokens from 'fintrix-ui/tokens.json' with { type: 'json' };
+  import { getTokens } from '@techosoul/ui/tokens';
+  import tokens from '@techosoul/ui/tokens.json' with { type: 'json' };
   for (const mode of ['light','dark']) for (const density of ['comfortable','compact']) {
     assert.ok(getTokens(mode,density)); assert.ok(tokens[mode][density]);
   }
@@ -90,7 +92,10 @@ const versions = Object.fromEntries(
   ]),
 );
 writeFileSync(
-  resolve(root, `docs/consumer-${versions.react}-antd-${versions.antd}.json`),
+  resolve(
+    root,
+    `artifacts/validation/consumer-${versions.react}-antd-${versions.antd}.json`,
+  ),
   JSON.stringify(
     {
       versions,

@@ -1,23 +1,34 @@
-# Fintrix UI documentation
+# Techosoul UI documentation
+
+Techosoul UI is the React design system under the Techosoul umbrella brand.
+The private candidate is `@techosoul/ui@0.3.0`.
 
 Start with [Getting Started](getting-started.md), then use the
-[component selection guide](components.md), [customization and iconography](customization.md),
-[token contract](tokens.md) and [package architecture](architecture.md).
+[component guide](components.md), [customization](customization.md),
+[token contract](tokens.md), [architecture](architecture.md), and
+[rebrand migration and owner checklist](techosoul-rebrand.md).
 
-The local Showcase Documentation tab groups the existing 14 topics into Start
-here, Foundations, Components, FinTech, Accessibility, and Contribution & release.
-Its section links are shareable: `/#docs-getting-started`, `/#docs-core`,
-`/#docs-grid`, `/#docs-financial`. `/#iconography` opens the searchable gallery.
-These Phase 3 navigation features become public after the approved merge/deployment.
+The Showcase Documentation tab retains 14 topics grouped into Start here,
+Foundations, Components, FinTech, Accessibility, and Contribution & release.
+Deep links include `/#docs-getting-started`, `/#docs-core`, `/#docs-grid`,
+`/#docs-financial` and `/#iconography`.
 
-[Live Phase 2 Showcase](https://morimdn.github.io/Fintrix-UI/) ·
+[Existing deployed Showcase](https://morimdn.github.io/Fintrix-UI/) ·
 [Repository](https://github.com/morimdn/Fintrix-UI) ·
 [Contributing](../CONTRIBUTING.md) · [Release checklist](releases.md)
 
-Phase 2 is merged and deployed. Phase 3 is implemented in PR #5 but not merged or
-deployed. The library is packable/installable from its tarball; npm publication,
-a GitHub Release and an editable Figma UI Kit remain future deliverables.
+The repository has not been renamed. The deployed site may show its previous
+branding; this rebrand does not deploy it or configure techosoul.com.
+Scope control must be confirmed by the owner before any npm registry write.
 
-[Documentation refinement evidence](documentation-refinement.md) records the
-latest documentation checks. Earlier validation reports retain historical results
-and are not the source of current deployment status.
+## Historical evidence
+
+The Phase 2/3/4 reports, validation/refinement reports, Ant Design evaluation,
+contrast hotfix report, existing JSON measurements and `screenshots/` archive
+record their original revisions, package names and results. They are retained
+unchanged, including earlier status statements; they are not current release
+instructions. Earlier changelog entries are also preserved.
+
+New runs write screenshots to `artifacts/screenshots` and measurements to
+`artifacts/validation`, uploaded by CI. See [rebrand validation](techosoul-validation.md)
+for the new candidate's evidence and limits.

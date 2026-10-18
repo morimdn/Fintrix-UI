@@ -10,8 +10,8 @@ import { useState } from "react";
 import { Wallet } from "lucide-react";
 import { createRoot } from "react-dom/client";
 import {
-  FintrixProvider,
-  useFintrixTheme,
+  TechosoulProvider,
+  useTechosoulTheme,
   Button,
   Form,
   Input,
@@ -21,13 +21,13 @@ import {
   WalletBalanceCard,
   PnLIndicator,
   KYCStatus,
-} from "fintrix-ui";
-import "fintrix-ui/styles.css";
-import "fintrix-ui/fonts.css";
+} from "@techosoul/ui";
+import "@techosoul/ui/styles.css";
+import "@techosoul/ui/fonts.css";
 function Consumer() {
   const [dialog, setDialog] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const { mode, setMode, density, setDensity } = useFintrixTheme();
+  const { mode, setMode, density, setDensity } = useTechosoulTheme();
   return (
     <main style={{ padding: 24 }}>
       <h1>Independent consumer</h1>
@@ -122,7 +122,7 @@ createRoot(document.getElementById("root")!).render(
   example === "onboarding" ? (
     <Onboarding />
   ) : (
-    <FintrixProvider
+    <TechosoulProvider
       colorOverrides={{
         light: { primary: "#5941a9" },
         dark: { primary: "#c4b5fd" },
@@ -136,6 +136,6 @@ createRoot(document.getElementById("root")!).render(
       ) : (
         <Consumer />
       )}
-    </FintrixProvider>
+    </TechosoulProvider>
   ),
 );

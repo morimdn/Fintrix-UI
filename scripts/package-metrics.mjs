@@ -1,22 +1,29 @@
 import { build } from "vite";
-import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import {
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { gzipSync } from "node:zlib";
 import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
+mkdirSync(resolve(root, "artifacts/validation"), { recursive: true });
 const consumer = process.env.CONSUMER_PATH;
 const dist = consumer
-  ? resolve(consumer, "node_modules/fintrix-ui/dist")
-  : resolve(root, "packages/fintrix-ui/dist");
+  ? resolve(consumer, "node_modules/@techosoul/ui/dist")
+  : resolve(root, "packages/techosoul-ui/dist");
 const js = readdirSync(dist)
   .filter((name) => name.endsWith(".js"))
   .map((name) => ({ name, bytes: statSync(resolve(dist, name)).size }));
 const probes = {};
 for (const [label, source] of Object.entries({
-  tokens: 'export { getTokens } from "fintrix-ui/tokens";',
-  icon: 'export { FintrixIcon } from "fintrix-ui";',
+  tokens: 'export { getTokens } from "@techosoul/ui/tokens";',
+  icon: 'export { TechosoulIcon } from "@techosoul/ui";',
   walletIcon:
-    'import { FintrixIcon } from "fintrix-ui"; import { Wallet } from "lucide-react"; export const WalletIcon = () => FintrixIcon({ icon: Wallet });',
-  amount: 'export { CurrencyAmount } from "fintrix-ui";',
+    'import { TechosoulIcon } from "@techosoul/ui"; import { Wallet } from "lucide-react"; export const WalletIcon = () => TechosoulIcon({ icon: Wallet });',
+  amount: 'export { CurrencyAmount } from "@techosoul/ui";',
 })) {
   const probe = resolve(consumer || root, `.probe-${label}.js`);
   writeFileSync(probe, source);
@@ -57,10 +64,10 @@ const metrics = {
   modules: js,
   treeShakingProbes: probes,
   notes:
-    "Probes bundle Fintrix only, externalizing peers. Not application bundle sizes. Fonts and generated JSON dominate archive size.",
+    "Probes bundle Techosoul only, externalizing peers. Not application bundle sizes. Fonts and generated JSON dominate archive size.",
 };
 writeFileSync(
-  resolve(root, "docs/package-metrics.json"),
+  resolve(root, "artifacts/validation/package-metrics.json"),
   JSON.stringify(metrics, null, 2) + "\n",
 );
 console.log(JSON.stringify(metrics, null, 2));

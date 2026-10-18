@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       authorization:
-        description: "Type stage fintrix-ui@0.3.0 to authorize uploading this release"
+        description: "Type stage @techosoul/ui@0.3.0 to authorize uploading this release"
         required: true
         type: string
 permissions:
@@ -26,10 +26,12 @@ jobs:
         env:
           AUTHORIZATION: ${{ inputs.authorization }}
           RELEASE_ENABLED: ${{ vars.NPM_RELEASE_ENABLED }}
+          SCOPE_OWNER_CONFIRMED: ${{ vars.NPM_SCOPE_OWNER_CONFIRMED }}
         with:
           script: |
             if (process.env.RELEASE_ENABLED !== 'true') throw new Error('Owner must configure and enable npm-release first');
-            if (process.env.AUTHORIZATION !== 'stage fintrix-ui@0.3.0') throw new Error('Exact release authorization required');
+            if (process.env.SCOPE_OWNER_CONFIRMED !== 'techosoul') throw new Error('Owner must verify control of npm organization techosoul and package publishing rights');
+            if (process.env.AUTHORIZATION !== 'stage @techosoul/ui@0.3.0') throw new Error('Exact release authorization required');
             const {data: branch} = await github.rest.repos.getBranch({...context.repo, branch:'main'});
             if (branch.commit.sha !== context.sha) throw new Error('Dispatch must target current main');
             const {data} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', head_sha:context.sha, event:'push', per_page:100});
@@ -45,7 +47,7 @@ jobs:
       - run: npm install --global npm@11.15.0
       - name: Check release manifest and retained safeguard
         run: |
-          node --input-type=module -e "import p from './packages/fintrix-ui/package.json' with {type:'json'}; if(p.name!=='fintrix-ui'||p.version!=='0.3.0'||p.private!==false) throw Error('Release blocked: owner-approved follow-up must explicitly set private=false');"
+          node --input-type=module -e "import p from './packages/techosoul-ui/package.json' with {type:'json'}; import root from './package.json' with {type:'json'}; if(root.private!==true) throw Error('Workspace root must remain private'); if(p.name!=='@techosoul/ui'||p.version!=='0.3.0'||p.private!==false) throw Error('Release blocked: owner-approved follow-up must explicitly set private=false');"
       - run: npm ci
       - run: npm run build:library
       - run: npm run inspect:package
@@ -58,7 +60,7 @@ jobs:
             const {data} = await github.rest.repos.getBranch({...context.repo,branch:'main'});
             if (data.commit.sha !== context.sha) throw new Error('Main changed; rerun CI and release review');
       - name: Stage with OIDC and provenance; never approve automatically
-        working-directory: packages/fintrix-ui
+        working-directory: packages/techosoul-ui
         run: npm stage publish --access public --provenance --tag latest
       - name: Owner follow-up
         run: echo 'Review the stage ID in npm, inspect the archive and provenance, and approve with 2FA only after explicit release authorization.' >> "$GITHUB_STEP_SUMMARY"

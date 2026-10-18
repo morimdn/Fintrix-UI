@@ -19,7 +19,7 @@ const Context = createContext<{
   setMode: (m: ColorMode) => void;
   setDensity: (d: Density) => void;
 } | null>(null);
-export function FintrixProvider({
+export function TechosoulProvider({
   children,
   colorOverrides,
   initialMode = "light",
@@ -37,8 +37,8 @@ export function FintrixProvider({
     <Context.Provider value={{ mode, density, setMode, setDensity }}>
       <ConfigProvider
         getPopupContainer={(trigger) =>
-          (trigger?.closest(".fintrix-root") as HTMLElement) ??
-          document.querySelector<HTMLElement>(".fintrix-root") ??
+          (trigger?.closest(".techosoul-root") as HTMLElement) ??
+          document.querySelector<HTMLElement>(".techosoul-root") ??
           document.body
         }
         theme={{
@@ -156,7 +156,7 @@ export function FintrixProvider({
         }}
       >
         <div
-          className="fintrix-root"
+          className="techosoul-root"
           data-theme={mode}
           data-density={density}
           style={cssVariables(mode, density, colorOverrides) as CSSProperties}
@@ -167,8 +167,8 @@ export function FintrixProvider({
     </Context.Provider>
   );
 }
-export function useFintrixTheme() {
+export function useTechosoulTheme() {
   const context = useContext(Context);
-  if (!context) throw new Error("Use within FintrixProvider");
+  if (!context) throw new Error("Use within TechosoulProvider");
   return context;
 }

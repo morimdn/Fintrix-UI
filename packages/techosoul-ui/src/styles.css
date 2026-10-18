@@ -1,0 +1,221 @@
+.techosoul-root {
+  font-family: var(--techosoul-font);
+  color: var(--techosoul-text);
+  background: var(--techosoul-canvas);
+  font-size: var(--techosoul-typography-body);
+  line-height: var(--techosoul-typography-lineHeight);
+  font-variant-numeric: tabular-nums;
+}
+.techosoul-root *,
+.techosoul-root *::before,
+.techosoul-root *::after {
+  box-sizing: border-box;
+}
+.techosoul-root
+  :is(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--techosoul-focus);
+  outline-offset: 3px;
+}
+.techosoul-root .financial-positive {
+  color: var(--techosoul-positive);
+}
+.techosoul-root .financial-negative {
+  color: var(--techosoul-negative);
+}
+.techosoul-root .financial-neutral {
+  color: var(--techosoul-neutral);
+}
+.techosoul-root .techosoul-button-group {
+  display: inline-flex;
+  gap: var(--techosoul-space-xs);
+  flex-wrap: wrap;
+}
+.techosoul-root .techosoul-status {
+  border-radius: var(--techosoul-radius-pill);
+}
+.techosoul-root .techosoul-status i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.techosoul-root .tone-success {
+  color: var(--techosoul-success);
+  background: var(--techosoul-successSoft);
+}
+.techosoul-root .tone-warning {
+  color: var(--techosoul-warning);
+  background: var(--techosoul-warningSoft);
+}
+.techosoul-root .tone-danger {
+  color: var(--techosoul-danger);
+  background: var(--techosoul-dangerSoft);
+}
+.techosoul-root .tone-info {
+  color: var(--techosoul-info);
+  background: var(--techosoul-infoSoft);
+}
+.techosoul-root .tone-neutral {
+  color: var(--techosoul-muted);
+  background: var(--techosoul-subtle);
+}
+
+.techosoul-root .techosoul-financial-card {
+  border: 1px solid var(--techosoul-border);
+  border-radius: var(--techosoul-radius-card);
+  padding: var(--techosoul-space-xl);
+  background: var(--techosoul-surface);
+  box-shadow: var(--techosoul-shadow);
+}
+.techosoul-root .techosoul-financial-card h3 {
+  margin: 0 0 var(--techosoul-space-md);
+  font-size: var(--techosoul-typography-label);
+  color: var(--techosoul-muted);
+}
+.techosoul-root .techosoul-financial-card strong {
+  font-size: var(--techosoul-typography-title);
+}
+.techosoul-root .techosoul-data-table {
+  max-width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .techosoul-root *,
+  .techosoul-root *::before,
+  .techosoul-root *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.techosoul-root .ant-table-thead > tr > th {
+  position: relative;
+}
+/* Keep the header text on the same right edge as its figures. Sort controls
+   precede the label; the independent resize handle stays on the column edge. */
+.techosoul-root .techosoul-data-table .techosoul-cell-right {
+  font-variant-numeric: tabular-nums;
+}
+.techosoul-root
+  .techosoul-data-table
+  .techosoul-cell-right
+  .ant-table-column-sorters {
+  justify-content: flex-end;
+}
+.techosoul-root
+  .techosoul-data-table
+  .techosoul-cell-right
+  .ant-table-column-title {
+  flex: 0 1 auto;
+}
+.techosoul-root
+  .techosoul-data-table
+  .techosoul-cell-right
+  .ant-table-column-sorter {
+  order: -1;
+  flex-shrink: 0;
+  margin-inline: 0 var(--techosoul-space-xs);
+}
+.techosoul-root .techosoul-currency {
+  font-variant-numeric: tabular-nums;
+}
+.techosoul-root .column-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -12px;
+  width: 24px;
+  z-index: 4;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.techosoul-root .column-resize-handle::before {
+  content: "";
+  width: 2px;
+  height: 45%;
+  background: var(--techosoul-controlBorder);
+  border-radius: var(--techosoul-radius-pill);
+}
+.techosoul-root .column-resize-handle:hover::before,
+.techosoul-root .column-resize-handle:focus::before {
+  background: var(--techosoul-primary);
+  width: 3px;
+}
+.techosoul-root .range-controller {
+  display: grid;
+  gap: var(--techosoul-space-md);
+}
+
+.metric {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+.metric .ant-card-body {
+  padding: var(--techosoul-space-xl);
+}
+.metric-label {
+  font-size: var(--techosoul-typography-table);
+  color: var(--techosoul-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--techosoul-space-sm);
+}
+.metric-icon {
+  color: var(--techosoul-muted);
+  background: var(--techosoul-subtle);
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--techosoul-border);
+  border-radius: var(--techosoul-radius-control);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.metric strong {
+  font-size: clamp(22px, 1.85vw, 30px);
+  letter-spacing: -1px;
+  display: block;
+  margin: var(--techosoul-space-lg) 0 var(--techosoul-space-sm);
+  font-weight: 650;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+.metric-detail {
+  font-size: var(--techosoul-typography-caption);
+  color: var(--techosoul-muted);
+  position: relative;
+  z-index: 1;
+}
+.metric-detail span {
+  font-weight: 600;
+  margin-right: var(--techosoul-space-xs);
+}
+.financial-positive {
+  color: var(--techosoul-positive);
+}
+.financial-negative {
+  color: var(--techosoul-negative);
+}
+.financial-neutral {
+  color: var(--techosoul-neutral);
+}
+.sparkline {
+  position: absolute;
+  width: 64px;
+  height: 24px;
+  right: 0;
+  bottom: 50px;
+  opacity: 0.25;
+}
+.sparkline path {
+  fill: none;
+  stroke: var(--techosoul-primary);
+  stroke-width: 2;
+}

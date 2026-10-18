@@ -1,5 +1,5 @@
 {
-  "name": "fintrix-independent-consumer",
+  "name": "techosoul-independent-consumer",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "fintrix-ui": "file:./fintrix-ui-0.3.0.tgz",
+    "@techosoul/ui": "file:./techosoul-ui-0.3.0.tgz",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "antd": "6.6.6",

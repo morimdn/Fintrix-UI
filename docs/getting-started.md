@@ -1,9 +1,9 @@
 # Getting Started
 
 The npm registry package is **not published**. Use the generated
-`fintrix-ui-0.3.0.tgz` artifact today. The proposed name is not a claim
-to registry ownership. After publication only, existing React apps may run
-`npm install fintrix-ui antd`; new apps must also install matching React/React DOM
+`techosoul-ui-0.3.0.tgz` artifact today. The target name requires owner-confirmed control of the npm `techosoul`
+organization and package publishing rights; domain registration is not proof. After publication only, existing React apps may run
+`npm install @techosoul/ui antd`; new apps must also install matching React/React DOM
 and their TypeScript types as described below.
 
 ## 1. Prerequisites
@@ -21,8 +21,8 @@ git clone https://github.com/morimdn/Fintrix-UI.git
 cd Fintrix-UI
 ```
 
-`main` includes merged Phase 3. Use the reviewed Phase 4 checkout to build
-the proposed `fintrix-ui@0.3.0` candidate before Phase 4 merges.
+Before the rebrand merges, use `git switch feat/techosoul-rebrand`. After merge,
+use updated `main`. The candidate remains private at version `0.3.0`.
 
 ## 3. Install repository dependencies
 
@@ -45,28 +45,28 @@ Rebuild after changing library source.
 ## 5. Pack the artifact
 
 ```sh
-mkdir -p artifacts
-npm pack --workspace fintrix-ui --pack-destination ./artifacts
+node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
+npm pack --workspace @techosoul/ui --pack-destination ./artifacts
 ```
 
-The generated file is `artifacts/fintrix-ui-0.3.0.tgz`. Record its absolute
+The generated file is `artifacts/techosoul-ui-0.3.0.tgz`. Record its absolute
 path. `npm pack` creates a local archive; it does not publish to npm.
 
 ## 6. Install in a separate React application
 
 If you already have a React/TypeScript app, use it. Otherwise, from a directory
-outside the Fintrix repository, create a standard Vite consumer:
+outside the Techosoul repository, create a standard Vite consumer:
 
 ```sh
-npm create vite@latest fintrix-consumer -- --template react-ts --no-interactive
-cd fintrix-consumer
+npm create vite@latest techosoul-consumer -- --template react-ts --no-interactive
+cd techosoul-consumer
 npm install
 ```
 
 Install the real tarball path, replacing the clearly marked example path below:
 
 ```sh
-npm install /absolute/path/to/Fintrix-UI/artifacts/fintrix-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+npm install /absolute/path/to/Fintrix-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
 ```
 
 For an existing React 18 application use `react@18.3.1 react-dom@18.3.1` instead
@@ -80,14 +80,14 @@ npm install lucide-react@1.58.0
 
 ## 7. Import CSS and optional fonts
 
-Import `fintrix-ui/styles.css` once in your app. Optionally import
-`fintrix-ui/fonts.css` to self-host Inter Variable. These are exported
+Import `@techosoul/ui/styles.css` once in your app. Optionally import
+`@techosoul/ui/fonts.css` to self-host Inter Variable. These are exported
 package paths; do not import library source files or depend on remote fonts.
 
-## 8. Initialize FintrixProvider
+## 8. Initialize TechosoulProvider
 
-Wrap your application with FintrixProvider. Its initialMode and initialDensity
-set defaults; mode changes use useFintrixTheme inside that provider. Standard Ant
+Wrap your application with TechosoulProvider. Its initialMode and initialDensity
+set defaults; mode changes use useTechosoulTheme inside that provider. Standard Ant
 controls inherit the same semantic palette.
 
 ## 9. Render a wallet and labeled buttons
@@ -96,22 +96,22 @@ Replace the scaffold's **src/App.tsx** with this complete example. Retain its
 **src/main.tsx** mounting App into the index.html element with id `root`. Remove
 the scaffold's `import './index.css'` from main.tsx: its centered body layout and
 button resets can conflict with any component library's styling. This example
-imports Fintrix CSS and optional self-hosted Inter; neither requires a remote font service.
+imports Techosoul CSS and optional self-hosted Inter; neither requires a remote font service.
 
 <!-- onboarding:start -->
 
 ```tsx
 import {
   Button,
-  FintrixProvider,
+  TechosoulProvider,
   WalletBalanceCard,
-  useFintrixTheme,
-} from "fintrix-ui";
-import "fintrix-ui/styles.css";
-import "fintrix-ui/fonts.css"; // Optional self-hosted Inter Variable
+  useTechosoulTheme,
+} from "@techosoul/ui";
+import "@techosoul/ui/styles.css";
+import "@techosoul/ui/fonts.css"; // Optional self-hosted Inter Variable
 
 function WalletPage() {
-  const { mode, setMode, density, setDensity } = useFintrixTheme();
+  const { mode, setMode, density, setDensity } = useTechosoulTheme();
   return (
     <main style={{ padding: 24 }}>
       <h1>My wallet</h1>
@@ -137,7 +137,7 @@ function WalletPage() {
 // Replace src/App.tsx in a React/TypeScript Vite app with this file.
 export default function App() {
   return (
-    <FintrixProvider
+    <TechosoulProvider
       initialMode="dark"
       initialDensity="comfortable"
       colorOverrides={{
@@ -146,7 +146,7 @@ export default function App() {
       }}
     >
       <WalletPage />
-    </FintrixProvider>
+    </TechosoulProvider>
   );
 }
 ```
@@ -155,7 +155,7 @@ export default function App() {
 
 ## 10. Switch modes and run the application
 
-The two labeled buttons call `useFintrixTheme()` inside the provider to change
+The two labeled buttons call `useTechosoulTheme()` inside the provider to change
 Light/Dark and Comfortable/Compact independently. `initialMode` and
 `initialDensity` only initialize state. `colorOverrides` demonstrates typed
 mode-specific accent foregrounds; filled-button backgrounds use separate
@@ -167,7 +167,7 @@ npm run build
 ```
 
 Open the local URL printed by Vite, operate both controls, and confirm the
-synthetic EUR wallet renders. CSS is required for Fintrix wrappers; fonts are
+synthetic EUR wallet renders. CSS is required for Techosoul wrappers; fonts are
 optional. If a package export is missing, confirm the installed tarball was rebuilt
 from the intended reviewed source, not an older dist directory.
 

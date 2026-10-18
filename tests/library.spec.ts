@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 for (const mode of ["light", "dark"])
   test(`public documentation: ${mode}`, async ({ page }) => {
     await page.goto("/");
@@ -30,12 +30,14 @@ for (const mode of ["light", "dark"])
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/library-${mode}.png`,
+      path: `artifacts/screenshots/library-${mode}.png`,
       fullPage: true,
     });
     await page
       .locator("#docs-financial")
-      .screenshot({ path: `docs/screenshots/library-financial-${mode}.png` });
+      .screenshot({
+        path: `artifacts/screenshots/library-financial-${mode}.png`,
+      });
   });
 test("10k grid interactions and synthetic benchmark", async ({ page }) => {
   await page.goto("/");
@@ -63,8 +65,9 @@ test("10k grid interactions and synthetic benchmark", async ({ page }) => {
   await expect(
     grid.getByText("Synthetic account 00025", { exact: true }),
   ).toBeVisible();
+  mkdirSync("artifacts/validation", { recursive: true });
   writeFileSync(
-    "docs/grid-benchmark.json",
+    "artifacts/validation/grid-benchmark.json",
     JSON.stringify(
       {
         datasetRows: 10000,
@@ -81,7 +84,7 @@ test("10k grid interactions and synthetic benchmark", async ({ page }) => {
       2,
     ) + "\n",
   );
-  await grid.screenshot({ path: "docs/screenshots/library-grid.png" });
+  await grid.screenshot({ path: "artifacts/screenshots/library-grid.png" });
 });
 test("public docs on narrow screen", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -93,7 +96,7 @@ test("public docs on narrow screen", async ({ page }) => {
     ),
   ).toBe(true);
   await page.screenshot({
-    path: "docs/screenshots/library-mobile.png",
+    path: "artifacts/screenshots/library-mobile.png",
     fullPage: true,
   });
 });

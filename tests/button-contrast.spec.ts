@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import { palettes } from "fintrix-ui/tokens";
+import { palettes } from "@techosoul/ui/tokens";
 
 function rgb(hex: string) {
   return `rgb(${[1, 3, 5].map((offset) => parseInt(hex.slice(offset, offset + 2), 16)).join(", ")})`;

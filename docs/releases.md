@@ -1,8 +1,9 @@
 # Versioning and releases
 
-`fintrix-ui@0.3.0` is the proposed first public preview, **not published**.
-Phase 3 is merged and deployed. Phase 4 prepares an artifact and release controls;
-it does not merge, publish npm, create a GitHub Release or deploy Pages.
+`@techosoul/ui@0.3.0` is the proposed first public preview, **not published**.
+This rebrand prepares a private candidate. It does not merge, stage or publish npm,
+create a GitHub Release, deploy Pages, or change DNS. The registered techosoul.com
+domain does not establish npm scope ownership.
 Use SemVer; preview support remains limited to the tested environments.
 
 ## Candidate verification
@@ -11,6 +12,7 @@ Use SemVer; preview support remains limited to the tested environments.
 npm ci
 npm run build
 npm run docs:check
+npm run test:scripts
 npm test
 npm run build-storybook
 npm run inspect:package
@@ -40,7 +42,9 @@ The release job additionally requires:
 - Current `main`, protected by required PR review and required CI checks.
 - Latest push CI run successful for the exact dispatched commit, including all jobs.
 - Protected `npm-release` environment and `NPM_RELEASE_ENABLED=true` environment variable.
-- Exact dispatch authorization `stage fintrix-ui@0.3.0`.
+- Owner confirmation of npm `techosoul` organization control and publishing rights,
+  recorded as protected-environment variable `NPM_SCOPE_OWNER_CONFIRMED=techosoul`.
+- Exact dispatch authorization `stage @techosoul/ui@0.3.0`.
 - Verified package name/version, no existing registry version, and no registry errors other than E404.
 - An npm Trusted Publisher bound to this repository, workflow and environment.
 
@@ -56,9 +60,9 @@ published versions. Failures stop the job and add guidance to its summary.
 
 [Current npm staged-publishing docs](https://docs.npmjs.com/staged-publishing/)
 require npm 11.15.0+ and add a final owner review with 2FA. This is appropriate
-for Fintrix's controlled preview. **Staging a new package creates a public
+for Techosoul's controlled preview. **Staging a new package creates a public
 `0.0.0-stage` placeholder**, so initial staging is itself an owner-approved
-registry write. It is not a harmless dry-run and is not performed in Phase 4.
+registry write. It is not a harmless dry-run and is not performed by this rebrand.
 Trusted publisher setup uses package settings; the owner must establish the
 package first or confirm npm offers an applicable bootstrap path.
 

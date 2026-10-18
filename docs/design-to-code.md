@@ -26,19 +26,19 @@ Use the documented 4px spacing scale and responsive constraints. Component names
 and states above should match React props; product business states stay outside
 primitive component names. Icons use semantic names and accessible text.
 
-## Phase 3 icon and customization mapping
+## Icon and customization mapping
 
-| Design property | React / token mapping |
-| --- | --- |
-| Icon/name | Lucide named export passed to FintrixIcon.icon |
-| Icon/size | size in pixels; curated previews 16–48, default 20 |
-| Icon/stroke | strokeWidth, default 2 |
-| Icon/tone | neutral / primary / success / warning / danger / info → same color token |
-| Icon/meaning | Decorative default; label for meaningful SVG, IconButton.label for actions |
-| Financial card/icon | Optional icon and iconTone; title supplies meaning |
-| Theme/brand | FintrixProvider.colorOverrides.light / .dark with stable semantic names |
-| Control/state | idle, hover, active, focus, disabled, loading; preserve primary/action distinction |
-| Density | comfortable / compact, independent of Light / Dark |
+| Design property     | React / token mapping                                                              |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| Icon/name           | Lucide named export passed to TechosoulIcon.icon                                   |
+| Icon/size           | size in pixels; curated previews 16–48, default 20                                 |
+| Icon/stroke         | strokeWidth, default 2                                                             |
+| Icon/tone           | neutral / primary / success / warning / danger / info → same color token           |
+| Icon/meaning        | Decorative default; label for meaningful SVG, IconButton.label for actions         |
+| Financial card/icon | Optional icon and iconTone; title supplies meaning                                 |
+| Theme/brand         | TechosoulProvider.colorOverrides.light / .dark with stable semantic names          |
+| Control/state       | idle, hover, active, focus, disabled, loading; preserve primary/action distinction |
+| Density             | comfortable / compact, independent of Light / Dark                                 |
 
 This is a design-to-code contract, not an editable Figma UI kit. An editable kit
 with icon components and mode variables remains a separate phase.

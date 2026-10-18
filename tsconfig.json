@@ -13,7 +13,7 @@
   },
   "include": [
     "apps/showcase/src",
-    "packages/fintrix-ui/src",
+    "packages/techosoul-ui/src",
     "vite.config.ts",
     ".storybook"
   ]

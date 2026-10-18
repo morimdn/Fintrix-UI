@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { FintrixProvider, useFintrixTheme } from "./ThemeProvider";
+import { TechosoulProvider, useTechosoulTheme } from "./ThemeProvider";
 import { cssVariables, palettes } from "./tokens";
 import { clients, filterClients } from "../../../apps/showcase/src/demo/data";
 import { ClientModal } from "../../../apps/showcase/src/demo/ClientModal";
@@ -8,14 +8,14 @@ import { vi } from "vitest";
 describe("semantic tokens", () => {
   it("maintains parity and density independent of mode", () => {
     expect(Object.keys(palettes.light)).toEqual(Object.keys(palettes.dark));
-    expect(cssVariables("dark", "compact")["--fx-control"]).toBe("32px");
-    expect(cssVariables("light", "comfortable")["--fx-primary"]).toBe(
+    expect(cssVariables("dark", "compact")["--techosoul-control"]).toBe("32px");
+    expect(cssVariables("light", "comfortable")["--techosoul-primary"]).toBe(
       palettes.light.primary,
     );
   });
   it("switches both theme axes", () => {
     function Controls() {
-      const { setMode, setDensity } = useFintrixTheme();
+      const { setMode, setDensity } = useTechosoulTheme();
       return (
         <button
           onClick={() => {
@@ -28,16 +28,16 @@ describe("semantic tokens", () => {
       );
     }
     const { container } = render(
-      <FintrixProvider>
+      <TechosoulProvider>
         <Controls />
-      </FintrixProvider>,
+      </TechosoulProvider>,
     );
     fireEvent.click(screen.getByText("Switch"));
-    expect(container.querySelector(".fintrix-root")).toHaveAttribute(
+    expect(container.querySelector(".techosoul-root")).toHaveAttribute(
       "data-theme",
       "dark",
     );
-    expect(container.querySelector(".fintrix-root")).toHaveAttribute(
+    expect(container.querySelector(".techosoul-root")).toHaveAttribute(
       "data-density",
       "compact",
     );
@@ -62,9 +62,9 @@ describe("client filtering", () => {
 it("blocks invalid client submissions", async () => {
   const save = vi.fn();
   render(
-    <FintrixProvider>
+    <TechosoulProvider>
       <ClientModal open onClose={() => {}} onSave={save} />
-    </FintrixProvider>,
+    </TechosoulProvider>,
   );
   fireEvent.click(screen.getByText("Create client"));
   expect(await screen.findByText("Enter a full name")).toBeInTheDocument();

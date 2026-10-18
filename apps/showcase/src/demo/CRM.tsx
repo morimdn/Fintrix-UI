@@ -34,7 +34,7 @@ import {
   StatusIndicator,
   RangeController,
   ResizableHeaderCell,
-} from "fintrix-ui";
+} from "@techosoul/ui";
 import { clients, filterClients, money, type Client } from "./data";
 import { ClientModal } from "./ClientModal";
 const fieldNames = [
@@ -185,7 +185,7 @@ export function CRM() {
     const url = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = "fintrix-demo-clients.csv";
+    a.download = "techosoul-demo-clients.csv";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -485,7 +485,7 @@ export function CRM() {
                         rows.length) *
                         100,
                     )}
-                    strokeColor={`var(--fx-${["success", "warning", "danger"][i]})`}
+                    strokeColor={`var(--techosoul-${["success", "warning", "danger"][i]})`}
                     size="small"
                   />
                 </div>
@@ -524,7 +524,7 @@ export function CRM() {
       </div>
       <footer>
         <span>
-          FINTRIX UI <b> / </b> Built for financial clarity.
+          TECHOSOUL UI <b> / </b> Built for financial clarity.
         </span>
         <span>
           Phase 1 POC <ChevronRight size={12} /> Client management

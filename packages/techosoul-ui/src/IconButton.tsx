@@ -1,6 +1,6 @@
 import { Button, Tooltip, type ButtonProps } from "antd";
 import { useState, type ReactNode } from "react";
-import type { IconTone } from "./FintrixIcon";
+import type { IconTone } from "./TechosoulIcon";
 export function IconButton({
   label,
   icon,
@@ -34,7 +34,7 @@ export function IconButton({
             aria-hidden="true"
             style={{
               display: "inline-flex",
-              color: iconTone ? `var(--fx-${iconTone})` : undefined,
+              color: iconTone ? `var(--techosoul-${iconTone})` : undefined,
             }}
           >
             {icon}

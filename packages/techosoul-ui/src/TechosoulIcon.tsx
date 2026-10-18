@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 export type IconTone =
   "neutral" | "primary" | "success" | "warning" | "danger" | "info";
-export interface FintrixIconProps {
+export interface TechosoulIconProps {
   icon: LucideIcon;
   tone?: IconTone;
   size?: number;
@@ -10,20 +10,20 @@ export interface FintrixIconProps {
   label?: string;
   className?: string;
 }
-export function FintrixIcon({
+export function TechosoulIcon({
   icon: Icon,
   tone = "neutral",
   size = 20,
   strokeWidth = 2,
   label,
   className,
-}: FintrixIconProps) {
+}: TechosoulIconProps) {
   return (
     <Icon
       className={className}
       size={size}
       strokeWidth={strokeWidth}
-      style={{ color: `var(--fx-${tone})` }}
+      style={{ color: `var(--techosoul-${tone})` }}
       focusable="false"
       role={label ? "img" : undefined}
       aria-label={label}

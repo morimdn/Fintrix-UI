@@ -5,7 +5,7 @@ try {
   result = runNpm(
     [
       "view",
-      "fintrix-ui@0.3.0",
+      "@techosoul/ui@0.3.0",
       "version",
       "--json",
       "--registry=https://registry.npmjs.org/",

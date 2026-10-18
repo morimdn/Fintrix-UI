@@ -12,11 +12,11 @@ for (const [label, payload, exitCode, accepted] of [
   ["malformed response", null, 1, false],
 ]) {
   test(`registry gate: ${label}`, () => {
-    const dir = mkdtempSync(resolve(tmpdir(), "fintrix-registry-test-"));
+    const dir = mkdtempSync(resolve(tmpdir(), "techosoul-registry-test-"));
     try {
       writeFileSync(
         resolve(dir, "npm-cli.cjs"),
-        `console.log(${JSON.stringify(JSON.stringify(payload))}); process.exit(${exitCode});\n`,
+        `require("node:assert/strict").deepEqual(process.argv.slice(2), ["view", "@techosoul/ui@0.3.0", "version", "--json", "--registry=https://registry.npmjs.org/"]); console.log(${JSON.stringify(JSON.stringify(payload))}); process.exit(${exitCode});\n`,
         { mode: 0o755 },
       );
       const result = spawnSync(

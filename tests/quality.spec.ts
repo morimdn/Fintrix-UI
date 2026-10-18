@@ -65,13 +65,13 @@ for (const mode of ["light", "dark"] as const)
       ).toBe(true);
       await noViolations(page);
       await page.screenshot({
-        path: `docs/screenshots/crm-${mode}${density === "compact" ? "-compact" : ""}.png`,
+        path: `artifacts/screenshots/crm-${mode}${density === "compact" ? "-compact" : ""}.png`,
         fullPage: true,
       });
       if (mode === "dark" && density === "compact")
         await page
           .locator(".directory")
-          .screenshot({ path: "docs/screenshots/compact-grid.png" });
+          .screenshot({ path: "artifacts/screenshots/compact-grid.png" });
       await page.getByRole("button", { name: "Add client" }).click();
       const dialog = page.getByRole("dialog");
       await expect(dialog).toBeVisible();
@@ -106,7 +106,7 @@ for (const mode of ["light", "dark"] as const)
       await page.getByRole("tab", { name: tab, exact: true }).click();
       await noViolations(page);
       await page.screenshot({
-        path: `docs/screenshots/${file}-${mode}.png`,
+        path: `artifacts/screenshots/${file}-${mode}.png`,
         fullPage: true,
       });
     }
@@ -206,11 +206,13 @@ test("mobile navigation, table scroll, touch sizes and modal", async ({
   await scroller.evaluate((el) => (el.scrollLeft = 0));
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
-    path: "docs/screenshots/mobile.png",
+    path: "artifacts/screenshots/mobile.png",
     fullPage: true,
   });
   await menu.click();
-  await page.screenshot({ path: "docs/screenshots/mobile-navigation.png" });
+  await page.screenshot({
+    path: "artifacts/screenshots/mobile-navigation.png",
+  });
   await page.keyboard.press("Escape");
 });
 test("tablet layout and keyboard resize limits", async ({ page }) => {
@@ -232,7 +234,7 @@ test("tablet layout and keyboard resize limits", async ({ page }) => {
   await expect(handle).toHaveAttribute("aria-valuenow", "320");
   await expect(page.locator("th[aria-sort]")).toHaveCount(0);
   await page.screenshot({
-    path: "docs/screenshots/tablet.png",
+    path: "artifacts/screenshots/tablet.png",
     fullPage: true,
   });
 });

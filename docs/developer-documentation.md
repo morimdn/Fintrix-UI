@@ -1,13 +1,13 @@
 # Developer documentation
 
-The release candidate is `fintrix-ui@0.3.0`. It is not on npm yet; use the
+The release candidate is `@techosoul/ui@0.3.0`. It is not on npm yet; use the
 [tarball instructions](getting-started.md). After publication, install
-`fintrix-ui antd` in an existing React app, with matching `react` and `react-dom`
+`@techosoul/ui antd` in an existing React app, with matching `react` and `react-dom`
 18.3 or 19 peers and corresponding TypeScript type packages.
 
-Import components/types from `fintrix-ui`, token helpers from `fintrix-ui/tokens`,
-DTCG data from `fintrix-ui/tokens.json`, and CSS from `fintrix-ui/styles.css`.
-Optional `fintrix-ui/fonts.css` self-hosts Inter. ESM modules preserve tree shaking;
+Import components/types from `@techosoul/ui`, token helpers from `@techosoul/ui/tokens`,
+DTCG data from `@techosoul/ui/tokens.json`, and CSS from `@techosoul/ui/styles.css`.
+Optional `@techosoul/ui/fonts.css` self-hosts Inter. ESM modules preserve tree shaking;
 CSS is intentionally marked as a side effect. Lucide is a runtime dependency;
 if your app imports Lucide icons directly, declare `lucide-react` in your app.
 

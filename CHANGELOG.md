@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased — Techosoul UI rebrand (0.3.0 candidate)
+
+- Rename the private package to `@techosoul/ui` and workspace to `packages/techosoul-ui`.
+- Rename public APIs to `TechosoulProvider`, `useTechosoulTheme`, `TechosoulIcon` and `TechosoulIconProps`.
+- Migrate CSS variables/classes to `--techosoul-*` / `techosoul-*`; no pre-release aliases.
+- Rebrand active examples, Showcase, Storybook and docs; retain historical evidence below.
+- Keep library and root private; owner confirmation of npm scope control is required before release.
+
+Earlier entries retain their original names and results. See [migration and owner actions](docs/techosoul-rebrand.md).
+
 ## 0.3.0 — unreleased public preview candidate
 
 - Prepare the proposed `fintrix-ui` package name and public ESM/types, CSS/fonts and token exports.

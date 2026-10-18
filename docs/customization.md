@@ -1,6 +1,6 @@
 # Customization contract
 
-Import styles once and place controls under `FintrixProvider`. The independent
+Import styles once and place controls under `TechosoulProvider`. The independent
 `examples/consumer-app` installs the tarball outside the workspace.
 
 ## Themes and density
@@ -12,15 +12,15 @@ This complete App initializes the provider and switches both modes.
 ```tsx
 import {
   Button,
-  FintrixProvider,
+  TechosoulProvider,
   WalletBalanceCard,
-  useFintrixTheme,
-} from "fintrix-ui";
-import "fintrix-ui/styles.css";
-import "fintrix-ui/fonts.css"; // Optional self-hosted Inter Variable
+  useTechosoulTheme,
+} from "@techosoul/ui";
+import "@techosoul/ui/styles.css";
+import "@techosoul/ui/fonts.css"; // Optional self-hosted Inter Variable
 
 function WalletPage() {
-  const { mode, setMode, density, setDensity } = useFintrixTheme();
+  const { mode, setMode, density, setDensity } = useTechosoulTheme();
   return (
     <main style={{ padding: 24 }}>
       <h1>My wallet</h1>
@@ -46,7 +46,7 @@ function WalletPage() {
 // Replace src/App.tsx in a React/TypeScript Vite app with this file.
 export default function App() {
   return (
-    <FintrixProvider
+    <TechosoulProvider
       initialMode="dark"
       initialDensity="comfortable"
       colorOverrides={{
@@ -55,7 +55,7 @@ export default function App() {
       }}
     >
       <WalletPage />
-    </FintrixProvider>
+    </TechosoulProvider>
   );
 }
 ```
@@ -64,34 +64,34 @@ export default function App() {
 
 `colorOverrides` is typed as `ThemeOverrides`: an optional partial map per mode
 using existing color token names. Omitted values retain defaults. The resolved
-palette feeds both Ant tokens and scoped `--fx-*` variables. `primary` is a
+palette feeds both Ant tokens and scoped `--techosoul-*` variables. `primary` is a
 foreground; `action` is a filled background paired with `onAction`. Do not use a
 dark filled-action color as an outlined button's hover foreground. Override
 related roles together and check text at 4.5:1 and meaningful graphics at 3:1
 across idle/hover/active/selected/focus states. Overrides cannot guarantee contrast.
 
-`initialMode` and `initialDensity` initialize state. Use `useFintrixTheme()` with
+`initialMode` and `initialDensity` initialize state. Use `useTechosoulTheme()` with
 `setMode`/`setDensity` for subsequent changes. Comfortable controls are 40px;
 compact controls are 32px. Ant `size="small" | "middle" | "large"` is available
 where supported. Preserve accessible target spacing in compact interfaces.
 
 ## Icons
 
-Render this exported example inside FintrixProvider, as shown in Getting Started.
+Render this exported example inside TechosoulProvider, as shown in Getting Started.
 
 <!-- icons:start -->
 
 ```tsx
 import { useState } from "react";
 import { Settings, Wallet } from "lucide-react";
-import { FintrixIcon, IconButton, WalletBalanceCard } from "fintrix-ui";
+import { TechosoulIcon, IconButton, WalletBalanceCard } from "@techosoul/ui";
 
 export default function Icons() {
   const [status, setStatus] = useState("Ready");
   return (
     <>
-      <FintrixIcon icon={Wallet} size={20} strokeWidth={2} />
-      <FintrixIcon icon={Wallet} tone="primary" label="Wallet" />
+      <TechosoulIcon icon={Wallet} size={20} strokeWidth={2} />
+      <TechosoulIcon icon={Wallet} tone="primary" label="Wallet" />
       <IconButton
         label="Wallet settings"
         icon={<Settings size={20} />}
@@ -129,16 +129,16 @@ catalog is shipped in the library. The lazy Showcase Iconography tab includes
 
 ## Component extensions
 
-| Area | Supported customization |
-| --- | --- |
-| Buttons | Ant type, variant, color, danger, size, loading, disabled, className and style |
-| Cards | Ant Card variant, size, styles and classNames; financial cards use scoped surface/border/radius tokens and detail content |
-| Metrics | FinancialKPICard accepts arbitrary value/detail; MetricCard retains its legacy decorative sparkline |
-| Money | Decimal text, currency, locale and maximumFractionDigits; formatting only, no financial arithmetic |
-| DataGrid | Typed Ant columns, render, sorter, filters, onFilter, rowKey, controlled pagination/selection, scroll and fixed columns |
-| Grid layout | hiddenColumnKeys, columnWidths, onColumnWidthChange and min/max widths; fixed columns stay visible |
+| Area         | Supported customization                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Buttons      | Ant type, variant, color, danger, size, loading, disabled, className and style                                                   |
+| Cards        | Ant Card variant, size, styles and classNames; financial cards use scoped surface/border/radius tokens and detail content        |
+| Metrics      | FinancialKPICard accepts arbitrary value/detail; MetricCard retains its legacy decorative sparkline                              |
+| Money        | Decimal text, currency, locale and maximumFractionDigits; formatting only, no financial arithmetic                               |
+| DataGrid     | Typed Ant columns, render, sorter, filters, onFilter, rowKey, controlled pagination/selection, scroll and fixed columns          |
+| Grid layout  | hiddenColumnKeys, columnWidths, onColumnWidthChange and min/max widths; fixed columns stay visible                               |
 | Modal/Drawer | Ant styles, classNames, Modal width, Drawer size/placement and controlled open state; retain labeled titles and focus management |
-| Layout | Consumer-owned wrappers and scoped classes; semantic CSS variables rather than global Ant selector overrides |
+| Layout       | Consumer-owned wrappers and scoped classes; semantic CSS variables rather than global Ant selector overrides                     |
 
 See [component APIs](components.md) and the independent consumer example. Keep
 semantic token names stable for future design-tool mappings. No editable Figma kit exists.

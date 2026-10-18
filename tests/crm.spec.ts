@@ -11,7 +11,7 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   ).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({
-    path: "docs/screenshots/crm-light.png",
+    path: "artifacts/screenshots/crm-light.png",
     fullPage: true,
   });
   await page
@@ -75,12 +75,12 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   );
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
   await page.getByText("Compact", { exact: true }).click();
-  await expect(page.locator(".fintrix-root")).toHaveAttribute(
+  await expect(page.locator(".techosoul-root")).toHaveAttribute(
     "data-density",
     "compact",
   );
   await page.screenshot({
-    path: "docs/screenshots/crm-dark-compact.png",
+    path: "artifacts/screenshots/crm-dark-compact.png",
     fullPage: true,
   });
   await page.getByRole("button", { name: "Add client" }).click();
@@ -94,7 +94,7 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   await page.getByRole("button", { name: "Create client" }).click();
   await expect(page.getByText("Enter a full name")).toBeVisible();
   await page.screenshot({
-    path: "docs/screenshots/client-modal-dark.png",
+    path: "artifacts/screenshots/client-modal-dark.png",
     fullPage: true,
   });
   await page.getByRole("textbox", { name: "Full name" }).fill("Taylor Demo");
@@ -116,12 +116,12 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
     page.getByRole("heading", { name: "Precision with a human perspective." }),
   ).toBeVisible();
   await page.screenshot({
-    path: "docs/screenshots/showcase-dark.png",
+    path: "artifacts/screenshots/showcase-dark.png",
     fullPage: true,
   });
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await page.screenshot({
-    path: "docs/screenshots/showcase-light.png",
+    path: "artifacts/screenshots/showcase-light.png",
     fullPage: true,
   });
 });
@@ -148,7 +148,7 @@ test("mobile table scroll and filters", async ({ page }) => {
   await page.getByRole("heading", { name: "Client directory" }).click();
   await expect(page.locator(".ant-select-dropdown:visible")).toHaveCount(0);
   await page.screenshot({
-    path: "docs/screenshots/mobile.png",
+    path: "artifacts/screenshots/mobile.png",
     fullPage: true,
   });
 });
