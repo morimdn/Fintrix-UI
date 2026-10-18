@@ -91,6 +91,7 @@ for (const [label, envPatch, branchSha, runs, accepted] of [
         },
         actions: {
           listWorkflowRuns: async (args) => {
+            assert.equal(args.branch, "main");
             assert.equal(args.head_sha, "current");
             assert.equal(args.event, "push");
             assert.equal(args.workflow_id, "ci.yml");
@@ -187,6 +188,7 @@ for (const [label, sha, runs, accepted] of [
         repos: { getBranch: async () => ({ data: { commit: { sha } } }) },
         actions: {
           listWorkflowRuns: async (args) => {
+            assert.equal(args.branch, "main");
             assert.equal(args.head_sha, "current");
             assert.equal(args.event, "push");
             assert.equal(args.workflow_id, "ci.yml");

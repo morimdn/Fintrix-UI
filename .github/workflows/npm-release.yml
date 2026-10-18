@@ -40,7 +40,7 @@ jobs:
             if (process.env.AUTHORIZATION !== 'stage @techosoul/ui@0.3.0') throw new Error('Exact release authorization required');
             const {data: branch} = await github.rest.repos.getBranch({...context.repo, branch:'main'});
             if (branch.commit.sha !== context.sha) throw new Error('Dispatch must target current main');
-            const {data} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', head_sha:context.sha, event:'push', per_page:100});
+            const {data} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', branch:'main', head_sha:context.sha, event:'push', per_page:100});
             const latest = data.workflow_runs.sort((a,b) => b.id-a.id)[0];
             if (!latest || latest.status !== 'completed' || latest.conclusion !== 'success') throw new Error('Latest main CI run must succeed for this exact commit');
       - uses: actions/checkout@v4
@@ -68,7 +68,7 @@ jobs:
           script: |
             const {data} = await github.rest.repos.getBranch({...context.repo,branch:'main'});
             if (data.commit.sha !== context.sha) throw new Error('Main changed; rerun CI and release review');
-            const {data: runs} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', head_sha:context.sha, event:'push', per_page:100});
+            const {data: runs} = await github.rest.actions.listWorkflowRuns({...context.repo, workflow_id:'ci.yml', branch:'main', head_sha:context.sha, event:'push', per_page:100});
             const latest = runs.workflow_runs.sort((a,b) => b.id-a.id)[0];
             if (!latest || latest.status !== 'completed' || latest.conclusion !== 'success') throw new Error('Latest main CI run must still succeed for this exact commit');
       - name: Stage with OIDC and provenance; never approve automatically
