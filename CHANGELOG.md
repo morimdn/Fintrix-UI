@@ -18,6 +18,7 @@ Earlier entries retain their original names and results. See [migration and owne
 - Add package inspection, guarded manual OIDC release workflow and owner setup guide.
 - Keep `private: true`; no npm publication or deployment has occurred in Phase 4.
 
+
 ## 0.2.0 — Unreleased
 
 - Correct default-button hover/pressed contrast using semantic foreground tokens.
