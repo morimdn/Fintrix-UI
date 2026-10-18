@@ -47,7 +47,7 @@ package metadata, README, MIT license, third-party notices and Inter/Lucide
 licenses. Source, tests, Storybook files, maps, credentials and workspace files
 are excluded. Existing export/peer/CSS-side-effect and token checks remain intact.
 
-Local checks passed with npm 11.19.1 on Node 24.19.0: 61 script regressions,
+Local checks passed with npm 11.19.1 on Node 24.19.0: 62 script regressions,
 library build, documentation checks and archive inspection/publication dry-run.
 The archive is 241,359 bytes, with integrity
 `sha512-tLpbuAcJN5LHyI/ocTr1iAOmLDJS4L2kI16qS3stONr7z6eGOrV6jpUP2GVqefB3CcufU/HSMZqsFtCGsCgWKw==`.

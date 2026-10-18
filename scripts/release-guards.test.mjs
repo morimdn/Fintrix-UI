@@ -231,29 +231,32 @@ test("GitHub API failure stops both CI gates", async () => {
     /API unavailable/,
   );
 });
-test("release workflow stays manual, protected and stage-only", () => {
-  assert.match(workflow, /on:\n  workflow_dispatch:/);
-  assert.doesNotMatch(
-    workflow,
-    /\n  (push|pull_request|schedule|workflow_run):/,
-  );
-  assert.match(workflow, /if: github.ref == 'refs\/heads\/main'/);
-  assert.match(workflow, /environment: npm-release/);
-  assert.match(workflow, /runs-on: ubuntu-latest/);
-  assert.match(workflow, /id-token: write/);
-  assert.match(workflow, /cancel-in-progress: false/);
-  assert.match(workflow, /node-version: 24\.22\.0/);
-  assert.match(workflow, /npm@11\.19\.1/);
-  assert.match(
-    workflow,
-    /node scripts\/inspect-package\.mjs "\$RUNNER_TEMP\/techosoul-ui-0\.3\.0\.tgz"/,
-  );
-  assert.match(
-    workflow,
-    /npm stage publish "\$RUNNER_TEMP\/techosoul-ui-0\.3\.0\.tgz" --ignore-scripts --access public --provenance --tag latest --registry=https:\/\/registry\.npmjs\.org\//,
-  );
-  assert.doesNotMatch(
-    workflow,
-    /npm (?:publish|stage (?:approve|reject))|NODE_AUTH_TOKEN|NPM_TOKEN/,
-  );
-});
+for (const newline of ["\n", "\r\n"]) {
+  const source = workflow.replace(/\r?\n/g, newline);
+  test(`release workflow stays manual, protected and stage-only (${JSON.stringify(newline)})`, () => {
+    assert.match(source, /on:\r?\n  workflow_dispatch:/);
+    assert.doesNotMatch(
+      source,
+      /\n  (push|pull_request|schedule|workflow_run):/,
+    );
+    assert.match(source, /if: github.ref == 'refs\/heads\/main'/);
+    assert.match(source, /environment: npm-release/);
+    assert.match(source, /runs-on: ubuntu-latest/);
+    assert.match(source, /id-token: write/);
+    assert.match(source, /cancel-in-progress: false/);
+    assert.match(source, /node-version: 24\.22\.0/);
+    assert.match(source, /npm@11\.19\.1/);
+    assert.match(
+      source,
+      /node scripts\/inspect-package\.mjs "\$RUNNER_TEMP\/techosoul-ui-0\.3\.0\.tgz"/,
+    );
+    assert.match(
+      source,
+      /npm stage publish "\$RUNNER_TEMP\/techosoul-ui-0\.3\.0\.tgz" --ignore-scripts --access public --provenance --tag latest --registry=https:\/\/registry\.npmjs\.org\//,
+    );
+    assert.doesNotMatch(
+      source,
+      /npm (?:publish|stage (?:approve|reject))|NODE_AUTH_TOKEN|NPM_TOKEN/,
+    );
+  });
+}
