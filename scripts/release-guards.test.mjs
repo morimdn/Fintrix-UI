@@ -17,7 +17,10 @@ const workflow = readFileSync(
   resolve(import.meta.dirname, "../.github/workflows/npm-release.yml"),
   "utf8",
 );
-const gate = workflow.match(/script: \|\r?\n([\s\S]*?)(?=      - )/)[1];
+const gates = [
+  ...workflow.matchAll(/script: \|\r?\n([\s\S]*?)(?=      - )/g),
+].map((match) => match[1]);
+const gate = gates[0];
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 const authorize = new AsyncFunction("process", "github", "context", gate);
 for (const [label, envPatch, branchSha, runs, accepted] of [
@@ -27,6 +30,14 @@ for (const [label, envPatch, branchSha, runs, accepted] of [
     "current",
     [{ id: 1, status: "completed", conclusion: "success" }],
     true,
+  ],
+  ["queue review missing", { PENDING_STAGES: "" }, "current", [], false],
+  [
+    "queue review wrong package",
+    { PENDING_STAGES: "no pending stages for fintrix-ui" },
+    "current",
+    [],
+    false,
   ],
   ["release disabled", { RELEASE_ENABLED: "false" }, "current", [], false],
   [
@@ -66,6 +77,7 @@ for (const [label, envPatch, branchSha, runs, accepted] of [
   test(`release authorization: ${label}`, async () => {
     const process = {
       env: {
+        PENDING_STAGES: "no pending stages for @techosoul/ui",
         RELEASE_ENABLED: "true",
         SCOPE_OWNER_CONFIRMED: "techosoul",
         AUTHORIZATION: "stage @techosoul/ui@0.3.0",
@@ -79,6 +91,7 @@ for (const [label, envPatch, branchSha, runs, accepted] of [
         },
         actions: {
           listWorkflowRuns: async (args) => {
+            assert.equal(args.branch, "main");
             assert.equal(args.head_sha, "current");
             assert.equal(args.event, "push");
             assert.equal(args.workflow_id, "ci.yml");
@@ -127,5 +140,125 @@ for (const [label, rootPrivate, libraryPatch, accepted] of [
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
+  });
+}
+
+// The pre-upload gate must repeat the CI check, including a rerun that fails or
+// becomes pending after the initial authorization step.
+const recheck = new AsyncFunction("github", "context", gates[1]);
+for (const [label, sha, runs, accepted] of [
+  [
+    "unchanged main and green CI",
+    "current",
+    [{ id: 1, status: "completed", conclusion: "success" }],
+    true,
+  ],
+  [
+    "main advanced",
+    "newer",
+    [{ id: 1, status: "completed", conclusion: "success" }],
+    false,
+  ],
+  ["CI disappeared", "current", [], false],
+  [
+    "rerun pending",
+    "current",
+    [{ id: 1, status: "in_progress", conclusion: null }],
+    false,
+  ],
+  [
+    "rerun failed",
+    "current",
+    [{ id: 1, status: "completed", conclusion: "failure" }],
+    false,
+  ],
+  [
+    "newer failed run",
+    "current",
+    [
+      { id: 1, status: "completed", conclusion: "success" },
+      { id: 2, status: "completed", conclusion: "failure" },
+    ],
+    false,
+  ],
+]) {
+  test(`pre-upload CI gate: ${label}`, async () => {
+    const github = {
+      rest: {
+        repos: { getBranch: async () => ({ data: { commit: { sha } } }) },
+        actions: {
+          listWorkflowRuns: async (args) => {
+            assert.equal(args.branch, "main");
+            assert.equal(args.head_sha, "current");
+            assert.equal(args.event, "push");
+            assert.equal(args.workflow_id, "ci.yml");
+            return { data: { workflow_runs: runs } };
+          },
+        },
+      },
+    };
+    const run = () => recheck(github, { repo: {}, sha: "current" });
+    if (accepted) await assert.doesNotReject(run);
+    else await assert.rejects(run);
+  });
+}
+test("GitHub API failure stops both CI gates", async () => {
+  const github = {
+    rest: {
+      repos: {
+        getBranch: async () => {
+          throw new Error("API unavailable");
+        },
+      },
+    },
+  };
+  await assert.rejects(
+    () =>
+      authorize(
+        {
+          env: {
+            RELEASE_ENABLED: "true",
+            SCOPE_OWNER_CONFIRMED: "techosoul",
+            AUTHORIZATION: "stage @techosoul/ui@0.3.0",
+            PENDING_STAGES: "no pending stages for @techosoul/ui",
+          },
+        },
+        github,
+        { repo: {}, sha: "current" },
+      ),
+    /API unavailable/,
+  );
+  await assert.rejects(
+    () => recheck(github, { repo: {}, sha: "current" }),
+    /API unavailable/,
+  );
+});
+for (const newline of ["\n", "\r\n"]) {
+  const source = workflow.replace(/\r?\n/g, newline);
+  test(`release workflow stays manual, protected and stage-only (${JSON.stringify(newline)})`, () => {
+    assert.match(source, /on:\r?\n  workflow_dispatch:/);
+    assert.doesNotMatch(
+      source,
+      /\n  (push|pull_request|schedule|workflow_run):/,
+    );
+    assert.match(source, /if: github.ref == 'refs\/heads\/main'/);
+    assert.match(source, /environment: npm-release/);
+    assert.match(source, /runs-on: ubuntu-latest/);
+    assert.match(source, /id-token: write/);
+    assert.match(source, /cancel-in-progress: false/);
+    assert.match(source, /node-version: 24\.22\.0/);
+    assert.match(source, /npm@11\.19\.1/);
+    assert.match(
+      source,
+      /node scripts\/inspect-package\.mjs "\$RUNNER_TEMP\/techosoul-ui-0\.3\.0\.tgz"/,
+    );
+    assert.match(
+      source,
+      /npm stage publish "\$RUNNER_TEMP\/techosoul-ui-0\.3\.0\.tgz" --ignore-scripts --access public --provenance --tag latest --registry=https:\/\/registry\.npmjs\.org\//,
+    );
+    assert.doesNotMatch(
+      source,
+      /npm (?:publish|stage (?:approve|reject))|NODE_AUTH_TOKEN|NPM_TOKEN/,
+    );
   });
 }

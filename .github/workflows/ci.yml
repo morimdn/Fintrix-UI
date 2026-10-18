@@ -106,7 +106,7 @@ jobs:
         working-directory: Techosoul UI
       - run: npm run build:library
         working-directory: Techosoul UI
-      - run: npm run inspect:package
+      - run: npm run inspect:package -- "${{ runner.temp }}/techosoul-ui-0.3.0.tgz"
         working-directory: Techosoul UI
       - run: npm run validate:consumer
         working-directory: Techosoul UI
