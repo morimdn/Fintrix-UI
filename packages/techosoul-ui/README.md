@@ -1,75 +1,61 @@
 # Techosoul UI
 
-A React design system for teams building brokerage CRMs, wallet interfaces and
-risk dashboards. Techosoul UI is the React design system under the Techosoul umbrella brand.
-It combines Ant Design 6 controls with financial display
-components, semantic Light/Dark tokens, two density modes and Lucide icon conventions.
-It extends Ant Design; it is not a standalone replacement for it.
+**FinTech-first. Built for modern software.**
+
+An open-source React design system for precise, accessible, data-intensive
+interfaces. Techosoul UI combines Ant Design 6 controls with semantic tokens,
+financial display components and consistent interaction patterns. Its reusable
+foundations support financial products, enterprise software, CRM, ERP and SaaS
+applications, with room for product-specific composition and extension.
 
 [Live Showcase](https://morimdn.github.io/Techosoul-UI/) ·
-[Component documentation](https://github.com/morimdn/Techosoul-UI/blob/main/docs/components.md) ·
-[Iconography](https://github.com/morimdn/Techosoul-UI/blob/main/docs/customization.md#icons) ·
-[Installation guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md) ·
-[GitHub repository](https://github.com/morimdn/Techosoul-UI)
+[Documentation](https://morimdn.github.io/Techosoul-UI/#docs-getting-started) ·
+[Component guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/components.md) ·
+[Getting Started](https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md) ·
+[GitHub](https://github.com/morimdn/Techosoul-UI)
 
-## Current candidate
+**Release status:** `@techosoul/ui@0.3.0` is a private, independently packable
+candidate, not yet published to npm. Use the local tarball instructions below.
 
-`@techosoul/ui@0.3.0` is independently buildable and packable, but remains
-**private**. The monorepo root is also private and must stay private permanently.
-The owner has registered **techosoul.com**; this does not establish control of the
-npm `techosoul` organization, nor does it mean this site has been deployed there.
-Owner control of the npm scope and publishing rights must be confirmed before
-any registry write. No publication, staging, deployment or GitHub Release is
-part of this rebrand.
+## Why FinTech First?
 
-The repository is [morimdn/Techosoul-UI](https://github.com/morimdn/Techosoul-UI).
-The project-site URL is `https://morimdn.github.io/Techosoul-UI/`; deployment
-remains manual. See [Pages deployment and future custom domain](https://github.com/morimdn/Techosoul-UI/blob/main/docs/pages.md)
-for owner instructions. `ui.techosoul.com` is a future UI host, while
-`techosoul.com` remains reserved for the umbrella-brand website.
-See the [migration checklist](https://github.com/morimdn/Techosoul-UI/blob/main/docs/techosoul-rebrand.md),
-[release guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/releases.md) and [owner setup](https://github.com/morimdn/Techosoul-UI/blob/main/docs/npm-owner-setup.md).
+Techosoul UI grew from real-world financial-product development requirements.
+Financial applications bring several interface challenges together: dense but
+readable tables, precise financial-value display, clearly distinguished states,
+efficient keyboard interaction, professional Light/Dark themes, Comfortable and
+Compact layouts, and consistent forms, dashboards and status indicators.
 
-### Future registry installation (only after publication)
+These requirements informed the semantic token architecture, controlled grid
+extensions and financial display components. They also apply to many other kinds
+of modern software: comparing records, editing structured data and communicating
+state are common needs across enterprise applications.
 
-```sh
-npm install @techosoul/ui antd
-# In a new application, also install matching React peers and TypeScript types:
-npm install react@19 react-dom@19
-npm install --save-dev @types/react@19 @types/react-dom@19
-```
+Founder Dr. Mirmorsal Madani brings experience developing and managing Forex CRM,
+Risk Management, Social Trading, IB Platforms, Loyalty Clubs, Trading Plugins and
+enterprise applications. This professional background informs the product's
+focus; the package provides reusable interface components and formatting APIs.
+The brokerage CRM in the Showcase is an illustrative application using synthetic
+records, separate from the library.
 
-Use the tarball method below until publication is confirmed.
+## Research & Design Philosophy
 
-## Install the current artifact
+Use semantic roles instead of scattered color values; distinguish an action from
+its financial outcome; preserve readable typography as density changes; and give
+keyboard users access to the same interactions. Techosoul extends Ant Design
+rather than introducing a second complete control framework.
 
-Use the latest merged `main` after cloning.
+[Research & Design Decisions](https://github.com/morimdn/Techosoul-UI/blob/main/docs/design-rationale.md) connects these principles
+to the original engineering evaluations, current tokens, implementation and tests.
+It separates recorded decisions from interpretive rationale and states the limits
+of the available evidence.
 
-Use Node 24, npm and Git for repository development. Consumers use React/React DOM
-18.3 or 19 and Ant Design 6 as peers. Independent validation covers React
-18.3.1/19.3.1 × Ant 6.0.0/6.6.6; other versions in the peer ranges are not individually verified.
+## Features & Components
 
-```sh
-git clone https://github.com/morimdn/Techosoul-UI.git
-cd Techosoul-UI
-npm ci
-npm run build:library
-node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
-npm pack --workspace @techosoul/ui --pack-destination ./artifacts
-```
-
-In a separate React app, install the resulting tarball by its actual absolute path:
-
-```sh
-npm install /absolute/path/to/Techosoul-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
-```
-
-Follow the [complete Getting Started guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md) for a new
-React/TypeScript app, CSS and optional local Inter fonts, TechosoulProvider, a wallet
-and working theme/density controls. The [complete App example](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/App.tsx)
-is compiled against the installed artifact, along with the other documentation examples.
-
-## Components and customization
+- Light/Dark themes and independent Comfortable/Compact density modes.
+- Typed semantic tokens, scoped CSS variables, generated token JSON and per-mode
+  color overrides through `TechosoulProvider`.
+- Optional self-hosted Inter Variable fonts and consistent Lucide icon usage.
+- Native ESM and TypeScript declarations; React, React DOM and Ant Design remain peers.
 
 | Area                | Available APIs                                                                                                                             |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -92,7 +78,50 @@ between controls and [customization](https://github.com/morimdn/Techosoul-UI/blo
 overrides. Financial values are display-only; decimal strings are preferred.
 No ledger, trading engine, broker integration, payment system or live data feed is included.
 
-## Explore the system
+## Getting Started
+
+Use Node 24, npm and Git for repository development. Consumers supply React/React
+DOM 18.3 or 19 and Ant Design 6. Independent validation covers React
+18.3.1/19.3.1 × Ant Design 6.0.0/6.6.6; other versions within the peer ranges are
+not individually verified.
+
+### Install the current private candidate
+
+```sh
+git clone https://github.com/morimdn/Techosoul-UI.git
+cd Techosoul-UI
+npm ci
+npm run build:library
+node -e "require('node:fs').mkdirSync('artifacts', { recursive: true })"
+npm pack --workspace @techosoul/ui --pack-destination ./artifacts
+```
+
+In a separate React app, use the actual absolute path to the generated archive:
+
+```sh
+npm install /absolute/path/to/Techosoul-UI/artifacts/techosoul-ui-0.3.0.tgz antd@6.6.6 react@19.3.1 react-dom@19.3.1
+```
+
+The [Getting Started guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/getting-started.md) covers a new React/TypeScript
+app, CSS and optional local fonts, `TechosoulProvider`, a wallet and working theme
+and density controls. Its [complete App example](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/App.tsx)
+is compiled against the installed tarball along with the other documentation examples.
+
+### Registry installation — only after publication
+
+```sh
+npm install @techosoul/ui antd
+# In a new app, also install matching React peers and TypeScript types:
+npm install react@19 react-dom@19
+npm install --save-dev @types/react@19 @types/react-dom@19
+```
+
+Both the library and monorepo root remain private; the root must stay private
+permanently. Scope ownership, release authorization and final publication remain
+owner-controlled. See the [release guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/releases.md),
+[owner checklist](https://github.com/morimdn/Techosoul-UI/blob/main/docs/npm-owner-setup.md) and [migration notes](https://github.com/morimdn/Techosoul-UI/blob/main/docs/techosoul-rebrand.md).
+
+## Examples & Showcase
 
 ```sh
 npm run build
@@ -100,27 +129,68 @@ npm run dev        # Local Techosoul UI Showcase
 npm run storybook  # Local component stories
 ```
 
-The public documentation retains 14 topics grouped for developers and designers.
-Local deep links such as `/#docs-getting-started`, `/#docs-grid` and `/#iconography`
-open the relevant section. Browse the Iconography tab to search
-36 curated icons and copy size/stroke/tone examples; Lucide remains usable directly.
+Explore foundations, core controls, financial UI and 14 documentation topics.
+The Iconography gallery offers 36 curated icons with size/stroke/tone examples;
+Lucide also remains usable directly. Local links such as `/#docs-grid` and
+`/#iconography` open the relevant section.
 
-Historical visual evidence is retained in [the screenshot archive](https://github.com/morimdn/Techosoul-UI/blob/main/docs/screenshots/README.md);
-it predates the rebrand. Fresh screenshots are produced under `artifacts/screenshots`
-and uploaded by CI.
+The **brokerage CRM example** demonstrates synthetic clients, filters, selection,
+column resizing and record editing. It is application composition, not a bundled
+CRM product. Its header and sidebar stay fixed while the content scrolls; mobile
+navigation uses a Drawer. There is no live customer or market data.
 
-The **brokerage CRM is an example application**, separate from the reusable
-package. It demonstrates synthetic clients, filters, selection, resizing and
-record editing. The header and sidebar stay fixed while main content scrolls;
-mobile navigation uses a Drawer.
+### From the running application
 
-The CRM uses illustrative records, not live customer or market data.
+![Techosoul UI Light Showcase with semantic foundations](https://raw.githubusercontent.com/morimdn/Techosoul-UI/main/docs/screenshots/brand-showcase-light.png)
 
-More [real screenshots](https://github.com/morimdn/Techosoul-UI/blob/main/docs/screenshots/README.md),
-[financial examples](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/Financial.tsx) and
-[DataGrid example](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/Grid.tsx).
+![Techosoul UI Dark brokerage CRM example with synthetic client records](https://raw.githubusercontent.com/morimdn/Techosoul-UI/main/docs/screenshots/brand-crm-dark.png)
 
-## Validate and contribute
+These are real Chromium captures of this revision, not mockups. See the
+[capture record](https://github.com/morimdn/Techosoul-UI/blob/main/docs/brand-preview.md) for dimensions, a mobile view and the
+README preview. The [historical screenshot archive](https://github.com/morimdn/Techosoul-UI/blob/main/docs/screenshots/README.md)
+retains earlier versions without relabeling them as current.
+
+Browse the [financial examples](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/Financial.tsx),
+[DataGrid example](https://github.com/morimdn/Techosoul-UI/blob/main/examples/documentation/Grid.tsx) and
+[customization guide](https://github.com/morimdn/Techosoul-UI/blob/main/docs/customization.md). The current Showcase uses the
+[GitHub Pages project URL](https://morimdn.github.io/Techosoul-UI/); deployment
+remains manual. Future `ui.techosoul.com` setup is documented in
+[Pages instructions](https://github.com/morimdn/Techosoul-UI/blob/main/docs/pages.md) and is not activated by these changes.
+
+## About Techosoul
+
+**Techosoul — Technology with a Human Soul**
+
+Techosoul is an emerging software product brand focused on intelligent software
+engineering, agentic AI workflows and human-centered product design. It brings
+together experienced professionals in Product Design, Product Management and
+Software Engineering, with years of experience across different companies and
+projects.
+
+The brand combines technical expertise and intelligent automation with human
+creativity, judgment and design craftsmanship. Its strengths include FinTech,
+enterprise applications, CRM and data-intensive software, while its scope extends
+beyond those sectors. Techosoul UI is one of its first public products.
+
+The registered `techosoul.com` domain is reserved for a future umbrella-brand
+website; it does not yet host an operational company website.
+
+## Founder & Maintainer
+
+**Dr. Mirmorsal Madani**
+
+Founder of Techosoul · Creator & Lead Maintainer of Techosoul UI
+
+Dr. Madani holds a Ph.D. in Computer Engineering — Software Systems. His background
+spans academic research, data science, AI, product management and software
+engineering, and he currently serves as a Chief Product Officer in the FinTech
+industry. His work developing and managing financial and enterprise applications
+provides the professional context for Techosoul UI's FinTech-first approach.
+
+[GitHub](https://github.com/morimdn) ·
+[LinkedIn](https://www.linkedin.com/in/mirmorsal-madani/)
+
+## Validate & Contribute
 
 ```sh
 npm run build
@@ -149,6 +219,9 @@ See [architecture](https://github.com/morimdn/Techosoul-UI/blob/main/docs/archit
 [release checklist](https://github.com/morimdn/Techosoul-UI/blob/main/docs/releases.md). Older validation reports describe their
 original test dates, not current deployment status.
 
-MIT licensed. See [LICENSE](https://github.com/morimdn/Techosoul-UI/blob/main/LICENSE) and [third-party attribution](https://github.com/morimdn/Techosoul-UI/blob/main/docs/third-party-notices.md).
-Techosoul UI is independent and has no implied affiliation with MetaTrader,
-cTrader or Ant Design. The editable Figma UI Kit and official npm release remain future deliverables.
+## License & Attribution
+
+MIT licensed. Copyright © 2026 Mirmorsal Madani. See [LICENSE](https://github.com/morimdn/Techosoul-UI/blob/main/LICENSE) and
+[third-party attribution](https://github.com/morimdn/Techosoul-UI/blob/main/docs/third-party-notices.md), including Ant Design,
+Lucide and Inter. Techosoul UI is an independent project. An editable Figma UI
+Kit remains a future deliverable.

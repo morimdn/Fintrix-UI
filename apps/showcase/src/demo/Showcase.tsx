@@ -635,17 +635,17 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
       <div className="showcase-hero">
         <div>
           <span className="eyebrow">TECHOSOUL UI · DESIGN SYSTEM</span>
-          <h1>Precision with a human perspective.</h1>
+          <h1>FinTech-first. Built for modern software.</h1>
           <p>
-            A practical visual language for financial software.
+            A React design system for precise, accessible, data-intensive
+            interfaces.
             <br />
-            Built for clear decisions, from a single control to a complete
-            workspace.
+            Financial foundations. Reusable across modern applications.
           </p>
         </div>
         <div className="hero-meta">
-          <StatusIndicator label="Phase 3 · Library preview" tone="info" />
-          <span>React + Ant Design</span>
+          <StatusIndicator label="0.3.0 · Private preview" tone="info" />
+          <span>React + Ant Design 6</span>
           <span>Inter Variable · Semantic tokens</span>
         </div>
       </div>
@@ -681,6 +681,10 @@ export function Showcase({ onOpenCRM = () => {} }: { onOpenCRM?: () => void }) {
           },
         ]}
       />
+      <footer className="showcase-attribution" aria-label="Project attribution">
+        <a href="https://github.com/morimdn/Techosoul-UI">Built by Techosoul</a>
+        <a href="https://github.com/morimdn">Created by Dr. Mirmorsal Madani</a>
+      </footer>
       <FormModal
         title={
           modal === "form"

@@ -1824,3 +1824,12 @@ footer b {
 .iconography a:hover {
   color: var(--techosoul-primaryHover);
 }
+
+/* Showcase attribution stays in the demo, never in library components. */
+.showcase-attribution {
+  flex-wrap: wrap;
+}
+.showcase-attribution a {
+  color: var(--techosoul-primary);
+  text-underline-offset: 3px;
+}
