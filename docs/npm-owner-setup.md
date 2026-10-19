@@ -1,9 +1,13 @@
 # Owner setup for @techosoul/ui@0.3.0
 
-This preparation does not authorize any registry write or account change. Both
-manifests remain `private: true`; the monorepo root must stay private permanently.
+This preparation does not authorize any registry write or account change. The library
+manifest is prepared with `private: false`; the monorepo root stays `private: true`.
 Domain registration, GitHub ownership and an npm E404 do not establish npm scope
 control. The owner must complete the following checklist under separate approval.
+
+For the planned first publication, use the [manual owner publication path](releases.md#first-publication-owner-controlled-manual-release).
+The staged bootstrap and Trusted Publisher setup below are a separate future
+option, not prerequisites to enable or dispatch during this preparation.
 
 ## 1. Confirm identity and access
 
@@ -31,10 +35,10 @@ network errors before continuing. Version `0.3.0` must not already be published.
   a separate authorized dispatcher/reviewer if self-review is prohibited. If the
   required protections cannot be enforced, leave release enablement off.
 - Leave `NPM_RELEASE_ENABLED` unset/false while preparing.
-- Do not reuse old PR #8, which targets the former package identity. A fresh,
-  separately authorized PR must change only the library's `private` field to
-  false (and lockfile metadata if needed), retaining version **0.3.0** and a
-  private root. Review and merge that PR only with separate owner authorization.
+- Do not reuse old PR #8, which targets the former package identity. The current
+  preparation changes the library's `private` field to false, retaining version
+  **0.3.0** and a private root. Review and merge it only with separate owner
+  authorization; merging alone does not authorize publication.
 - Review the resulting exact `main` SHA, its full successful push CI, and the
   packed contents using [candidate verification](releases.md#candidate-verification).
 

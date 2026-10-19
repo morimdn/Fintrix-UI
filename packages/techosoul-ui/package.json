@@ -4,7 +4,7 @@
   "description": "FinTech-first React design system for precise, accessible, data-intensive interfaces in financial, enterprise and SaaS applications.",
   "type": "module",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "files": [
     "dist",
     "LICENSE",
