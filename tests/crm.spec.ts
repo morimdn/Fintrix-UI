@@ -113,7 +113,9 @@ test("client workflow, themes, columns, sorting and real screenshots", async ({
   await expect(page.getByRole("button", { name: /Taylor Demo/ })).toBeVisible();
   await page.getByRole("button", { name: /Design system/ }).click();
   await expect(
-    page.getByRole("heading", { name: "Precision with a human perspective." }),
+    page.getByRole("heading", {
+      name: "FinTech-first. Built for modern software.",
+    }),
   ).toBeVisible();
   await page.screenshot({
     path: "artifacts/screenshots/showcase-dark.png",

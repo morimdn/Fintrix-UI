@@ -1,7 +1,7 @@
 {
   "name": "@techosoul/ui",
   "version": "0.3.0",
-  "description": "React components and design tokens for brokerage CRMs and financial applications",
+  "description": "FinTech-first React design system for precise, accessible, data-intensive interfaces in financial, enterprise and SaaS applications.",
   "type": "module",
   "license": "MIT",
   "private": true,
@@ -48,20 +48,31 @@
     "url": "git+https://github.com/morimdn/Techosoul-UI.git",
     "directory": "packages/techosoul-ui"
   },
-  "homepage": "https://github.com/morimdn/Techosoul-UI#readme",
+  "homepage": "https://morimdn.github.io/Techosoul-UI/",
   "bugs": {
     "url": "https://github.com/morimdn/Techosoul-UI/issues"
   },
   "keywords": [
     "react",
+    "typescript",
     "design-system",
+    "design-tokens",
     "fintech",
+    "enterprise",
+    "crm",
+    "erp",
+    "saas",
+    "data-grid",
     "antd",
-    "accessible"
+    "accessibility"
   ],
   "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "author": {
+    "name": "Dr. Mirmorsal Madani",
+    "url": "https://github.com/morimdn"
   }
 }

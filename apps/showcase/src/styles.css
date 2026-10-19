@@ -143,7 +143,7 @@ button {
   align-items: center;
   gap: var(--techosoul-space-sm);
   color: var(--techosoul-text);
-  font-size: 24px;
+  font-size: var(--techosoul-typography-title);
   font-weight: 750;
   letter-spacing: -1px;
   text-decoration: none;
@@ -152,23 +152,6 @@ button {
 }
 .brand:hover {
   color: var(--techosoul-text);
-}
-.brand-mark {
-  background: var(--techosoul-action);
-  color: var(--techosoul-onAction);
-  display: grid;
-  place-items: center;
-  width: 36px;
-  flex-shrink: 0;
-  height: 38px;
-  border-radius: var(--techosoul-radius-control);
-}
-.brand-ui {
-  font-size: var(--techosoul-typography-caption);
-  color: var(--techosoul-muted);
-  letter-spacing: 0.8px;
-  align-self: flex-start;
-  margin-top: var(--techosoul-space-sm);
 }
 .workspace {
   display: flex;
@@ -1823,4 +1806,13 @@ footer b {
 .documentation-content a:hover,
 .iconography a:hover {
   color: var(--techosoul-primaryHover);
+}
+
+/* Showcase attribution stays in the demo, never in library components. */
+.showcase-attribution {
+  flex-wrap: wrap;
+}
+.showcase-attribution a {
+  color: var(--techosoul-primary);
+  text-underline-offset: 3px;
 }

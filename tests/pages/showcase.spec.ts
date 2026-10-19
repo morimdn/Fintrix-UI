@@ -26,7 +26,7 @@ test("production project-site assets, catalog, docs and CRM survive navigation a
   });
   await page.goto("./");
   await expect(page).toHaveTitle("Techosoul UI · React Design System");
-  await expect(page.locator(".sidebar .brand")).toHaveText("TechosoulUI");
+  await expect(page.locator(".sidebar .brand")).toHaveText("Techosoul UI");
   for (const name of [
     "Foundations",
     "Core components",

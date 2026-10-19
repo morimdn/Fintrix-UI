@@ -25,6 +25,9 @@ for (const mode of ["light", "dark"] as const) {
       const topbar = page.locator(".topbar");
       const scroller = page.locator(".main-scroll");
       const sidebar = page.locator(".sidebar");
+      await expect(
+        topbar.getByRole("img", { name: "Demo Admin · Sample Workspace" }),
+      ).toHaveText("DA");
       const before = await topbar.boundingBox();
       expect(
         await page.evaluate(() => ({
@@ -61,6 +64,17 @@ for (const mode of ["light", "dark"] as const) {
           name: "Workspace navigation",
         });
         await expect(drawer).toBeVisible();
+        await expect(
+          drawer.getByRole("link", { name: "Techosoul UI", exact: true }),
+        ).toBeVisible();
+        await expect(drawer.locator(".brand svg")).toHaveCount(0);
+        await expect(drawer.locator(".profile strong")).toHaveText(
+          "Demo Admin",
+        );
+        await expect(drawer.locator(".profile small")).toHaveText(
+          "Sample Workspace",
+        );
+        await expect(drawer.locator(".profile .ant-avatar")).toHaveText("DA");
         const drawerNav = drawer.getByRole("region", {
           name: "Sidebar navigation",
         });
@@ -99,6 +113,11 @@ for (const mode of ["light", "dark"] as const) {
         await expect(sidebar).toHaveCSS("overflow-y", "hidden");
         const brand = sidebar.locator(".brand");
         const profile = sidebar.locator(".profile");
+        await expect(brand).toHaveAccessibleName("Techosoul UI");
+        await expect(brand.locator("svg")).toHaveCount(0);
+        await expect(profile.locator("strong")).toHaveText("Demo Admin");
+        await expect(profile.locator("small")).toHaveText("Sample Workspace");
+        await expect(profile.locator(".ant-avatar")).toHaveText("DA");
         const brandBefore = await brand.boundingBox();
         const profileBefore = (await profile.boundingBox())!;
         expect(
