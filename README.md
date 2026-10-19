@@ -14,8 +14,8 @@ applications, with room for product-specific composition and extension.
 [Getting Started](docs/getting-started.md) ·
 [GitHub](https://github.com/morimdn/Techosoul-UI)
 
-**Release status:** `@techosoul/ui@0.3.0` is an independently packable
-candidate, not yet published to npm. Use the local tarball instructions below.
+**Package:** `@techosoul/ui` (preview version `0.3.0`). The instructions
+below cover npm installation and local tarball validation.
 
 ## Why FinTech First?
 
@@ -85,7 +85,7 @@ DOM 18.3 or 19 and Ant Design 6. Independent validation covers React
 18.3.1/19.3.1 × Ant Design 6.0.0/6.6.6; other versions within the peer ranges are
 not individually verified.
 
-### Install the current unpublished candidate
+### Build and validate a local tarball
 
 ```sh
 git clone https://github.com/morimdn/Techosoul-UI.git
@@ -107,7 +107,7 @@ app, CSS and optional local fonts, `TechosoulProvider`, a wallet and working the
 and density controls. Its [complete App example](examples/documentation/App.tsx)
 is compiled against the installed tarball along with the other documentation examples.
 
-### Registry installation — only after publication
+### Install from npm
 
 ```sh
 npm install @techosoul/ui antd
@@ -116,8 +116,8 @@ npm install react@19 react-dom@19
 npm install --save-dev @types/react@19 @types/react-dom@19
 ```
 
-The library manifest is prepared for publication (`private: false`), but the
-monorepo root remains private permanently. Scope ownership, release authorization and final publication remain
+The library is packaged for public npm distribution while the monorepo root
+remains private permanently. Package releases and release authorization remain
 owner-controlled. See the [release guide](docs/releases.md),
 [owner checklist](docs/npm-owner-setup.md) and [migration notes](docs/techosoul-rebrand.md).
 
