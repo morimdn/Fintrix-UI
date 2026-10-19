@@ -1,7 +1,7 @@
 # Techosoul UI documentation
 
 Techosoul UI is the React design system under the Techosoul umbrella brand.
-The private candidate is `@techosoul/ui@0.3.0`.
+The unpublished release candidate is `@techosoul/ui@0.3.0`.
 
 Start with [Getting Started](getting-started.md), then use the
 [component guide](components.md), [customization](customization.md),

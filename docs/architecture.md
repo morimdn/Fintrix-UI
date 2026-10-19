@@ -5,7 +5,7 @@ semantic tokens, the provider and package CSS. `apps/showcase` owns public examp
 and the synthetic brokerage CRM. `examples/consumer-app` is deliberately outside
 the workspace so validation cannot silently resolve a source alias.
 
-The proposed public preview is `@techosoul/ui@0.3.0`, still guarded by `private: true`. No registry name or
+The proposed public preview is `@techosoul/ui@0.3.0`, prepared with `private: false` but not yet published. No registry name or
 organization ownership is assumed. No package has been published.
 
 `npm run build:library` emits native ESM modules and TypeScript declarations with
